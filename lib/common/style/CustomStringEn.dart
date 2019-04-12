@@ -32,4 +32,8 @@ class CustomStringEn extends CustomStringBase{
   String loginUsernameHintText = "username";
   @override
   String loginPasswordHintText = "password";
+
+  ///主页tab
+  @override
+  String homeMy = "My";
 }

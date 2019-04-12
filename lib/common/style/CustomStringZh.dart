@@ -32,4 +32,8 @@ class CustomStringZh extends CustomStringBase{
   String loginUsernameHintText = "用户名";
   @override
   String loginPasswordHintText = "密码";
+
+  ///主页tab
+  @override
+  String homeMy = "我的";
 }

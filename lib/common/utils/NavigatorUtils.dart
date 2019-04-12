@@ -14,4 +14,21 @@ class NavigatorUtils{
     Navigator.pushReplacementNamed(context, LoginPage.sName);
   }
 
+  ///显示人员档案，车辆档案，人员及证件状态，车辆状态页
+  static goDisplayUserInfo(BuildContext context, String title){
+    switch(title){
+      case "人员档案":
+        //Navigator.push(context, new CupertinoPageRoute(builder: (context) => new UserInfoPage()));
+        break;
+      case "车辆档案":
+        //Navigator.push(context, new CupertinoPageRoute(builder: (context) => new VehicleArchivesPage()));
+        break;
+      case "人员及证件状态":
+        //Navigator.push(context, new CupertinoPageRoute(builder: (context) => new StaffAndCertificatesStatePage()));
+        break;
+      case "车辆状态":
+        //Navigator.push(context, new CupertinoPageRoute(builder: (context) => new VehicleStatePage()));
+        break;
+    }
+  }
 }

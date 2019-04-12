@@ -2,6 +2,7 @@ import 'package:car_free_company/common/config/Config.dart';
 import 'package:car_free_company/common/local/LocalStorage.dart';
 import 'package:car_free_company/common/style/CustomStyle.dart';
 import 'package:car_free_company/common/utils/CommonUtils.dart';
+import 'package:car_free_company/page/MyPage.dart';
 import 'package:car_free_company/widget/CustomTabBarWidget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/material.dart';
@@ -21,7 +22,7 @@ class HomePage extends StatelessWidget{
                   ///清空LocalStorage
 //                  await LocalStorage.remove(Config.DRIVER_ARCHIVES);
 //                  await LocalStorage.remove(Config.DRIVER_NAME);
-//                  await LocalStorage.remove(Config.USER_ID);
+                  await LocalStorage.remove(Config.USER_ID);
 //                  await LocalStorage.remove(Config.VEHICLE_ARCHIVES);
 //                  await LocalStorage.remove(Config.VEHICLE_STATE);
 //                  await LocalStorage.remove(Config.STAFF_AND_CERTIFICATES_STATE);
@@ -52,7 +53,7 @@ class HomePage extends StatelessWidget{
 //      _renderTab(CustomIcons.HOME_HOME, CommonUtils.getLocale(context).homeHome),
 //      _renderTab(CustomIcons.HOME_GRAB_SHEET, CommonUtils.getLocale(context).homeGrabSheet),
 //      _renderTab(CustomIcons.HOME_NOTICE, CommonUtils.getLocale(context).homeNotice),
-//      _renderTab(CustomIcons.HOME_MY, CommonUtils.getLocale(context).homeMy)
+      _renderTab(CustomIcons.HOME_MY, CommonUtils.getLocale(context).homeMy)
     ];
     return WillPopScope(
       onWillPop: (){
@@ -67,7 +68,7 @@ class HomePage extends StatelessWidget{
 //          new HomeHomePage(),
 //          new GrabSheetPage(),
 //          new NoticePage(),
-//          new MyPage()
+          new MyPage()
         ],
         backgroundColor: Theme.of(context).primaryColor,
         indicatorColor: Color(CustomColors.white),
