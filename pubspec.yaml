@@ -32,10 +32,18 @@ dependencies:
   fluttertoast: ^3.0.3
   flutter_statusbar: ^0.0.1
   url_launcher: ^5.0.2
+  rxdart: ^0.21.0
+  provide: ^1.0.2
+  flutter_picker: ^1.0.10
+  json_annotation: ^2.2.0
+  flutter_localizations:
+    sdk: flutter
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
+  build_runner:
+  json_serializable:
 
 
 # For information on the generic Dart part of this file, see the
@@ -52,6 +60,8 @@ flutter:
   # To add assets to your application, add an assets section, like this:
   assets:
   - lib/static/images/user.ico
+  - lib/static/images/welcome01.jpg
+  - lib/static/images/loginbackground.jpeg
   #  - images/a_dot_burr.jpeg
   #  - images/a_dot_ham.jpeg
 
