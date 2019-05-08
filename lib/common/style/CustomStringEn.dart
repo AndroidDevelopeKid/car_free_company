@@ -35,5 +35,9 @@ class CustomStringEn extends CustomStringBase{
 
   ///主页tab
   @override
+  String homehome = "Home";
+  @override
+  String homeNotice = "Notice";
+  @override
   String homeMy = "My";
 }

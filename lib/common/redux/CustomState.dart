@@ -1,7 +1,6 @@
 
 
 
-import 'package:car_free_company/common/redux/LocalRedux.dart';
 import 'package:flutter/material.dart';
 
 ///全局Redux store 对象，保存state数据
@@ -20,7 +19,6 @@ class CustomState{
 CustomState appReducer(CustomState state, action){
   return CustomState(
 
-    ///通过 LocaleReducer 将 CustomState 内的 locale 和 action 关联在一起
-    locale: LocaleReducer(state.locale, action),
+
   );
 }

@@ -1,3 +1,4 @@
+import 'package:car_free_company/page/HistoryBillPage.dart';
 import 'package:car_free_company/page/HomePage.dart';
 import 'package:car_free_company/page/LoginPage.dart';
 import 'package:flutter/cupertino.dart';
@@ -12,6 +13,11 @@ class NavigatorUtils{
   ///登录页
   static goLogin(BuildContext context){
     Navigator.pushReplacementNamed(context, LoginPage.sName);
+  }
+
+  ///历史提货单
+  static goHistoryBill(BuildContext context){
+    Navigator.push(context, new CupertinoPageRoute(builder: (context) => new HistoryBillPage()));
   }
 
   ///显示人员档案，车辆档案，人员及证件状态，车辆状态页

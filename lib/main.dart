@@ -10,9 +10,7 @@ import 'package:car_free_company/page/LoginPage.dart';
 import 'package:car_free_company/page/WelcomePage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:flutter_redux/flutter_redux.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:redux/redux.dart';
 import 'package:flutter_picker/PickerLocalizationsDelegate.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 
@@ -22,24 +20,14 @@ void main(){
 }
 
 class FlutterReduxApp extends StatelessWidget {
-  ///创建Store,引用CustomState中的appReducer实现Reducer方法
-  ///initialState初始化State
-  final store = new Store<CustomState>(
-    appReducer,
-    ///初始化数据
-    initialState:new CustomState(
-      locale: Locale('zh', 'CH'),
-    ),
-  );
+
   FlutterReduxApp({Key key}) : super(key: key);
 
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return new StoreProvider(
-        store: store,
-        child: new StoreBuilder<CustomState>(builder: (context, store){
-          return MaterialApp(
+    return
+          new MaterialApp(
             ///多语言实现代理
             localizationsDelegates: [
               PickerLocalizationsDelegate.delegate,
@@ -47,9 +35,7 @@ class FlutterReduxApp extends StatelessWidget {
               GlobalWidgetsLocalizations.delegate,
               CustomLocalizationsDelegate.delegate,
             ],
-            ///本地化委托，用于更改Flutter Widget默认的提示语，按钮text等
-            locale:store.state.locale,///区域
-            supportedLocales: [store.state.locale],///支持区域，传入支持的语种组数
+            locale: Locale('zh', 'CH'),
             debugShowCheckedModeBanner: false,
             theme: ThemeData(
               // This is the theme of your application.
@@ -69,13 +55,11 @@ class FlutterReduxApp extends StatelessWidget {
             ///value：对应的Widget
             routes: {
               WelcomePage.sName: (context){
-                store.state.platformLocale = Localizations.localeOf(context);
                 return WelcomePage();
               },
               HomePage.sName: (context){
                 return new CustomLocalizations(
                   child: new HomePage(),
-
                 );
               },
               LoginPage.sName: (context){
@@ -85,7 +69,6 @@ class FlutterReduxApp extends StatelessWidget {
               }
             },
           );
-        }));
 
   }
 }
@@ -108,17 +91,15 @@ class _CustomLocalizationsState extends State<CustomLocalizations> {
       errorHandleFunction(event.code, event.message);
     });
   }
-
   @override
   Widget build(BuildContext context) {
-    return new StoreBuilder<CustomState>(builder: (context, store) {
       return new Localizations.override(
         context: context,
-        locale: store.state.locale,
+        locale: Locale('zh', 'CH'),
         child: widget.child,
       );
-    });
   }
+
 
   @override
   void dispose() {

@@ -35,5 +35,9 @@ class CustomStringZh extends CustomStringBase{
 
   ///主页tab
   @override
+  String homeHome = "首页";
+  @override
+  String homeNotice = "消息";
+  @override
   String homeMy = "我的";
 }

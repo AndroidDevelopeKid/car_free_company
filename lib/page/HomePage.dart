@@ -2,10 +2,12 @@ import 'package:car_free_company/common/config/Config.dart';
 import 'package:car_free_company/common/local/LocalStorage.dart';
 import 'package:car_free_company/common/style/CustomStyle.dart';
 import 'package:car_free_company/common/utils/CommonUtils.dart';
+import 'package:car_free_company/page/HomeHomePage.dart';
 import 'package:car_free_company/page/MyPage.dart';
+import 'package:car_free_company/page/NoticePage.dart';
 import 'package:car_free_company/widget/CustomTabBarWidget.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/material.dart';
+
 
 class HomePage extends StatelessWidget{
   static final String sName = "home";
@@ -50,9 +52,8 @@ class HomePage extends StatelessWidget{
   @override
   Widget build(BuildContext context){
     List<Widget> tabs = [
-//      _renderTab(CustomIcons.HOME_HOME, CommonUtils.getLocale(context).homeHome),
-//      _renderTab(CustomIcons.HOME_GRAB_SHEET, CommonUtils.getLocale(context).homeGrabSheet),
-//      _renderTab(CustomIcons.HOME_NOTICE, CommonUtils.getLocale(context).homeNotice),
+      _renderTab(CustomIcons.HOME_HOME, CommonUtils.getLocale(context).homeHome),
+      _renderTab(CustomIcons.HOME_NOTICE, CommonUtils.getLocale(context).homeNotice),
       _renderTab(CustomIcons.HOME_MY, CommonUtils.getLocale(context).homeMy)
     ];
     return WillPopScope(
@@ -65,9 +66,8 @@ class HomePage extends StatelessWidget{
         type: CustomTabBarWidget.BOTTOM_TAB,
         tabItems: tabs,
         tabViews: [
-//          new HomeHomePage(),
-//          new GrabSheetPage(),
-//          new NoticePage(),
+          new HomeHomePage(),
+          new NoticePage(),
           new MyPage()
         ],
         backgroundColor: Theme.of(context).primaryColor,

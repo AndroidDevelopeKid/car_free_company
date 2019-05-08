@@ -6,16 +6,17 @@ import 'package:car_free_company/common/net/Address.dart';
 import 'package:car_free_company/common/net/HttpApi.dart';
 import 'package:car_free_company/common/net/ResultData.dart';
 import 'package:dio/dio.dart';
-import 'package:redux/redux.dart';
 
 class UserDao{
-  static login(company, userName, password, store) async{
+  static login(company, userName, password) async{
 
     print("company login:" + company);
     String tenantId = Config.TENANT;
     await LocalStorage.save(Config.USER_NAME_KEY, userName);
     ///清除授权
     HttpManager.clearAuthorization();
+    ///清除缓存
+    await LocalStorage.remove(Config.USER_ID);
     Map requestParams = {
       "usernameOrEmailAddress": userName,
       "password": password
@@ -36,8 +37,5 @@ class UserDao{
     }
     return new ResultData(res.data, res.result, null);
   }
-  ///初始化用户信息
-  static initUserInfo(Store store) async {
 
-  }
 }

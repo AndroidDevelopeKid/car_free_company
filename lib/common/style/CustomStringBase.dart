@@ -26,5 +26,9 @@ abstract class CustomStringBase{
   String loginPasswordHintText;
 
   ///tab
+  String homeHome;
+
+  String homeNotice;
+
   String homeMy;
 }
