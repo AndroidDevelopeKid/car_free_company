@@ -17,6 +17,8 @@ class Config{
   static const COMPANY_KEY = "company";
   static const USER_ID = "user-id";
 
+  static const LOGIN_INFO = "login-info";
+
   static const List<String>  CompanyList = ["贺泰物流"];
 
   ///github outh apps

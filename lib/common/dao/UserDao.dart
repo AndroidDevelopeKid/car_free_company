@@ -38,4 +38,8 @@ class UserDao{
     return new ResultData(res.data, res.result, null);
   }
 
+  static getLoginInfo() async {
+
+  }
+
 }

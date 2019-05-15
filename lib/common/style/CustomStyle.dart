@@ -36,6 +36,7 @@ class CustomIcons{
   static const String ARROW_ICON = "lib/static/images/ic_arrow_right.png";
   static const String LOGIN_FACE_IMAGE_MY = "lib/static/images/userformy02.ico";
   static const String MESSAGE_IMAGE = "lib/static/images/message.ico";
+  static const String DAILY_PLAN_IMAGE = "lib/static/images/dailyplan.ico";
 
   static const IconData HOME_HOME = const IconData(58819, fontFamily: CustomIcons.FONT_FAMILY);
   static const IconData HOME_NOTICE = const IconData(0xe0b7, fontFamily: CustomIcons.FONT_FAMILY);
@@ -49,6 +50,9 @@ class CustomConstant{
   static const normalTextWhite = TextStyle(
     color: Color(CustomColors.textColorWhite),
     fontSize: normalTextSize,
+  );
+  static const hintText = TextStyle(
+    color: Color(0x8A000000)
   );
 
   static const normalText = TextStyle(

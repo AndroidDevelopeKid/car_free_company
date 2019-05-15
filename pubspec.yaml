@@ -78,6 +78,7 @@ flutter:
   - lib/static/images/vehiclequery.ico
   - lib/static/images/vehiclequeue.ico
   - lib/static/images/message.ico
+  - lib/static/images/dailyplan.ico
   #  - images/a_dot_burr.jpeg
   #  - images/a_dot_ham.jpeg
 

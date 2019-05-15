@@ -35,6 +35,7 @@ class FlutterReduxApp extends StatelessWidget {
               GlobalWidgetsLocalizations.delegate,
               CustomLocalizationsDelegate.delegate,
             ],
+            supportedLocales: [Locale('zh', 'CH')],
             locale: Locale('zh', 'CH'),
             debugShowCheckedModeBanner: false,
             theme: ThemeData(

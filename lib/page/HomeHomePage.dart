@@ -133,8 +133,8 @@ class _HomeHomePageState extends State<HomeHomePage>
               iconSize: Config.ICON_SIZE,
               //new Icon(CustomIcons.FREIGHT_INQUIRY, size: Config.ICON_SIZE),
               onPressed: () {
-                CommonUtils.showShort("敬请期待...");
-                //NavigatorUtils.goFreightInquiry(context);
+                //CommonUtils.showShort("敬请期待...");
+                NavigatorUtils.goDailySourcePlan(context);
               },
               tooltip: "每日货源计划查询",
               //padding: EdgeInsets.only(right: Config.ICON_RIGHT_PADDING),
@@ -154,8 +154,8 @@ class _HomeHomePageState extends State<HomeHomePage>
               iconSize: Config.ICON_SIZE,
               //new Icon(CustomIcons.REFUEL_INQUIRY, size: Config.ICON_SIZE),
               onPressed: () {
-                CommonUtils.showShort("敬请期待...");
-                //NavigatorUtils.goRefuelInquiry(context);
+                //CommonUtils.showShort("敬请期待...");
+                NavigatorUtils.goDriver(context);
               },
               tooltip: "司机查询",
               //padding: EdgeInsets.only(right: Config.ICON_RIGHT_PADDING),
@@ -175,8 +175,8 @@ class _HomeHomePageState extends State<HomeHomePage>
               iconSize: Config.ICON_SIZE,
               //new Icon(CustomIcons.TOLL_INQUIRY, size: Config.ICON_SIZE),
               onPressed: () {
-                CommonUtils.showShort("敬请期待...");
-                //NavigatorUtils.goTollInquiry(context);
+                //CommonUtils.showShort("敬请期待...");
+                NavigatorUtils.goVehicle(context);
               },
               tooltip: "车辆查询",
               //padding: EdgeInsets.only(right: Config.ICON_RIGHT_PADDING),
@@ -217,8 +217,8 @@ class _HomeHomePageState extends State<HomeHomePage>
               iconSize: Config.ICON_SIZE,
               //new Icon(CustomIcons.OTHER_COST_INQUIRY, size: Config.ICON_SIZE),
               onPressed: () {
-                CommonUtils.showShort("敬请期待...");
-                //NavigatorUtils.goOtherCostInquiry(context);
+                //CommonUtils.showShort("敬请期待...");
+                NavigatorUtils.goVehicleInsteadQueue(context);
               },
               tooltip: "车辆代排队",
               //padding: EdgeInsets.only(right: Config.ICON_RIGHT_PADDING),
@@ -238,8 +238,8 @@ class _HomeHomePageState extends State<HomeHomePage>
               iconSize: Config.ICON_SIZE,
               //new Icon(CustomIcons.CURRENT_ASSIGN_CUSTOMER, size: Config.ICON_SIZE),
               onPressed: () {
-                CommonUtils.showShort("敬请期待...");
-                //NavigatorUtils.goCurrentAssignCustomer(context);
+                //CommonUtils.showShort("敬请期待...");
+                NavigatorUtils.goVehicleCancelQueue(context);
               },
               tooltip: "取消排队",
               //padding: EdgeInsets.only(right: Config.ICON_RIGHT_PADDING),
