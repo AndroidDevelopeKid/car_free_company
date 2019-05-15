@@ -30,13 +30,10 @@ class _HomeHomePageState extends State<HomeHomePage>
     //检查版本更新
     ReposDao.getNewsVersion(context, false);
     //初始化本地通知
-    var initializationSettingsAndroid =
-        new AndroidInitializationSettings('icon_msg');
+    var initializationSettingsAndroid = new AndroidInitializationSettings('icon_msg');
     //var initializationSettingsIOS = new IOSInitializationSettings(onDidReceiveLocalNotification: onDidReceiveLocalNotification);
-    var initializationSettings =
-        new InitializationSettings(initializationSettingsAndroid, null);
-    flutterLocalNotificationsPlugin.initialize(initializationSettings,
-        onSelectNotification: null); //onSelectNotification
+    var initializationSettings = new InitializationSettings(initializationSettingsAndroid, null);
+    flutterLocalNotificationsPlugin.initialize(initializationSettings, onSelectNotification: null); //onSelectNotification
     var timer = new Timer.periodic(const Duration(seconds: 60), (Void) async {
       //这里调用消息接口
       var notifications = await NoticeDao.getPagedUserNotifications(0, 0);
