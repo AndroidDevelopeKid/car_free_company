@@ -27,7 +27,7 @@ class DriverItem extends StatelessWidget {
                   children: <Widget>[
                     new Image.asset(CustomIcons.DAILY_PLAN_IMAGE),
                     new Text(
-                      driverItemViewModel.name == null ? "姓名" : driverItemViewModel.name,
+                      driverItemViewModel.driverName ?? "无",
                     ),
                   ],
                 ),
@@ -37,10 +37,10 @@ class DriverItem extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: <Widget>[
                     new Text(
-                      driverItemViewModel.personStatus == null ? "人员状态" : driverItemViewModel.personStatus,
+                      driverItemViewModel.personStateText ?? "人员状态",
                     ),
                     new Text(
-                      driverItemViewModel.phoneNumber == null ? "电话号码" : driverItemViewModel.phoneNumber,
+                      driverItemViewModel.driverPhone ?? "电话号码",
                     ),
                   ],),
               ],
@@ -54,34 +54,34 @@ class DriverItem extends StatelessWidget {
 }
 
 class DriverItemViewModel {
-  String idNumber;//身份证号
-  String name;//姓名
-  String phoneNumber;//电话
-  String logisticsCompany;//所属物流公司
-  String personType;//人员类型
+  String driverIDNumber;//身份证号
+  String driverName;//姓名
+  String driverPhone;//电话
+  String ouDisplayName;//所属物流公司 ??signingOrganization
+  String personTypeText;//人员类型
   String vehicleCode;//车辆编号
-  String idCardExpireDate;//身份证到期日期
-  String personStatus;//人员状态
-  String standbyContactPerson;//备用联系人
-  String standbyContactAddress;//备用联系地址
-  String standbyContactMode;//备用联系方式
-  String driverLicenseNumber;//驾驶证号
-  String driverLicenseExpireDate;//驾驶证到期日期
+  String certificateEndDate;//身份证到期日期
+  String personStateText;//人员状态
+  String buckupContactPerson;//备用联系人
+  String buckupContactPersonAddress;//备用联系地址
+  String buckupContactPersonPhone;//备用联系方式
+  String driverLicenseID;//驾驶证号
+  String dlCertificateEndDate;//驾驶证到期日期
 
   DriverItemViewModel.fromMap(Driver driver) {
-    idNumber = driver.idNumber;
-    name = driver.name;
-    phoneNumber = driver.phoneNumber;
-    logisticsCompany = driver.logisticsCompany;
-    personType = driver.personType;
+    driverIDNumber = driver.driverIDNumber;
+    driverName = driver.driverName;
+    driverPhone = driver.driverPhone;
+    ouDisplayName = driver.ouDisplayName;
+    personTypeText = driver.personTypeText;
     vehicleCode = driver.vehicleCode;
-    idCardExpireDate = driver.idCardExpireDate;
-    personStatus = driver.personStatus;
-    standbyContactPerson = driver.standbyContactPerson;
-    standbyContactAddress = driver.standbyContactAddress;
-    standbyContactMode = driver.standbyContactMode;
-    driverLicenseNumber = driver.driverLicenseNumber;
-    driverLicenseExpireDate = driver.driverLicenseExpireDate;
+    certificateEndDate = driver.certificateEndDate;
+    personStateText = driver.personStateText;
+    buckupContactPerson = driver.buckupContactPerson;
+    buckupContactPersonAddress = driver.buckupContactPersonAddress;
+    buckupContactPersonPhone = driver.buckupContactPersonPhone;
+    driverLicenseID = driver.driverLicenseID;
+    dlCertificateEndDate = driver.dlCertificateEndDate;
   }
 
 

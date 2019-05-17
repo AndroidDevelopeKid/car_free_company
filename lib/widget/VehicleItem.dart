@@ -27,7 +27,7 @@ class VehicleItem extends StatelessWidget {
                   children: <Widget>[
                     new Image.asset(CustomIcons.DAILY_PLAN_IMAGE),
                     new Text(
-                      vehicleItemViewModel.vehicleCode == null ? "车辆编号" : vehicleItemViewModel.vehicleCode,
+                      vehicleItemViewModel.vehicleCode ?? "车辆编号",
                     ),
                   ],
                 ),
@@ -37,10 +37,10 @@ class VehicleItem extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: <Widget>[
                     new Text(
-                      vehicleItemViewModel.vehicleStatus == null ? "车辆状态" : vehicleItemViewModel.vehicleStatus,
+                      vehicleItemViewModel.vehicleStateText ?? "车辆状态",
                     ),
                     new Text(
-                      vehicleItemViewModel.plateNumber == null ? "车牌号" : vehicleItemViewModel.plateNumber,
+                      vehicleItemViewModel.mainVehiclePlate ?? "车牌号",
                     ),
                   ],),
               ],
@@ -55,34 +55,34 @@ class VehicleItem extends StatelessWidget {
 
 class VehicleItemViewModel {
   String vehicleCode;//车辆编号
-  String plateNumber;//车牌号
-  String logisticsCompany;//所属物流公司
-  String vehicleType;//车辆类型
-  String businessType;//业务类型
-  String carType;//车型
-  String vehicleStatus;//车辆状态
-  String vehicleOwnerName;//车主姓名
-  String vehicleOwnerIdNumber;//车主身份证号
-  String vehicleOwnerContactMode;//车主联系方式
+  String mainVehiclePlate;//车牌号
+  String oUDisplayName;//所属物流公司
+  String vehicleTypeText;//车辆类型
+  String vehicleBusinessTypeText;//业务类型
+  String modelsText;//车型
+  String vehicleStateText;//车辆状态
+  String ownerName;//车主姓名
+  String ownerIDNumber;//车主身份证号
+  String ownerPhone;//车主联系方式
   String frameNumber;//车架号
   String engineNumber;//发动机编号
-  String joinDate;//加盟日期
+  String joiningDate;//加盟日期
 
   VehicleItemViewModel.fromMap(Vehicle vehicle) {
     vehicleCode = vehicle.vehicleCode;
-    plateNumber = vehicle.plateNumber;
-    logisticsCompany = vehicle.logisticsCompany;
-    vehicleType = vehicle.vehicleType;
-    businessType = vehicle.businessType;
+    mainVehiclePlate = vehicle.mainVehiclePlate;
+    oUDisplayName = vehicle.oUDisplayName;
+    vehicleTypeText = vehicle.vehicleTypeText;
+    vehicleBusinessTypeText = vehicle.vehicleBusinessTypeText;
     vehicleCode = vehicle.vehicleCode;
-    carType = vehicle.carType;
-    vehicleStatus = vehicle.vehicleStatus;
-    vehicleOwnerName = vehicle.vehicleOwnerName;
-    vehicleOwnerIdNumber = vehicle.vehicleOwnerIdNumber;
-    vehicleOwnerContactMode = vehicle.vehicleOwnerContactMode;
+    modelsText = vehicle.modelsText;
+    vehicleStateText = vehicle.vehicleStateText;
+    ownerName = vehicle.ownerName;
+    ownerIDNumber = vehicle.ownerIDNumber;
+    ownerPhone = vehicle.ownerPhone;
     frameNumber = vehicle.frameNumber;
     engineNumber = vehicle.engineNumber;
-    joinDate = vehicle.joinDate;
+    joiningDate = vehicle.joiningDate;
   }
 
 

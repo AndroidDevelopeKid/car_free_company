@@ -25,7 +25,7 @@ class _LoginInfoPage extends State<LoginInfoPage>{
     var loginInfoLS = await LocalStorage.get(Config.LOGIN_INFO);
     if(loginInfoLS == null){
       var userId = await LocalStorage.get(Config.USER_ID);
-      var resultDataLoginInfo = await UserDao.getLoginInfo();
+      var resultDataLoginInfo = await UserDao.getLoginInformation(userId);
       return resultDataLoginInfo.data;
     }else{
       LoginInfo loginInfoData = LoginInfo.fromJson(json.decode(loginInfoLS));

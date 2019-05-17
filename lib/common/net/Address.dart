@@ -22,6 +22,39 @@ class Address{
     return "${host}services/app/Notifications/MakeNotificationAsRead";
   }
 
+  ///个人设置
+  static getPersonalSettings(){
+    return "${host}services/app/User/GetUserByMobile";
+  }
+  ///我的登陆信息
+  static getLoginInformation(){
+    return "${host}services/app/User/GetUserOrganizationUnit";
+  }
+  ///车辆锁定
+  static setVehicleLocking(){
+    return "${host}services/app/VehicleArchives/ToStopVehicleArchives";
+  }
+  ///车辆解锁
+  static setVehicleUnlocking(){
+    return "${host}services/app/VehicleArchives/ToNomanlVehicleArchives";
+  }
+  ///司机锁定
+  static setDriverLocking(){
+    return "${host}services/app/VehicleDriverArchive/TempStopVehicleDriverArchive";
+  }
+  ///司机解锁
+  static setDriverUnlocking(){
+    return "${host}services/app/VehicleDriverArchive/ReturnVehicleDriverArchive";
+  }
+  ///车辆查询
+  static getVehicleQuery(){
+    return "${host}services/app/VehicleArchives/GetVehicleArchivess";
+  }
+  ///司机查询
+  static getDriverQuery(){
+    return "${host}services/app/VehicleDriverArchive/GetVehicleDriverArchives";
+  }
+
   ///仓release get
   static getReposRelease(reposOwner, reposName) {
     return "${hostGit}repos/$reposOwner/$reposName/releases";

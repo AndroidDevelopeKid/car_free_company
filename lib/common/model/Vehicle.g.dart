@@ -8,33 +8,35 @@ part of 'Vehicle.dart';
 
 Vehicle _$VehicleFromJson(Map<String, dynamic> json) {
   return Vehicle(
-      json['logisticsCompany'] as String,
+      json['id'] as String,
+      json['oUDisplayName'] as String,
       json['vehicleCode'] as String,
       json['engineNumber'] as String,
-      json['vehicleType'] as String,
+      json['vehicleTypeText'] as String,
       json['frameNumber'] as String,
-      json['businessType'] as String,
-      json['carType'] as String,
-      json['joinDate'] as String,
-      json['plateNumber'] as String,
-      json['vehicleOwnerContactMode'] as String,
-      json['vehicleOwnerIdNumber'] as String,
-      json['vehicleOwnerName'] as String,
-      json['vehicleStatus'] as String);
+      json['vehicleBusinessTypeText'] as String,
+      json['modelsText'] as String,
+      json['joiningDate'] as String,
+      json['mainVehiclePlate'] as String,
+      json['vehicleStateText'] as String,
+      json['ownerName'] as String,
+      json['ownerIDNumber'] as String,
+      json['ownerPhone'] as String);
 }
 
 Map<String, dynamic> _$VehicleToJson(Vehicle instance) => <String, dynamic>{
+      'id': instance.id,
       'vehicleCode': instance.vehicleCode,
-      'plateNumber': instance.plateNumber,
-      'logisticsCompany': instance.logisticsCompany,
-      'vehicleType': instance.vehicleType,
-      'businessType': instance.businessType,
-      'carType': instance.carType,
-      'vehicleStatus': instance.vehicleStatus,
-      'vehicleOwnerName': instance.vehicleOwnerName,
-      'vehicleOwnerIdNumber': instance.vehicleOwnerIdNumber,
-      'vehicleOwnerContactMode': instance.vehicleOwnerContactMode,
+      'mainVehiclePlate': instance.mainVehiclePlate,
+      'oUDisplayName': instance.oUDisplayName,
+      'vehicleTypeText': instance.vehicleTypeText,
+      'vehicleBusinessTypeText': instance.vehicleBusinessTypeText,
+      'modelsText': instance.modelsText,
+      'vehicleStateText': instance.vehicleStateText,
+      'ownerName': instance.ownerName,
+      'ownerIDNumber': instance.ownerIDNumber,
+      'ownerPhone': instance.ownerPhone,
       'frameNumber': instance.frameNumber,
       'engineNumber': instance.engineNumber,
-      'joinDate': instance.joinDate
+      'joiningDate': instance.joiningDate
     };

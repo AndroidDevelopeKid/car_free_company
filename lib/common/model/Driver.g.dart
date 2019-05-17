@@ -8,33 +8,35 @@ part of 'Driver.dart';
 
 Driver _$DriverFromJson(Map<String, dynamic> json) {
   return Driver(
-      json['name'] as String,
+      json['id'] as String,
+      json['ouDisplayName'] as String,
       json['vehicleCode'] as String,
-      json['phoneNumber'] as String,
-      json['driverLicenseExpireDate'] as String,
-      json['driverLicenseNumber'] as String,
-      json['idCardExpireDate'] as String,
-      json['idNumber'] as String,
-      json['logisticsCompany'] as String,
-      json['personStatus'] as String,
-      json['personType'] as String,
-      json['standbyContactAddress'] as String,
-      json['standbyContactMode'] as String,
-      json['standbyContactPerson'] as String);
+      json['driverIDNumber'] as String,
+      json['driverName'] as String,
+      json['driverPhone'] as String,
+      json['personTypeText'] as String,
+      json['personStateText'] as String,
+      json['buckupContactPerson'] as String,
+      json['buckupContactPersonAddress'] as String,
+      json['buckupContactPersonPhone'] as String,
+      json['driverLicenseID'] as String,
+      json['certificateEndDate'] as String,
+      json['dlCertificateEndDate'] as String);
 }
 
 Map<String, dynamic> _$DriverToJson(Driver instance) => <String, dynamic>{
-      'idNumber': instance.idNumber,
-      'name': instance.name,
-      'phoneNumber': instance.phoneNumber,
-      'logisticsCompany': instance.logisticsCompany,
-      'personType': instance.personType,
+      'id': instance.id,
+      'driverIDNumber': instance.driverIDNumber,
+      'driverName': instance.driverName,
+      'driverPhone': instance.driverPhone,
+      'ouDisplayName': instance.ouDisplayName,
+      'personTypeText': instance.personTypeText,
       'vehicleCode': instance.vehicleCode,
-      'idCardExpireDate': instance.idCardExpireDate,
-      'personStatus': instance.personStatus,
-      'standbyContactPerson': instance.standbyContactPerson,
-      'standbyContactAddress': instance.standbyContactAddress,
-      'standbyContactMode': instance.standbyContactMode,
-      'driverLicenseNumber': instance.driverLicenseNumber,
-      'driverLicenseExpireDate': instance.driverLicenseExpireDate
+      'certificateEndDate': instance.certificateEndDate,
+      'personStateText': instance.personStateText,
+      'buckupContactPerson': instance.buckupContactPerson,
+      'buckupContactPersonAddress': instance.buckupContactPersonAddress,
+      'buckupContactPersonPhone': instance.buckupContactPersonPhone,
+      'driverLicenseID': instance.driverLicenseID,
+      'dlCertificateEndDate': instance.dlCertificateEndDate
     };
