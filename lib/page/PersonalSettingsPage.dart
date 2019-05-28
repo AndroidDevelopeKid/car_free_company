@@ -27,7 +27,13 @@ class _PersonalSettingsPage extends State<PersonalSettingsPage>{
     if(userInfoLS == null){
       var userId = await LocalStorage.get(Config.USER_ID);
       var resultDataUserInfo = await UserDao.getPersonalSettings(userId);
-      return resultDataUserInfo.data;
+      if(resultDataUserInfo.data == null){
+        var dataNull = new User("无", "无", "无", "无", "无", "无", 0, false, "无", "无");
+        return dataNull;
+      }else{
+        return resultDataUserInfo.data;
+      }
+
     }else{
       User userInfoData = User.fromJson(json.decode(userInfoLS));
       return userInfoData;

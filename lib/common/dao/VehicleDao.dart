@@ -8,12 +8,12 @@ import 'package:dio/dio.dart';
 class VehicleDao{
 
   ///车辆查询
-  static getVehicleQuery(oUDisplayName, vehicleCode, mainVehiclePlate, models) async {
-    var res = await HttpManager.netFetch(Address.getVehicleQuery() + "?OUDisplayName=${oUDisplayName}&VehicleCode=${vehicleCode}&MainVehiclePlate=${mainVehiclePlate}&Models=${models}", null, null, null);
+  static getVehicleQuery(oUDisplayName, vehicleCode, mainVehiclePlate, models, maxResultCount, skipCount) async {
+    var res = await HttpManager.netFetch(Address.getVehicleQuery() + "?OUDisplayName=${oUDisplayName}&VehicleCode=${vehicleCode}&MainVehiclePlate=${mainVehiclePlate}&ModelsText=${models}&MaxResultCount=${maxResultCount}&SkipCount=${skipCount}", null, null, null);
     if(res != null && res.result){
       print("vehicleList: " + res.data.toString());
       //LocalStorage.save(Config.DRIVERS, json.encode(res.data['result']['items']));
-      return new DataResult(json.encode(res.data['result']['items']), true);
+      return new DataResult(res.data, true);
     }else{
       return new DataResult(res.data, false);
     }

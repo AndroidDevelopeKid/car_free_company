@@ -25,7 +25,7 @@ class VehicleItem extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: <Widget>[
-                    new Image.asset(CustomIcons.DAILY_PLAN_IMAGE),
+                    new Image.asset(CustomIcons.VEHICLE_QUERY_SUB),
                     new Text(
                       vehicleItemViewModel.vehicleCode ?? "车辆编号",
                     ),
@@ -67,6 +67,7 @@ class VehicleItemViewModel {
   String frameNumber;//车架号
   String engineNumber;//发动机编号
   String joiningDate;//加盟日期
+  String id;
 
   VehicleItemViewModel.fromMap(Vehicle vehicle) {
     vehicleCode = vehicle.vehicleCode;
@@ -83,6 +84,7 @@ class VehicleItemViewModel {
     frameNumber = vehicle.frameNumber;
     engineNumber = vehicle.engineNumber;
     joiningDate = vehicle.joiningDate;
+    id = vehicle.id;
   }
 
 

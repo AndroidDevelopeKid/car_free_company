@@ -10,14 +10,12 @@ import 'package:dio/dio.dart';
 
 class DriverDao{
   ///司机查询
-  static getDriverQuery( driverIDNumber, driverName, driverPhone, ouDisplayName) async {
-    var res = await HttpManager.netFetch(Address.getDriverQuery() + "?DriverIdNumber=${driverIDNumber}&DriverName=${driverName}&DriverPhone=${driverPhone}&OuDisplayName=${ouDisplayName}", null, null, null);
+  static getDriverQuery(driverIDNumber, driverName, driverPhone, vehicleCode, maxResultCount, skipCount) async {
+    var res = await HttpManager.netFetch(Address.getDriverQuery() + "?DriverIdNumber=${driverIDNumber}&DriverName=${driverName}&DriverPhone=${driverPhone}&VehicleCode=${vehicleCode}&MaxResultCount=${maxResultCount}&SkipCount=${skipCount}", null, null, null);
     if(res != null && res.result){
       print("driverList: " + res.data.toString());
       //LocalStorage.save(Config.DRIVERS, json.encode(res.data['result']['items']));
-
-
-      return new DataResult(json.encode(res.data['result']['items']), true);
+      return new DataResult(res.data, true);
 
     }else{
       return new DataResult(res.data, false);
@@ -47,7 +45,7 @@ class DriverDao{
       "id": id,
     };
     if(id != null){
-      res = await HttpManager.netFetch(Address.setDriverLocking(), json.encode(requestParams), null, new Options(method: 'post'));
+      res = await HttpManager.netFetch(Address.setDriverUnlocking(), json.encode(requestParams), null, new Options(method: 'post'));
     }else{
       res = new DataResult('司机解锁失败，司机标识为空', false);
     }

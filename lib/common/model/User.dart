@@ -23,8 +23,8 @@ class User{
   String fullName;
   String emailAddress;
   String phoneNumber;
-  String isActive;
-  String id;
+  bool isActive;
+  int id;
 
   ///json转换为实体类
   factory User.fromJson(Map<String, dynamic> json) => _$UserFromJson(json);

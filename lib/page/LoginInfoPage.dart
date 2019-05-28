@@ -26,6 +26,10 @@ class _LoginInfoPage extends State<LoginInfoPage>{
     if(loginInfoLS == null){
       var userId = await LocalStorage.get(Config.USER_ID);
       var resultDataLoginInfo = await UserDao.getLoginInformation(userId);
+      if(resultDataLoginInfo.data == null){
+        var dataNull = new LoginInfo("无", "无", "无", "无", "无", "无", "无", "无");
+        return dataNull;
+      }
       return resultDataLoginInfo.data;
     }else{
       LoginInfo loginInfoData = LoginInfo.fromJson(json.decode(loginInfoLS));
@@ -45,7 +49,7 @@ class _LoginInfoPage extends State<LoginInfoPage>{
     return new Scaffold(
       backgroundColor: CustomColors.listBackground,
       appBar: new AppBar(
-        title: new Text("登陆信息"),
+        title: new Text("登录信息"),
       ),
       body:
       new Card(

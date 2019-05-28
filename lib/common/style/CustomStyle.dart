@@ -37,6 +37,9 @@ class CustomIcons{
   static const String LOGIN_FACE_IMAGE_MY = "lib/static/images/userformy02.ico";
   static const String MESSAGE_IMAGE = "lib/static/images/message.ico";
   static const String DAILY_PLAN_IMAGE = "lib/static/images/dailyplan.ico";
+  static const String DRIVER_IMAGE = "lib/static/images/driver.ico";
+  static const String VEHICLE_QUERY_SUB = "lib/static/images/vehiclequerysub.ico";
+  static const String DRIVER_QUERY_SUB = "lib/static/images/driverquerysub.ico";
 
   static const IconData HOME_HOME = const IconData(58819, fontFamily: CustomIcons.FONT_FAMILY);
   static const IconData HOME_NOTICE = const IconData(0xe0b7, fontFamily: CustomIcons.FONT_FAMILY);

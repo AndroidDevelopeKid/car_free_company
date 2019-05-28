@@ -30,13 +30,21 @@ class Address{
   static getLoginInformation(){
     return "${host}services/app/User/GetUserOrganizationUnit";
   }
+  ///历史提货单
+  static getHistoryBill(){
+    return "${host}services/app/DeliveryOrderRecordAppService/GetDeliveryOrderRecords";
+  }
+  ///每日货源计划
+  static getDailySourcePlans(){
+    return "${host}services/app/DailySourcePlanAppService/GetDailySourcePlanRecords";
+  }
   ///车辆锁定
   static setVehicleLocking(){
-    return "${host}services/app/VehicleArchives/ToStopVehicleArchives";
+    return "${host}services/app/VehicleArchives/ToStopVehicleArchiveByMobile";
   }
   ///车辆解锁
   static setVehicleUnlocking(){
-    return "${host}services/app/VehicleArchives/ToNomanlVehicleArchives";
+    return "${host}services/app/VehicleArchives/ToNomanlVehicleArchiveByMobile";
   }
   ///司机锁定
   static setDriverLocking(){
@@ -53,6 +61,14 @@ class Address{
   ///司机查询
   static getDriverQuery(){
     return "${host}services/app/VehicleDriverArchive/GetVehicleDriverArchives";
+  }
+  ///代排队
+  static replaceQueue(){
+    return "${host}services/app/AcceptOrderQueueAppService/CreateAcceptOrderQueueForMobile";
+  }
+  ///取消排队
+  static cancelQueue(){
+    return "${host}services/app/AcceptOrderQueueAppService/CancelAcceptOrderQueueForMobile";
   }
 
   ///仓release get

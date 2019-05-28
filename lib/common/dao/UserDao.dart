@@ -22,6 +22,7 @@ class UserDao{
     await LocalStorage.remove(Config.USER_ID);
     await LocalStorage.remove(Config.USER_INFO);
     await LocalStorage.remove(Config.LOGIN_INFO);
+    await LocalStorage.remove(Config.DRIVERS);
     Map requestParams = {
       "usernameOrEmailAddress": userName,
       "password": password
@@ -54,11 +55,15 @@ class UserDao{
     }
     if(res != null && res.result){
       print("userInfo: " + res.data.toString());
-      User user = User.fromJson(res.data["result"]);
-      LocalStorage.save(Config.USER_INFO, json.encode(user.toJson()));
-      print("userinfo.ls" + json.encode(user.toJson()));
+      if(res.data["result"] != null){
+        User user = User.fromJson(res.data["result"]);
+        LocalStorage.save(Config.USER_INFO, json.encode(user.toJson()));
+        print("userinfo.ls" + json.encode(user.toJson()));
+        return new DataResult(user, true);
+      }else{
+        return new DataResult(null, true);
+      }
 
-      return new DataResult(user, true);
 
     }else{
       return new DataResult(res.data, false);
@@ -71,15 +76,20 @@ class UserDao{
       res = await HttpManager.netFetch(Address.getLoginInformation() + "?UserId=${userId}", null, null, null);
     }
     else{
-      res = new DataResult("获取登陆信息失败", false);
+      res = new DataResult("获取登录信息失败", false);
     }
     if(res != null && res.result){
       print("loginInfo: " + res.data.toString());
-      LoginInfo loginInfo = LoginInfo.fromJson(res.data["result"]);
-      LocalStorage.save(Config.LOGIN_INFO, json.encode(loginInfo.toJson()));
-      print("loginInfo.ls" + json.encode(loginInfo.toJson()));
+      if(res.data["result"] != null){
+        LoginInfo loginInfo = LoginInfo.fromJson(res.data["result"]);
+        LocalStorage.save(Config.LOGIN_INFO, json.encode(loginInfo.toJson()));
+        print("loginInfo.ls" + json.encode(loginInfo.toJson()));
 
-      return new DataResult(loginInfo, true);
+        return new DataResult(loginInfo, true);
+      }else{
+        return new DataResult(null, true);
+      }
+
 
     }else{
       return new DataResult(res.data, false);

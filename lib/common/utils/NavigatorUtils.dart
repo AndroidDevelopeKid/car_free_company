@@ -2,7 +2,9 @@ import 'package:car_free_company/page/DailySourcePlanPage.dart';
 import 'package:car_free_company/page/DriverPage.dart';
 import 'package:car_free_company/page/HistoryBillPage.dart';
 import 'package:car_free_company/page/HomePage.dart';
+import 'package:car_free_company/page/LoginInfoPage.dart';
 import 'package:car_free_company/page/LoginPage.dart';
+import 'package:car_free_company/page/PersonalSettingsPage.dart';
 import 'package:car_free_company/page/VehicleCancelQueuePage.dart';
 import 'package:car_free_company/page/VehicleInsteadQueuePage.dart';
 import 'package:car_free_company/page/VehiclePage.dart';
@@ -48,17 +50,11 @@ class NavigatorUtils{
   ///显示人员档案，车辆档案，人员及证件状态，车辆状态页
   static goDisplayUserInfo(BuildContext context, String title){
     switch(title){
-      case "人员档案":
-        //Navigator.push(context, new CupertinoPageRoute(builder: (context) => new UserInfoPage()));
+      case "个人设置":
+        Navigator.push(context, new CupertinoPageRoute(builder: (context) => new PersonalSettingsPage()));
         break;
-      case "车辆档案":
-        //Navigator.push(context, new CupertinoPageRoute(builder: (context) => new VehicleArchivesPage()));
-        break;
-      case "人员及证件状态":
-        //Navigator.push(context, new CupertinoPageRoute(builder: (context) => new StaffAndCertificatesStatePage()));
-        break;
-      case "车辆状态":
-        //Navigator.push(context, new CupertinoPageRoute(builder: (context) => new VehicleStatePage()));
+      case "登录信息":
+        Navigator.push(context, new CupertinoPageRoute(builder: (context) => new LoginInfoPage()));
         break;
     }
   }

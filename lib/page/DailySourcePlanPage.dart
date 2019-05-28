@@ -1,12 +1,14 @@
+import 'dart:convert';
+
+import 'package:car_free_company/common/config/CompanyConfig.dart';
 import 'package:car_free_company/common/config/Config.dart';
-import 'package:car_free_company/common/dao/DailySourcePlanDao.dart';
 import 'package:car_free_company/common/style/CustomStyle.dart';
 import 'package:car_free_company/widget/BaseDailySourcePlanState.dart';
 import 'package:car_free_company/widget/CustomFlexButton.dart';
-import 'package:car_free_company/widget/CustomInputWidget.dart';
 import 'package:car_free_company/widget/CustomPullLoadWidget.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_picker/Picker.dart';
 
 class DailySourcePlanPage extends StatefulWidget {
   static final String name = "DailySourcePlan";
@@ -65,6 +67,47 @@ class _DailySourcePlanPage extends BaseDailySourcePlanState<DailySourcePlanPage>
       _dateEnd = _picker.toString();
     });
   }
+
+  ///装地选择器
+  showLoadPlacePickerArray(BuildContext context) {
+    new Picker(
+        adapter: PickerDataAdapter<String>(
+          pickerdata: new JsonDecoder().convert(loadPlaceEnum),
+          isArray: false,
+        ),
+        hideHeader: true,
+        selecteds: [0],
+        title: new Text("请选择"),
+        onConfirm: (Picker picker, List value) {
+          print(value.toString());
+          print(picker.getSelectedValues());
+          setState(() {
+            _loadPlace = picker.getSelectedValues()[0];
+          });
+        }
+    ).showDialog(context);
+
+  }
+  ///卸地选择器
+  showUnloadPlacePickerArray(BuildContext context) {
+    new Picker(
+        adapter: PickerDataAdapter<String>(
+          pickerdata: new JsonDecoder().convert(unloadPlaceEnum),
+          isArray: false,
+        ),
+        hideHeader: true,
+        selecteds: [0],
+        title: new Text("请选择"),
+        onConfirm: (Picker picker, List value) {
+          print(value.toString());
+          print(picker.getSelectedValues());
+          setState(() {
+            _unloadPlace = picker.getSelectedValues()[0];
+          });
+        }
+    ).showDialog(context);
+
+  }
   ///获取数据
   _getData(state, skipCount) async {
 
@@ -106,7 +149,7 @@ class _DailySourcePlanPage extends BaseDailySourcePlanState<DailySourcePlanPage>
 //      showRefreshLoading();
 //    }
     super.didChangeDependencies();
-    handleRefresh();
+    //handleRefresh();
   }
 
   @override
@@ -162,11 +205,31 @@ class _DailySourcePlanPage extends BaseDailySourcePlanState<DailySourcePlanPage>
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: <Widget>[
               Expanded(
-                child: buildTextField(_loadPlace, '装地', loadPlaceController)
+                child: new OutlineButton(
+                  child: new Padding(padding: new EdgeInsets.fromLTRB(10.0, 10.0, 10.0, 10.0),
+                    child:new Text( _loadPlace == ""
+                        ? " 装地 "
+                        : _loadPlace,
+                      style: CustomConstant.hintText,),
+                  ),
+                  color: Color(CustomColors.white),
+                  borderSide: new BorderSide(color: Colors.grey),
+                  onPressed: () => showLoadPlacePickerArray(context),
+                ),
               ),
               new Padding(padding: EdgeInsets.all(5.0)),
               Expanded(
-                child: buildTextField(_unloadPlace, '卸地', unloadPlaceController),
+                child: new OutlineButton(
+                  child: new Padding(padding: new EdgeInsets.fromLTRB(10.0, 10.0, 10.0, 10.0),
+                    child:new Text( _unloadPlace == ""
+                        ? " 卸地 "
+                        : _unloadPlace,
+                      style: CustomConstant.hintText,),
+                  ),
+                  color: Color(CustomColors.white),
+                  borderSide: new BorderSide(color: Colors.grey),
+                  onPressed: () => showUnloadPlacePickerArray(context),
+                ),
               ),
             ],
           ),
