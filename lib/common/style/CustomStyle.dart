@@ -40,6 +40,7 @@ class CustomIcons{
   static const String DRIVER_IMAGE = "lib/static/images/driver.ico";
   static const String VEHICLE_QUERY_SUB = "lib/static/images/vehiclequerysub.ico";
   static const String DRIVER_QUERY_SUB = "lib/static/images/driverquerysub.ico";
+  static const String HISTORY_BILL_SUB = "lib/static/images/historybillsub.ico";
 
   static const IconData HOME_HOME = const IconData(58819, fontFamily: CustomIcons.FONT_FAMILY);
   static const IconData HOME_NOTICE = const IconData(0xe0b7, fontFamily: CustomIcons.FONT_FAMILY);

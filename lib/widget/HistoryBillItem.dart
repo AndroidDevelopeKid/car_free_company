@@ -24,7 +24,7 @@ class HistoryBillItem extends StatelessWidget{
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: <Widget>[
-                    new Image.asset(CustomIcons.VEHICLE_QUERY_SUB),
+                    new Image.asset(CustomIcons.HISTORY_BILL_SUB),
                     new Text(''
                       //vehicleItemViewModel.vehicleCode ?? "车辆编号",
                     ),

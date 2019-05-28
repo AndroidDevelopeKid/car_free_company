@@ -46,7 +46,7 @@ class _DailySourcePlanPage extends BaseDailySourcePlanState<DailySourcePlanPage>
     DateTime _picker = await showDatePicker(
       context: context,
       initialDate: new DateTime.now(),
-      firstDate: new DateTime.now().subtract(new Duration(days: 30)), // 减 30 天
+      firstDate: new DateTime.now().subtract(new Duration(days: 3000)), // 减 30 天
       lastDate: new DateTime.now().add(new Duration(days: 30)), // 加 30 天
     );
     if (_picker == null) return;
@@ -59,7 +59,7 @@ class _DailySourcePlanPage extends BaseDailySourcePlanState<DailySourcePlanPage>
     DateTime _picker = await showDatePicker(
       context: context,
       initialDate: new DateTime.now(),
-      firstDate: new DateTime.now().subtract(new Duration(days: 30)), // 减 30 天
+      firstDate: new DateTime.now().subtract(new Duration(days: 3000)), // 减 30 天
       lastDate: new DateTime.now().add(new Duration(days: 30)), // 加 30 天
     );
     if (_picker == null) return;

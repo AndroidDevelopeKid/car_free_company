@@ -81,7 +81,7 @@ flutter:
   - lib/static/images/dailyplan.ico
   - lib/static/images/driver.ico
   - lib/static/images/vehiclequerysub.ico
-  - lib/static/images/driverquerysub.ico
+  - lib/static/images/historybillsub.ico
   #  - images/a_dot_burr.jpeg
   #  - images/a_dot_ham.jpeg
 
