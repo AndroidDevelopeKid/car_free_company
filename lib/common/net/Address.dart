@@ -1,7 +1,8 @@
 import 'package:car_free_company/common/config/Config.dart';
 
 class Address{
-  static const String host = "http://10.1.9.167/api/";
+  //static const String host = "http://10.1.9.167/api/";
+  static const String host = "https://m2.yixintm.com/api/";
   static const String hostGit = "https://api.github.com/";
   static const String updateUrl = "";
 
@@ -32,11 +33,11 @@ class Address{
   }
   ///历史提货单
   static getHistoryBill(){
-    return "${host}services/app/DeliveryOrderRecordAppService/GetDeliveryOrderRecords";
+    return "${host}services/app/DeliveryOrderRecord/GetDeliveryOrderRecordsForManagerByMobileAsync";
   }
   ///每日货源计划
   static getDailySourcePlans(){
-    return "${host}services/app/DailySourcePlanAppService/GetDailySourcePlanRecords";
+    return "${host}services/app/DailySourcePlan/GetDailySourcePlanRecordsByMobile";
   }
   ///车辆锁定
   static setVehicleLocking(){
@@ -46,29 +47,38 @@ class Address{
   static setVehicleUnlocking(){
     return "${host}services/app/VehicleArchives/ToNomanlVehicleArchiveByMobile";
   }
+  ///司机换车
+  static setDriverChangeVehicle(){
+    return "${host}services/app/VehicleDriverChange/ChangeDriverVehicle";
+  }
   ///司机锁定
   static setDriverLocking(){
-    return "${host}services/app/VehicleDriverArchive/TempStopVehicleDriverArchive";
+    return "${host}services/app/VehicleDriverArchive/TempStopVehicleDriverArchiveByMobile";
   }
   ///司机解锁
   static setDriverUnlocking(){
-    return "${host}services/app/VehicleDriverArchive/ReturnVehicleDriverArchive";
+    return "${host}services/app/VehicleDriverArchive/ReturnVehicleDriverArchiveByMobile";
   }
+
   ///车辆查询
   static getVehicleQuery(){
-    return "${host}services/app/VehicleArchives/GetVehicleArchivess";
+    return "${host}services/app/VehicleArchives/GetVehicleArchivessForManagerByMobileAsync";
   }
   ///司机查询
   static getDriverQuery(){
-    return "${host}services/app/VehicleDriverArchive/GetVehicleDriverArchives";
+    return "${host}services/app/VehicleDriverArchive/GetVehicleDriverArchivesForManagerByMobileAsync";
   }
   ///代排队
   static replaceQueue(){
-    return "${host}services/app/AcceptOrderQueueAppService/CreateAcceptOrderQueueForMobile";
+    return "${host}services/app/AcceptOrderQueue/DeputyCreateAcceptOrderQueueByMobileAsync";
   }
   ///取消排队
   static cancelQueue(){
-    return "${host}services/app/AcceptOrderQueueAppService/CancelAcceptOrderQueueForMobile";
+    return "${host}services/app/AcceptOrderQueue/DeputyCancelAcceptOrderQueueByMobileAsync";
+  }
+  ///获取装卸地数据
+  static getTransportPlace(){
+    return "${host}services/app/TransportPlace/GetAllTransportPlaceByMobileAsync";
   }
 
   ///仓release get

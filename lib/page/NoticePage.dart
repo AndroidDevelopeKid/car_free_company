@@ -18,7 +18,7 @@ class _NoticePageState extends BaseMessagePushState<NoticePage>{
   ///消息颜色
   Color messageColor = const Color(CustomColors.subLightTextColor);
 
-  int skipCountGlobal = 0;
+  int skipCountGlobal = 10;
   int readState = null;
   int skipCountInit = 0;
   _refreshNotify(){
@@ -92,7 +92,7 @@ class _NoticePageState extends BaseMessagePushState<NoticePage>{
     // TODO: implement requestLoadMore
     var dataLoadMore = _getData(readState,skipCountGlobal);
     if(dataLoadMore.result){
-      skipCountGlobal = skipCountGlobal + Config.PAGE_SIZE;
+      skipCountGlobal = skipCountGlobal + Config.NOTICE_PAGE_SIZE;
       print("skipCountGlobal : " + skipCountGlobal.toString());
     }
     return dataLoadMore;

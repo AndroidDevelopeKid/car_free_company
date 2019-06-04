@@ -29,7 +29,7 @@ class DailySourcePlanItem extends StatelessWidget {
                   children: <Widget>[
                     new Image.asset(CustomIcons.DAILY_PLAN_IMAGE),
                     new Text(
-                      dailySourcePlanItemViewModel.planDate == null ? "0000-00-00" : dailySourcePlanItemViewModel.planDate.substring(0,10),
+                      dailySourcePlanItemViewModel.sourceDate == null ? "0000-00-00" : dailySourcePlanItemViewModel.sourceDate.substring(0,10),
                     ),
                   ],
                 ),
@@ -39,10 +39,10 @@ class DailySourcePlanItem extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: <Widget>[
                     new Text(
-                      dailySourcePlanItemViewModel.loadPlace == null ? "装地" : dailySourcePlanItemViewModel.loadPlace,
+                      dailySourcePlanItemViewModel.loadPlaceIdName == null ? "装地" : dailySourcePlanItemViewModel.loadPlaceIdName,
                     ),
                     new Text(
-                      dailySourcePlanItemViewModel.unloadPlace == null ? "卸地" : dailySourcePlanItemViewModel.unloadPlace,
+                      dailySourcePlanItemViewModel.unloadPlaceIdName == null ? "卸地" : dailySourcePlanItemViewModel.unloadPlaceIdName,
                     ),
                   ],),
               ],
@@ -56,22 +56,29 @@ class DailySourcePlanItem extends StatelessWidget {
 }
 
 class DailySourcePlanItemViewModel {
-  String customer;
-  String loadPlace;
-  String unloadPlace;
-  String goods;
-  String estimatedTotalTon;
-  String estimatedTotalVehicles;
-  String planDate;
+  ///客户
+  String customerName;
+  ///装地
+  String loadPlaceIdName;
+  ///卸地
+  String unloadPlaceIdName;
+  ///货物
+  String cargoCategoryText;
+  ///预计总吨数
+  String expectedTotalTon;
+  ///预计总车数
+  String expectedTruckAmount;
+  ///计划日期
+  String sourceDate;
 
   DailySourcePlanItemViewModel.fromMap(DailySourcePlan dailySourcePlan) {
-    customer = dailySourcePlan.customer;
-    loadPlace = dailySourcePlan.loadPlace;
-    unloadPlace = dailySourcePlan.unloadPlace;
-    goods = dailySourcePlan.goods;
-    estimatedTotalTon = dailySourcePlan.estimatedTotalTon;
-    estimatedTotalVehicles = dailySourcePlan.estimatedTotalVehicles;
-    planDate = dailySourcePlan.planDate;
+    customerName = dailySourcePlan.customerName;
+    loadPlaceIdName = dailySourcePlan.loadPlaceIdName;
+    unloadPlaceIdName = dailySourcePlan.unloadPlaceIdName;
+    cargoCategoryText = dailySourcePlan.cargoCategoryText;
+    expectedTotalTon = dailySourcePlan.expectedTotalTon;
+    expectedTruckAmount = dailySourcePlan.expectedTruckAmount;
+    sourceDate = dailySourcePlan.sourceDate;
   }
 
 

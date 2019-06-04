@@ -20,19 +20,32 @@ class DriverDetailPage extends StatefulWidget{
 }
 
 class _DriverDetailPage extends State<DriverDetailPage>{
+  String _newVehicleCode = "";
+  final TextEditingController newVehicleCodeController = new TextEditingController();
   final DriverItemViewModel model;
   _DriverDetailPage(this.model);
+
+  @override
+  void initState() {
+    super.initState();
+    newVehicleCodeController.value = new TextEditingValue(text: "");
+  }
+  @override
+  void dispose() {
+    newVehicleCodeController.dispose();
+    super.dispose();
+  }
   @override
   Widget build(BuildContext context) {
     return WillPopScope(
       child: Scaffold(
+        //resizeToAvoidBottomPadding: false, //键盘弹出覆盖，不重新布局
         backgroundColor: CustomColors.listBackground,
         appBar: new AppBar(
           title: new Text("司机详情"),
         ),
 
-        body:
-        new Card(
+        body:new SingleChildScrollView(child: new Card(
           color: Color(CustomColors.displayCardBackground),
           //margin: const EdgeInsets.only(left: 20.0, top: 30.0, right: 20.0, bottom: 30),
           margin: EdgeInsets.only(top: 6.0, bottom: 6.0, left: 4.0, right: 4.0),
@@ -41,7 +54,8 @@ class _DriverDetailPage extends State<DriverDetailPage>{
             child:new Column(
               mainAxisAlignment: MainAxisAlignment.start,
               children: <Widget>[
-                new Expanded(child: new Table(
+                //new Expanded(child:
+                new Table(
                   border: TableBorder.all(color: Color(CustomColors.tableBorderColor), width: 2.0, style: BorderStyle.solid),
                   children:
                   <TableRow>[
@@ -124,52 +138,71 @@ class _DriverDetailPage extends State<DriverDetailPage>{
                         ]
                     ),
                   ],
-                ),),
-                new Expanded(child: new Row(
+                ),
+                //),
+                Padding(padding: EdgeInsets.all(10.0)),
+                //new Expanded(child:
+                new Row(
                   children: <Widget>[
                     Expanded(
                         child: new CustomFlexButton(
-                          text: '锁定',
-                          color: Colors.blue,
-                          onPress: (){
-                            DriverDao.setDriverLocking(model.id).then((res){
-                              if(res != null && res.result){
-                                CommonUtils.showShort('锁定成功');
-                              }
-                              if(res != null && !res.result){
-                                CommonUtils.showShort(res.data['error']['message'].toString() + "-" + res.data["error"]["details"].toString());
-                              }
-                            });
-                          }
-                          )
+                            text: '锁定',
+                            color: Colors.blue,
+                            onPress: (){
+                              DriverDao.setDriverLocking(model.id).then((res){
+                                if(res != null && res.result){
+                                  CommonUtils.showShort('锁定成功');
+                                }
+                                if(res != null && !res.result){
+                                  CommonUtils.showShort(res.data['error']['message'].toString() + "-" + res.data["error"]["details"].toString());
+                                }
+                              });
+                            }
+                        )
                     ),
                     Padding(padding: EdgeInsets.all(5.0)),
                     Expanded(
                         child: new CustomFlexButton(
-                          text: '解锁',
-                          color: Colors.blue,
-                          onPress: (){
-                            DriverDao.setDriverUnlocking(model.id).then((res){
-                              if(res != null && res.result){
-                                CommonUtils.showShort('解锁成功');
-                              }
-                              if(res != null && !res.result){
-                                CommonUtils.showShort(res.data['error']['message'].toString() + "-" + res.data["error"]["details"].toString());
-                              }
-                            });
-                          }
-                          )
+                            text: '解锁',
+                            color: Colors.blue,
+                            onPress: (){
+                              DriverDao.setDriverUnlocking(model.id).then((res){
+                                if(res != null && res.result){
+                                  CommonUtils.showShort('解锁成功');
+                                }
+                                if(res != null && !res.result){
+                                  CommonUtils.showShort(res.data['error']['message'].toString() + "-" + res.data["error"]["details"].toString());
+                                }
+                              });
+                            }
+                        )
                     ),
-                    Padding(padding: EdgeInsets.all(5.0)),
-                    Expanded(
-                        child: new CustomFlexButton(
-                          text: '换车',
-                          color: Colors.blue,
-                          onPress: (){}
-                          )
-                    )
+
                   ],
-                ))
+                ),
+                //),
+                Padding(padding: EdgeInsets.all(10.0)),
+                new TextField(
+                  textAlign: TextAlign.center,
+                  onChanged: (String value) {
+                    _newVehicleCode = value;
+                  },
+                  controller: newVehicleCodeController,
+                  decoration: InputDecoration(
+                      hintText: '输入新车号',
+                      contentPadding: EdgeInsets.all(10.0),
+                      border:
+                      OutlineInputBorder(borderSide: BorderSide(color: Theme.of(context).primaryColor),)
+                  ),
+                ),
+                Padding(padding: EdgeInsets.all(10.0)),
+                //Expanded(child:
+                new CustomFlexButton(
+                    text: '换车',
+                    color: Colors.blue,
+                    onPress: (){}
+                )
+                //)
               ],
             ),
             decoration: BoxDecoration(
@@ -183,7 +216,8 @@ class _DriverDetailPage extends State<DriverDetailPage>{
             padding: EdgeInsets.only(left: 10.0, right: 10.0, top: 12.0, bottom: 12.0),
           ),
 
-        ),
+        ),)
+
 
       ),
       onWillPop: _onBack,

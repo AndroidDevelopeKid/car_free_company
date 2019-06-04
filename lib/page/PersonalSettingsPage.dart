@@ -71,6 +71,18 @@ class _PersonalSettingsPage extends State<PersonalSettingsPage>{
                   children: <TableRow>[
                     TableRow(
                         children: <Widget>[
+                          Text("用户名：", style: CustomConstant.normalTextBlack),
+                          Text(snapshot.data.userName ?? "无", style: CustomConstant.normalTextBlack),
+                        ]
+                    ),
+                    TableRow(
+                        children: <Widget>[
+                          Text("全称：", style: CustomConstant.normalTextBlack),
+                          Text(snapshot.data.fullName ?? "无", style: CustomConstant.normalTextBlack),
+                        ]
+                    ),
+                    TableRow(
+                        children: <Widget>[
                           Text("电子邮件：", style: CustomConstant.normalTextBlack),
                           Text(snapshot.data.emailAddress ?? "无", style: CustomConstant.normalTextBlack),
                         ]
@@ -81,6 +93,7 @@ class _PersonalSettingsPage extends State<PersonalSettingsPage>{
                           Text(snapshot.data.phoneNumber ?? "无", style: CustomConstant.normalTextBlack),
                         ]
                     ),
+
 
                   ],
                 );

@@ -5,28 +5,30 @@ part 'DailySourcePlan.g.dart';
 @JsonSerializable()
 class DailySourcePlan{
   ///客户
-  String customer;
+  String customerName;
   ///装地
-  String loadPlace;
+  String loadPlaceIdName;
   ///卸地
-  String unloadPlace;
+  String unloadPlaceIdName;
   ///货物
-  String goods;
+  String cargoCategoryText;
   ///预计总吨数
-  String estimatedTotalTon;
+  String expectedTotalTon;
   ///预计总车数
-  String estimatedTotalVehicles;
+  String expectedTruckAmount;
   ///计划日期
-  String planDate;
+  String sourceDate;
+  String id;
 
   DailySourcePlan(
-      this.customer,
-      this.estimatedTotalTon,
-      this.estimatedTotalVehicles,
-      this.goods,
-      this.loadPlace,
-      this.planDate,
-      this.unloadPlace
+      this.cargoCategoryText,
+      this.customerName,
+      this.expectedTotalTon,
+      this.expectedTruckAmount,
+      this.loadPlaceIdName,
+      this.sourceDate,
+      this.unloadPlaceIdName,
+      this.id
       );
 
   factory DailySourcePlan.fromJson(Map<String, dynamic> json) => _$DailySourcePlanFromJson(json);

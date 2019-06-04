@@ -8,22 +8,24 @@ part of 'DailySourcePlan.dart';
 
 DailySourcePlan _$DailySourcePlanFromJson(Map<String, dynamic> json) {
   return DailySourcePlan(
-      json['customer'] as String,
-      json['estimatedTotalTon'] as String,
-      json['estimatedTotalVehicles'] as String,
-      json['goods'] as String,
-      json['loadPlace'] as String,
-      json['planDate'] as String,
-      json['unloadPlace'] as String);
+      json['cargoCategoryText'] as String,
+      json['customerName'] as String,
+      json['expectedTotalTon'] as String,
+      json['expectedTruckAmount'] as String,
+      json['loadPlaceIdName'] as String,
+      json['sourceDate'] as String,
+      json['unloadPlaceIdName'] as String,
+      json['id'] as String);
 }
 
 Map<String, dynamic> _$DailySourcePlanToJson(DailySourcePlan instance) =>
     <String, dynamic>{
-      'customer': instance.customer,
-      'loadPlace': instance.loadPlace,
-      'unloadPlace': instance.unloadPlace,
-      'goods': instance.goods,
-      'estimatedTotalTon': instance.estimatedTotalTon,
-      'estimatedTotalVehicles': instance.estimatedTotalVehicles,
-      'planDate': instance.planDate
+      'customerName': instance.customerName,
+      'loadPlaceIdName': instance.loadPlaceIdName,
+      'unloadPlaceIdName': instance.unloadPlaceIdName,
+      'cargoCategoryText': instance.cargoCategoryText,
+      'expectedTotalTon': instance.expectedTotalTon,
+      'expectedTruckAmount': instance.expectedTruckAmount,
+      'sourceDate': instance.sourceDate,
+      'id': instance.id
     };

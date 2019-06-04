@@ -28,11 +28,10 @@ class _VehicleDetailPage extends State<VehicleDetailPage>{
       child: Scaffold(
         backgroundColor: CustomColors.listBackground,
         appBar: new AppBar(
-          title: new Text("司机详情"),
+          title: new Text("车辆详情"),
         ),
-
-        body:
-        new Card(
+        body:new SingleChildScrollView(
+          child: new Card(
           color: Color(CustomColors.displayCardBackground),
           //margin: const EdgeInsets.only(left: 20.0, top: 30.0, right: 20.0, bottom: 30),
           margin: EdgeInsets.only(top: 6.0, bottom: 6.0, left: 4.0, right: 4.0),
@@ -41,7 +40,8 @@ class _VehicleDetailPage extends State<VehicleDetailPage>{
             child:new Column(
               mainAxisAlignment: MainAxisAlignment.start,
               children: <Widget>[
-                new Expanded(child: new Table(
+                //new Expanded(child:
+                new Table(
                   border: TableBorder.all(color: Color(CustomColors.tableBorderColor), width: 2.0, style: BorderStyle.solid),
                   children:
                   <TableRow>[
@@ -124,8 +124,11 @@ class _VehicleDetailPage extends State<VehicleDetailPage>{
                         ]
                     ),
                   ],
-                ),),
-                new Expanded(child: new Row(
+                ),
+                //),
+                Padding(padding: EdgeInsets.all(10.0)),
+                //new Expanded(child:
+                new Row(
                   children: <Widget>[
                     Expanded(
                         child: new CustomFlexButton(
@@ -169,7 +172,8 @@ class _VehicleDetailPage extends State<VehicleDetailPage>{
                         )
                     )
                   ],
-                ))
+                )
+                //)
               ],
             ),
             decoration: BoxDecoration(
@@ -184,7 +188,7 @@ class _VehicleDetailPage extends State<VehicleDetailPage>{
           ),
 
         ),
-
+        )
       ),
       onWillPop: _onBack,
     );

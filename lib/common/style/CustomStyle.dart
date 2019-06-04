@@ -51,6 +51,7 @@ class CustomIcons{
 ///字体大小等
 class CustomConstant{
   static const normalTextSize = 18.0;
+  static const placeTextSize = 25.0;
   static const normalTextWhite = TextStyle(
     color: Color(CustomColors.textColorWhite),
     fontSize: normalTextSize,
@@ -66,5 +67,9 @@ class CustomConstant{
   static const normalTextBlack = TextStyle(
     color: Color(CustomColors.textColorBlack),
     fontSize: normalTextSize,
+  );
+  static const placeTextBlack = TextStyle(
+    color: Color(CustomColors.textColorBlack),
+    fontSize: placeTextSize,
   );
 }

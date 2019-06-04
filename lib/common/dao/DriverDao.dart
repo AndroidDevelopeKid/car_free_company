@@ -55,4 +55,23 @@ class DriverDao{
       return DataResult(res.data, false);
     }
   }
+  ///司机换车
+  static setDriverChangeVehicle(driverIdNumber, oldVehicleCode, newVehicleCode) async {
+    var res;
+    Map requestParams = {
+      "driverIdNumber": driverIdNumber,
+      "oldVehicleCode": oldVehicleCode,
+      "newVehicleCode": newVehicleCode
+    };
+    if(driverIdNumber != null && oldVehicleCode != null && newVehicleCode != null){
+      res = await HttpManager.netFetch(Address.setDriverChangeVehicle(), json.encode(requestParams), null, new Options(method: 'post'));
+    }else{
+      res = new DataResult('司机换车失败，输入参数为空', false);
+    }
+    if(res != null && res.result){
+      return DataResult(res.data, true);
+    }else{
+      return DataResult(res.data, false);
+    }
+  }
 }

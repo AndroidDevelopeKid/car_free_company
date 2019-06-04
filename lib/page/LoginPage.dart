@@ -76,13 +76,18 @@ class _LoginPageState extends State<LoginPage> {
       },
       child: Scaffold(
         resizeToAvoidBottomPadding: false, //键盘弹出覆盖，不重新布局
-        body: new Container(
-          decoration: new BoxDecoration(
+        body://new SingleChildScrollView(
+          //child:
+        new Container(
+          decoration:
+          new BoxDecoration(
             image: loginBackgroundImage,
           ),
           //color: Theme.of(context).primaryColor,
-          child: new Center(
-            child: new Card(
+          child:
+          new Center(
+            child:
+            new Card(
               ///阴影大小，默认2.0
               elevation: 5.0,
               shape: new RoundedRectangleBorder(
@@ -113,7 +118,7 @@ class _LoginPageState extends State<LoginPage> {
                     new Padding(padding: new EdgeInsets.all(10.0)),
                     new CustomInputWidget(
                       hintText:
-                          CommonUtils.getLocale(context).loginUsernameHintText,
+                      CommonUtils.getLocale(context).loginUsernameHintText,
                       iconData: CustomIcons.LOGIN_USER,
                       onChanged: (String value) {
                         _userName = value;
@@ -123,7 +128,7 @@ class _LoginPageState extends State<LoginPage> {
                     new Padding(padding: new EdgeInsets.all(10.0)),
                     new CustomInputWidget(
                       hintText:
-                          CommonUtils.getLocale(context).loginPasswordHintText,
+                      CommonUtils.getLocale(context).loginPasswordHintText,
                       iconData: CustomIcons.LOGIN_PW,
                       obscureText: true,
                       onChanged: (String value) {
@@ -148,7 +153,7 @@ class _LoginPageState extends State<LoginPage> {
                         }
                         CommonUtils.showLoadingDialog(context);
                         UserDao.login(_company.trim(), _userName.trim(),
-                                _password.trim())
+                            _password.trim())
                             .then((res) {
                           if (res != null && res.result) {
                             new Future.delayed(const Duration(seconds: 1), () {
@@ -171,6 +176,8 @@ class _LoginPageState extends State<LoginPage> {
             ),
           ),
         ),
+        //)
+
       ),
     );
   }

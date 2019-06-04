@@ -2,9 +2,15 @@ import 'dart:convert';
 
 import 'package:car_free_company/common/config/CompanyConfig.dart';
 import 'package:car_free_company/common/config/Config.dart';
+import 'package:car_free_company/common/dao/DailySourcePlanDao.dart';
+import 'package:car_free_company/common/dao/ResultDao.dart';
+import 'package:car_free_company/common/dao/TransportPlaceDao.dart';
+import 'package:car_free_company/common/model/DailySourcePlan.dart';
 import 'package:car_free_company/common/style/CustomStyle.dart';
+import 'package:car_free_company/common/utils/NavigatorUtils.dart';
 import 'package:car_free_company/widget/BaseDailySourcePlanState.dart';
 import 'package:car_free_company/widget/CustomFlexButton.dart';
+import 'package:car_free_company/widget/CustomPickDialog.dart';
 import 'package:car_free_company/widget/CustomPullLoadWidget.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -23,8 +29,7 @@ class _DailySourcePlanPage extends BaseDailySourcePlanState<DailySourcePlanPage>
   var _dateEnd;
   ///消息颜色
   Color planColor = const Color(CustomColors.subLightTextColor);
-  int skipCountGlobal = 0;
-  int readState = null;
+  int skipCountGlobal = 5;
   int skipCountInit = 0;
   _refreshNotify(){
     if(isShow){
@@ -108,22 +113,58 @@ class _DailySourcePlanPage extends BaseDailySourcePlanState<DailySourcePlanPage>
     ).showDialog(context);
 
   }
-  ///获取数据
-  _getData(state, skipCount) async {
+  ///获取装卸地数据
+  _getTransportPlaceData() async {
+    var place = await TransportPlaceDao.getTransportPlace();
+    var transportPlaces;
+    //装卸地
+    if(place != null && place.result){
 
+    }else{
+
+    }
+  }
+  ///获取数据
+  _getData(skipCount) async {
+    //获取日计划
+    final List<DailySourcePlan> dailyPlanList = new List();
+    var plans = await DailySourcePlanDao.getDailySourcePlans(_dateBegin, _dateEnd, _loadPlace, _unloadPlace, 5, skipCount);
+    //日计划
+    if(plans != null && plans.result){
+      print("skipCount : " + skipCountGlobal.toString());
+      print("plans: " + plans.data.toString());
+      var itemList = plans.data["result"]["items"];
+      print("plans's itemList: " + itemList.toString() + itemList.length.toString());
+      print("plans itemList length: " + itemList.length.toString());
+      for(int i = 0; i < itemList.length; i++){
+        var id = itemList[i]["id"].toString();
+        var customerName = itemList[i]["customerName"].toString();
+        var loadPlaceIdName = itemList[i]["loadPlaceIdName"].toString();
+        var unloadPlaceIdName = itemList[i]["unloadPlaceIdName"].toString();
+        var cargoCategoryText = itemList[i]["cargoCategoryText"].toString();
+        var expectedTotalTon = itemList[i]["expectedTotalTon"].toString();
+        var expectedTruckAmount = itemList[i]["expectedTruckAmount"].toString();
+        var sourceDate = itemList[i]["sourceDate"].toString();
+        dailyPlanList.add(new DailySourcePlan(cargoCategoryText, customerName, expectedTotalTon, expectedTruckAmount, loadPlaceIdName, sourceDate, unloadPlaceIdName, id));
+      }
+      return new DataResult(dailyPlanList, true);
+    }
+    if(plans != null && !plans.result){
+      return new DataResult("到底了", false);
+    }
   }
   ///请求刷新
   @override
   requestRefresh() {
     // TODO: implement requestRefresh
     //getMessagePush();
-    return _getData(readState,skipCountInit);
+    return _getData(skipCountInit);
   }
   ///请求加载更多
   @override
   requestLoadMore() {
     // TODO: implement requestLoadMore
-    var dataLoadMore = _getData(readState,skipCountGlobal);
+    var dataLoadMore = _getData(skipCountGlobal);
     if(dataLoadMore.result){
       skipCountGlobal = skipCountGlobal + Config.PAGE_SIZE;
       print("skipCountGlobal : " + skipCountGlobal.toString());
@@ -139,6 +180,7 @@ class _DailySourcePlanPage extends BaseDailySourcePlanState<DailySourcePlanPage>
   void initState() {
     pullLoadWidgetControl.needHeader = true;
     super.initState();
+    _getTransportPlaceData();
     loadPlaceController.value = new TextEditingValue(text: "");
     unloadPlaceController.value = new TextEditingValue(text: "");
   }
@@ -214,7 +256,32 @@ class _DailySourcePlanPage extends BaseDailySourcePlanState<DailySourcePlanPage>
                   ),
                   color: Color(CustomColors.white),
                   borderSide: new BorderSide(color: Colors.grey),
-                  onPressed: () => showLoadPlacePickerArray(context),
+                  onPressed:() => showLoadPlacePickerArray(context),
+//                      (){
+//                    NavigatorUtils.goLoadPlacePick(context);
+//                  }
+
+
+
+//                    (){
+//                      showDialog(
+//                          context: context,
+//                          barrierDismissible: false,
+//                          builder: (BuildContext context) {
+//                            return CustomPickDialog(
+//                              onChooseEvent:(){
+//
+//                              },
+//                                //title: '小哥哥小姐姐请选择',
+////                                onBoyChooseEvent: () {
+////                                  Navigator.pop(context);
+////                                },
+////                                onGirlChooseEvent: () {
+////                                  Navigator.pop(context);
+////                                }
+//                             );
+//                          });
+//                    }
                 ),
               ),
               new Padding(padding: EdgeInsets.all(5.0)),
