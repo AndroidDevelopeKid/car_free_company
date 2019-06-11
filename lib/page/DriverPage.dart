@@ -52,7 +52,7 @@ class _DriverPage extends BaseDriverState<DriverPage> {
   ///获取数据
   _getData(idNumber, name, phone, vehicleCode, skipCount) async {
     final List<Driver> driverList = new List();
-    var drivers = await DriverDao.getDriverQuery(idNumber, name, phone, vehicleCode, 5, skipCount);
+    var drivers = await DriverDao.getDriverQuery(idNumber, name, phone, vehicleCode, Config.MAX_RESULT, skipCount);
     if(drivers != null && drivers.result){
       print("skipCount : " + skipCountGlobal.toString());
       print("drivers: " + drivers.data.toString());
@@ -229,8 +229,6 @@ class _DriverPage extends BaseDriverState<DriverPage> {
             onPress:(){
               //获取到开始时间，结束时间，装地，卸地
               handleRefresh();
-              //_getData(_driverIdNumber.trim(), _driverName.trim(), _phoneNumber.trim(), _vehicleCode.trim(), skipCountInit);
-              //requestRefresh();
               _driverIdNumberNext = _driverIdNumber;
               _driverNameNext = _driverName;
               _phoneNumberNext = _phoneNumber;

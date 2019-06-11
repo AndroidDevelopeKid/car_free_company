@@ -52,7 +52,7 @@ class _VehiclePage extends BaseVehicleState<VehiclePage> {
   ///获取数据
   _getData(oUDisplayName, vehicleCode, mainVehiclePlate, models, skipCount) async {
     final List<Vehicle> vehicleList = new List();
-    var vehicles = await VehicleDao.getVehicleQuery(oUDisplayName, vehicleCode, mainVehiclePlate, models, 5, skipCount);
+    var vehicles = await VehicleDao.getVehicleQuery(oUDisplayName, vehicleCode, mainVehiclePlate, models, Config.MAX_RESULT, skipCount);
     if(vehicles != null && vehicles.result){
       print("skipCount : " + skipCountGlobal.toString());
       print("vehicles: " + vehicles.data.toString());

@@ -1,3 +1,4 @@
+import 'package:car_free_company/common/model/TransportPlace.dart';
 import 'package:car_free_company/common/style/CustomStyle.dart';
 import 'package:car_free_company/widget/CustomFlexButton.dart';
 import 'package:flutter/material.dart';
@@ -6,6 +7,9 @@ class CustomPickDialog extends Dialog {
   var placeData;
   Function onChooseEvent;
   CustomPickDialog({Key key, @required placeData, @required onChooseEvent}) : super(key: key);
+  List<TransportPlace> places = [TransportPlace(0,1,"001", "内蒙古"), TransportPlace(0,2,"002","北京")];
+
+
   var items = ["地址1", "地址2", "地址2", "地址2", "地址2","地址1", "地址2", "地址2", "地址2", "地址2","地址1", "地址2", "地址2", "地址2", "地址2","地址1", "地址2", "地址2", "地址2", "地址2"];
 
   @override
@@ -44,14 +48,19 @@ class CustomPickDialog extends Dialog {
                         itemBuilder: (context, index) {
                            if (index.isOdd) {//是奇数
                              return new Divider( //返回分割线
-                                 //height: 1.0,
+                                 height: 1.0,
                              );
                            } else {
                              index = index ~/ 2;
-                             return new InkWell(
-                                 child: new Center(child: new Text('${items[index]}', style: CustomConstant.placeTextBlack,)),
-                                 onTap: this.onChooseEvent,
-                                 );
+                             //return new InkWell(
+                                 //child:
+                             return new FlatButton(
+                               child: Text('${items[index]}', style: CustomConstant.placeTextBlack,),
+                               //color: Colors.blue,
+                               onPressed: (){ print("ssssfff");},
+                             );
+                                 //onTap: this.onChooseEvent,
+                                // );
                              //返回item 布局
                            }
                         })),

@@ -17,7 +17,7 @@ abstract class BaseHistoryBillState<T extends StatefulWidget> extends State<T> w
   bool get wantKeepAlive => true;
 
   @override
-  bool get isRefreshFirst => true;
+  bool get isRefreshFirst => false;
 
   @override
   bool get needHeader => false;

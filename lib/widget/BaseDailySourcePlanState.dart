@@ -17,7 +17,7 @@ abstract class BaseDailySourcePlanState<T extends StatefulWidget> extends State<
   bool get wantKeepAlive => true;
 
   @override
-  bool get isRefreshFirst => true;
+  bool get isRefreshFirst => false;
 
   @override
   bool get needHeader => false;
