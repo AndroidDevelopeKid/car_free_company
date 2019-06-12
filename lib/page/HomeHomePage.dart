@@ -116,7 +116,7 @@ class _HomeHomePageState extends State<HomeHomePage>
               //padding: EdgeInsets.only(right: Config.ICON_RIGHT_PADDING),
             ),
           ),
-          new Text("历史提货单"),
+          new Text("提货单"),
         ],
       ),
     );
@@ -137,7 +137,7 @@ class _HomeHomePageState extends State<HomeHomePage>
               //padding: EdgeInsets.only(right: Config.ICON_RIGHT_PADDING),
             ),
           ),
-          new Text("每日货源计划查询"),
+          new Text("货源查询"),
         ],
       ),
     );
@@ -200,7 +200,7 @@ class _HomeHomePageState extends State<HomeHomePage>
               //padding: EdgeInsets.only(right: Config.ICON_RIGHT_PADDING),
             ),
           ),
-          new Text("派单异常处理"),
+          new Text("派单处理"),
         ],
       ),
     );
@@ -221,7 +221,7 @@ class _HomeHomePageState extends State<HomeHomePage>
               //padding: EdgeInsets.only(right: Config.ICON_RIGHT_PADDING),
             ),
           ),
-          new Text("车辆代排队"),
+          new Text("代排队"),
         ],
       ),
     );
