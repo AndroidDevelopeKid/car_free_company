@@ -2,9 +2,9 @@ import 'package:car_free_company/common/config/Config.dart';
 
 class Address{
   //static const String host = "http://10.1.9.167/api/";
-  static const String host = "https://m2.yixintm.com/api/";
+  static const String host = "https://ht.yixintm.com/api/";
   static const String hostGit = "https://api.github.com/";
-  static const String updateUrl = "";
+  static const String updateUrl = "https://www.pgyer.com/2g1p";
 
   ///获取授权 post
   static getAuthorization(){
