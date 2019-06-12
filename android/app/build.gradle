@@ -36,18 +36,27 @@ android {
         applicationId "com.my.car_free_company"
         minSdkVersion 16
         targetSdkVersion 28
-        versionCode flutterVersionCode.toInteger()
-        versionName flutterVersionName
+        versionCode 1
+        versionName "1.0.1"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
 
-    buildTypes {
+    signingConfigs {
         release {
-            // TODO: Add your own signing config for the release build.
-            // Signing with the debug keys for now, so `flutter run --release` works.
-            signingConfig signingConfigs.debug
+            keyAlias 'key_car_free_company'
+            keyPassword '123456'
+            storeFile file('D:/Flutter/apk/key_car_free_company.jks')
+            storePassword '123456'
+        }
+        buildTypes {
+            release {
+                // TODO: Add your own signing config for the release build.
+                // Signing with the debug keys for now, so `flutter run --release` works.
+                signingConfig signingConfigs.release
+            }
         }
     }
+    buildToolsVersion '28.0.3'
 }
 
 flutter {
