@@ -92,6 +92,7 @@ class _HomeHomePageState extends State<HomeHomePage>
     return Scaffold(
       body: new GridView.count(
         crossAxisCount: 3,
+
         padding: EdgeInsets.all(20.0),
         children: _buildWidgetList(),
       ),
@@ -116,7 +117,7 @@ class _HomeHomePageState extends State<HomeHomePage>
               //padding: EdgeInsets.only(right: Config.ICON_RIGHT_PADDING),
             ),
           ),
-          new Text("提货单"),
+          new Text("历史提货单"),
         ],
       ),
     );
@@ -137,7 +138,7 @@ class _HomeHomePageState extends State<HomeHomePage>
               //padding: EdgeInsets.only(right: Config.ICON_RIGHT_PADDING),
             ),
           ),
-          new Text("货源查询"),
+          new Text("货源计划"),
         ],
       ),
     );
@@ -200,7 +201,7 @@ class _HomeHomePageState extends State<HomeHomePage>
               //padding: EdgeInsets.only(right: Config.ICON_RIGHT_PADDING),
             ),
           ),
-          new Text("派单处理"),
+          new Text("派单异常处理"),
         ],
       ),
     );
@@ -221,7 +222,7 @@ class _HomeHomePageState extends State<HomeHomePage>
               //padding: EdgeInsets.only(right: Config.ICON_RIGHT_PADDING),
             ),
           ),
-          new Text("代排队"),
+          new Text("车辆代排队"),
         ],
       ),
     );

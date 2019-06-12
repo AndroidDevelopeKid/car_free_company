@@ -24,7 +24,7 @@ class CustomIcons{
   ///首页image 图标
   static const String HISTORY_BILL_IMAGE = "lib/static/images/historybill.ico";
   static const String CANCEL_QUEUE = "lib/static/images/cancelqueue.ico";
-  static const String DAILY_SOURCE_PLAN = "lib/static/images/dailysourceplan.ico";
+  static const String DAILY_SOURCE_PLAN = "lib/static/images/dailysourceplan1.ico";
   static const String DISPATCH_EH = "lib/static/images/dispatcheh.ico";
   static const String DRIVER_QUERY = "lib/static/images/driverquery.ico";
   static const String VEHICLE_QUERY = "lib/static/images/vehiclequery.ico";

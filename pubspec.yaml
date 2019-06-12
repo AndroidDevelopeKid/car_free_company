@@ -73,6 +73,7 @@ flutter:
   - lib/static/images/historybill.ico
   - lib/static/images/cancelqueue.ico
   - lib/static/images/dailysourceplan.ico
+  - lib/static/images/dailysourceplan1.ico
   - lib/static/images/dispatcheh.ico
   - lib/static/images/driverquery.ico
   - lib/static/images/vehiclequery.ico
