@@ -710,7 +710,6 @@ class _HistoryBillPage extends BaseHistoryBillState<HistoryBillPage>{
                         }else{
                           _unloadPlaceId = null;
                         }
-
                       });
                     });
                   }
