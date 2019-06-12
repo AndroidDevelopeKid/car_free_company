@@ -28,7 +28,7 @@ class UserDao{
       "password": password
     };
     Map<String,String> header = {
-      "Abp.TenantId" : tenantId,
+      "Abp-TenantId" : tenantId,
     };
     var res = await HttpManager.netFetch(Address.getAuthorization(), json.encode(requestParams), header, new Options(method: 'post'));
     if(Config.DEBUG){
