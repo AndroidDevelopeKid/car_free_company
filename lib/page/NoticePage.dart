@@ -84,6 +84,7 @@ class _NoticePageState extends BaseMessagePushState<NoticePage>{
   requestRefresh() {
     // TODO: implement requestRefresh
     //getMessagePush();
+    skipCountGlobal = 10;
     return _getData(readState,skipCountInit);
   }
   ///请求加载更多

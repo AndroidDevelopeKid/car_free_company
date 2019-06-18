@@ -18,6 +18,7 @@ class Config{
   static const PW_KEY = "user-pw";
   static const COMPANY_KEY = "company";
   static const USER_ID = "user-id";
+  static const TRANSPORT_PLACE = "transport-place";
 
   static const USER_INFO = "user-info";
   static const LOGIN_INFO = "login-info";

@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:car_free_company/common/config/Config.dart';
 import 'package:car_free_company/common/dao/ResultDao.dart';
+import 'package:car_free_company/common/dao/TransportPlaceDao.dart';
 import 'package:car_free_company/common/local/LocalStorage.dart';
 import 'package:car_free_company/common/model/LoginInfo.dart';
 import 'package:car_free_company/common/model/User.dart';
@@ -23,6 +24,7 @@ class UserDao{
     await LocalStorage.remove(Config.USER_INFO);
     await LocalStorage.remove(Config.LOGIN_INFO);
     await LocalStorage.remove(Config.DRIVERS);
+    await LocalStorage.remove(Config.TRANSPORT_PLACE);
     Map requestParams = {
       "usernameOrEmailAddress": userName,
       "password": password
@@ -37,6 +39,9 @@ class UserDao{
     if(res != null && res.result){
       await LocalStorage.save(Config.PW_KEY, password);
       await LocalStorage.save(Config.USER_ID, res.data["result"]["userId"].toString());
+
+//      var places = await TransportPlaceDao.getTransportPlace();
+//      await LocalStorage.save(Config.TRANSPORT_PLACE, places);
       //redux 管理user状态
       //store.dispatch(new UpdateDriverAction(resultDataDriver.data));
 
@@ -65,6 +70,9 @@ class UserDao{
       }
 
 
+
+
+
     }else{
       return new DataResult(res.data, false);
     }
@@ -89,8 +97,6 @@ class UserDao{
       }else{
         return new DataResult(null, true);
       }
-
-
     }else{
       return new DataResult(res.data, false);
     }

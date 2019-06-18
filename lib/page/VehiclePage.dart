@@ -87,6 +87,7 @@ class _VehiclePage extends BaseVehicleState<VehiclePage> {
   requestRefresh() {
     // TODO: implement requestRefresh
     //getMessagePush();
+    skipCountGlobal = 5;
     return _getData(_oUDisplayName, _vehicleCode, _mainVehiclePlate, _models, skipCountInit);
   }
   ///请求加载更多
