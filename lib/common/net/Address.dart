@@ -2,7 +2,7 @@ import 'package:car_free_company/common/config/Config.dart';
 
 class Address{
   //static const String host = "http://10.1.9.167/api/";
-  static const String host = "https://api.yixintm.com/api/";
+  static const String host = "https://mpi.yixintm.com/api/";
   static const String hostGit = "https://api.github.com/";
   static const String updateUrl = "https://www.pgyer.com/FDwD";
 
@@ -39,6 +39,15 @@ class Address{
   static getDailySourcePlans(){
     return "${host}services/app/DailySourcePlan/GetDailySourcePlanRecordsByMobile";
   }
+
+  ///车辆查询
+  static getVehicleQuery(){
+    return "${host}services/app/VehicleArchives/GetVehicleArchivessForManagerByMobileAsync";
+  }
+  ///单个车辆查询
+  static getSingleVehicleInfo(){
+    return "${host}services/app/VehicleArchives/...";
+  }
   ///车辆锁定
   static setVehicleLocking(){
     return "${host}services/app/VehicleArchives/ToStopVehicleArchiveByMobile";
@@ -46,6 +55,21 @@ class Address{
   ///车辆解锁
   static setVehicleUnlocking(){
     return "${host}services/app/VehicleArchives/ToNomanlVehicleArchiveByMobile";
+  }
+  ///车辆调度
+  static vehicleDispatch(){
+    return "${host}services/app/VehicleArchives/...";
+  }
+
+
+
+  ///司机查询
+  static getDriverQuery(){
+    return "${host}services/app/VehicleDriverArchive/GetVehicleDriverArchivesForManagerByMobileAsync";
+  }
+  ///获取单个司机信息
+  static getSingelDriverInfo(){
+    return "${host}services/app/VehicleDriverArchive/...";
   }
   ///司机换车
   static setDriverChangeVehicle(){
@@ -60,14 +84,6 @@ class Address{
     return "${host}services/app/VehicleDriverArchive/ReturnVehicleDriverArchiveByMobile";
   }
 
-  ///车辆查询
-  static getVehicleQuery(){
-    return "${host}services/app/VehicleArchives/GetVehicleArchivessForManagerByMobileAsync";
-  }
-  ///司机查询
-  static getDriverQuery(){
-    return "${host}services/app/VehicleDriverArchive/GetVehicleDriverArchivesForManagerByMobileAsync";
-  }
   ///代排队
   static replaceQueue(){
     return "${host}services/app/AcceptOrderQueue/DeputyCreateAcceptOrderQueueByMobileAsync";

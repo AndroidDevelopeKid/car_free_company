@@ -21,6 +21,21 @@ class DriverDao{
       return new DataResult(res.data, false);
     }
   }
+  ///获取单个司机信息
+  static getSingleDriverInfo() async {
+    var res = await HttpManager.netFetch(Address.getSingelDriverInfo() + "?", null, null, null);
+    if(res != null && res.result){
+      if(res.data["result"] != null){
+        Driver driver = Driver.fromJson(res.data["result"]);
+        return new DataResult(driver, true);
+      }else{
+        return new DataResult(null, true);
+      }
+    }
+    if(res != null && !res.result){
+      return new DataResult(res.data, false);
+    }
+  }
   ///司机锁定
   static setDriverLocking(id) async {
     var res;

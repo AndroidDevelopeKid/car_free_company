@@ -87,8 +87,8 @@ class _DriverPage extends BaseDriverState<DriverPage> {
   requestRefresh() {
     // TODO: implement requestRefresh
     //getMessagePush();
-    skipCountGlobal = 5;
-    print("parameters: " + _driverIdNumber.toString() + "-" + _driverName.toString() + "-" + _phoneNumber.toString() + "-" + _vehicleCode.toString() + "-" + skipCountInit.toString());
+    //skipCountGlobal = 5;
+    //print("parameters: " + _driverIdNumber.toString() + "-" + _driverName.toString() + "-" + _phoneNumber.toString() + "-" + _vehicleCode.toString() + "-" + skipCountInit.toString());
     return _getData(_driverIdNumber, _driverName, _phoneNumber, _vehicleCode, skipCountInit);
   }
   ///请求加载更多
@@ -96,10 +96,10 @@ class _DriverPage extends BaseDriverState<DriverPage> {
   requestLoadMore() async {
     // TODO: implement requestLoadMore
     var dataLoadMore = await _getData(_driverIdNumberNext.trim(), _driverNameNext.trim(), _phoneNumberNext.trim(), _vehicleCodeNext.trim(), skipCountGlobal);
-    if(dataLoadMore.result){
+    //if(dataLoadMore.result){
       skipCountGlobal = skipCountGlobal + Config.PAGE_SIZE;
       print("skipCountGlobal : " + skipCountGlobal.toString());
-    }
+    //}
     return dataLoadMore;
   }
   ///tab切换防止页面重置

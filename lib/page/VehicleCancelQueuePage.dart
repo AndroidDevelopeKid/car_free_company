@@ -1,4 +1,6 @@
 
+import 'package:car_free_company/common/dao/VehicleDao.dart';
+import 'package:car_free_company/common/utils/CommonUtils.dart';
 import 'package:car_free_company/widget/CustomFlexButton.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
@@ -47,9 +49,21 @@ class _VehicleCancelQueuePage extends State<VehicleCancelQueuePage> {
           new CustomFlexButton(
             color: Colors.blue,
             text: '取消排队',
-            onPress: ()=>{
-              //获取到开始时间，结束时间，装地，卸地
-              //VehicleDao
+            onPress: (){
+              if(_vehicleSmall != null || _vehicleSmall.length == 0){
+                return;
+              }
+              CommonUtils.showLoadingDialog(context);
+              VehicleDao.setCancelQueue(_vehicleSmall).then((res){
+                if(res != null && res.result){
+                  //取消排队成功
+                  CommonUtils.showShort("取消排队成功");
+                }
+                if(res != null && !res.result){
+                  CommonUtils.showShort(res.data['error']['message'].toString() + "-" + res.data["error"]["details"].toString());
+                }
+              });
+
 
             },
           ),

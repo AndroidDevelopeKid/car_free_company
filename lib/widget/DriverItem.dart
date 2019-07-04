@@ -40,7 +40,7 @@ class DriverItem extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: <Widget>[
                     new Text(
-                      driverItemViewModel.personStateText ?? "人员状态",
+                      driverItemViewModel.personTypeText ?? "人员类型",
                     ),
                     new Text(
                       driverItemViewModel.driverPhone ?? "电话号码",
