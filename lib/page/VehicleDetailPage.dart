@@ -146,7 +146,7 @@ class _VehicleDetailPage extends State<VehicleDetailPage>{
                             TableRow(
                                 children: <Widget>[
                                   Text("加盟日期：", style: CustomConstant.normalTextBlack),
-                                  Text(snapshot.data.joiningDate == "null" ? "无" : model.joiningDate.toString().substring(0,10), style: CustomConstant.normalTextBlack),
+                                  Text(snapshot.data.joiningDate == "null" ? "无" : snapshot.data.joiningDate.toString().substring(0,10), style: CustomConstant.normalTextBlack),
                                 ]
                             ),
                           ],

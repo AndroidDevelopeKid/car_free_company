@@ -87,7 +87,7 @@ class _DriverPage extends BaseDriverState<DriverPage> {
   requestRefresh() {
     // TODO: implement requestRefresh
     //getMessagePush();
-    //skipCountGlobal = 5;
+    skipCountGlobal = 5;
     //print("parameters: " + _driverIdNumber.toString() + "-" + _driverName.toString() + "-" + _phoneNumber.toString() + "-" + _vehicleCode.toString() + "-" + skipCountInit.toString());
     return _getData(_driverIdNumber, _driverName, _phoneNumber, _vehicleCode, skipCountInit);
   }
