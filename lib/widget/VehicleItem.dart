@@ -37,7 +37,7 @@ class VehicleItem extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: <Widget>[
                     new Text(
-                      vehicleItemViewModel.vehicleStateText ?? "车辆状态",
+                      vehicleItemViewModel.vehicleTypeText ?? "车辆类型",
                     ),
                     new Text(
                       vehicleItemViewModel.mainVehiclePlate ?? "车牌号",

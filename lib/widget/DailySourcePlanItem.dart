@@ -29,7 +29,7 @@ class DailySourcePlanItem extends StatelessWidget {
                   children: <Widget>[
                     new Image.asset(CustomIcons.DAILY_PLAN_IMAGE),
                     new Text(
-                      dailySourcePlanItemViewModel.sourceDate == null ? "0000-00-00" : dailySourcePlanItemViewModel.sourceDate.substring(0,10),
+                      dailySourcePlanItemViewModel.sourceDate == null ? "无" : dailySourcePlanItemViewModel.sourceDate.substring(0,10),
                     ),
                   ],
                 ),
@@ -39,10 +39,10 @@ class DailySourcePlanItem extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: <Widget>[
                     new Text(
-                      dailySourcePlanItemViewModel.loadPlaceIdName == null ? "装地" : dailySourcePlanItemViewModel.loadPlaceIdName,
+                      dailySourcePlanItemViewModel.customerName ?? "客户" ,
                     ),
                     new Text(
-                      dailySourcePlanItemViewModel.unloadPlaceIdName == null ? "卸地" : dailySourcePlanItemViewModel.unloadPlaceIdName,
+                      dailySourcePlanItemViewModel.cargoCategoryText ?? "货物" ,
                     ),
                   ],),
               ],

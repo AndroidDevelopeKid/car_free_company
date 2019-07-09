@@ -37,10 +37,10 @@ class _DailySourcePlanPage
 //    TransportPlace(6, 4, "呼和浩特", "0001"),
 //    TransportPlace(7, 4, "包头", "0002"),
 //  ];
-  var _dateBegin;
-  var _dateEnd;
-  var _dateBeginNext;
-  var _dateEndNext;
+  var _dateBegin = "";
+  var _dateEnd = "";
+  var _dateBeginNext = "";
+  var _dateEndNext = "";
   List<TransportPlace> items;
 
   var selected; //选中的地址描述
@@ -67,10 +67,10 @@ class _DailySourcePlanPage
   String _loadPlaceNext = "";
   String _unloadPlaceNext = "";
 
-  int _loadPlaceId = null;
-  int _unloadPlaceId = null;
-  int _loadPlaceNextId = null;
-  int _unloadPlaceNextId = null;
+  int _loadPlaceId;
+  int _unloadPlaceId;
+  int _loadPlaceNextId;
+  int _unloadPlaceNextId;
 
 //  final TextEditingController loadPlaceController = new TextEditingController();
 //  final TextEditingController unloadPlaceController = new TextEditingController();
@@ -173,6 +173,12 @@ class _DailySourcePlanPage
   ///获取数据
   _getData(dateBegin, dateEnd, loadPlace, unloadPlace, skipCount) async {
     //获取日计划
+    if(loadPlace == null){
+      loadPlace = "";
+    }
+    if(unloadPlace == null){
+      unloadPlace = "";
+    }
     final List<DailySourcePlan> dailyPlanList = new List();
     var plans = await DailySourcePlanDao.getDailySourcePlans(dateBegin, dateEnd,
         loadPlace, unloadPlace, Config.MAX_RESULT, skipCount);
@@ -289,7 +295,7 @@ class _DailySourcePlanPage
                   child: new Padding(
                     padding: new EdgeInsets.fromLTRB(10.0, 10.0, 10.0, 10.0),
                     child: new Text(
-                      _dateBegin == null
+                      _dateBegin == ""
                           ? " 开始日期 "
                           : _dateBegin.toString().substring(0, 10),
                       style: CustomConstant.hintText,
@@ -307,7 +313,7 @@ class _DailySourcePlanPage
                 child: new Padding(
                   padding: new EdgeInsets.fromLTRB(10.0, 10.0, 10.0, 10.0),
                   child: new Text(
-                      _dateEnd == null
+                      _dateEnd == ""
                           ? " 结束日期 "
                           : _dateEnd.toString().substring(0, 10),
                       style: CustomConstant.hintText),

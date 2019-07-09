@@ -96,10 +96,10 @@ class _DriverPage extends BaseDriverState<DriverPage> {
   requestLoadMore() async {
     // TODO: implement requestLoadMore
     var dataLoadMore = await _getData(_driverIdNumberNext.trim(), _driverNameNext.trim(), _phoneNumberNext.trim(), _vehicleCodeNext.trim(), skipCountGlobal);
-    //if(dataLoadMore.result){
+    if(dataLoadMore.result){
       skipCountGlobal = skipCountGlobal + Config.PAGE_SIZE;
       print("skipCountGlobal : " + skipCountGlobal.toString());
-    //}
+    }
     return dataLoadMore;
   }
   ///tab切换防止页面重置

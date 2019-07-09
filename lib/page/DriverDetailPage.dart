@@ -128,7 +128,7 @@ class _DriverDetailPage extends State<DriverDetailPage>{
                           TableRow(
                               children: <Widget>[
                                 Text("身份证到期日：", style: CustomConstant.normalTextBlack),
-                                Text(snapshot.data.certificateEndDate == "null" ? "无" : snapshot.data.certificateEndDate.substring(0,10), style: CustomConstant.normalTextBlack),
+                                Text(snapshot.data.certificateEndDate ?? "无" , style: CustomConstant.normalTextBlack),
                               ]
                           ),
                           TableRow(
@@ -158,7 +158,7 @@ class _DriverDetailPage extends State<DriverDetailPage>{
                           TableRow(
                               children: <Widget>[
                                 Text("驾驶证到期日期：", style: CustomConstant.normalTextBlack),
-                                Text(snapshot.data.dlCertificateEndDate == "null" ? "无" : snapshot.data.dlCertificateEndDate.toString().substring(0,10), style: CustomConstant.normalTextBlack),
+                                Text(snapshot.data.dlCertificateEndDate ?? "无" , style: CustomConstant.normalTextBlack),
                               ]
                           ),
                         ],

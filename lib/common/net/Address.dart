@@ -68,7 +68,7 @@ class Address{
     return "${host}services/app/VehicleDriverArchive/GetVehicleDriverArchivesForManagerByMobileAsync";
   }
   ///获取单个司机信息
-  static getSingelDriverInfo(){
+  static getSingleDriverInfo(){
     return "${host}services/app/VehicleDriverArchive/...";
   }
   ///司机换车

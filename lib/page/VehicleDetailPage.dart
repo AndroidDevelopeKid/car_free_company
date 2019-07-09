@@ -146,7 +146,7 @@ class _VehicleDetailPage extends State<VehicleDetailPage>{
                             TableRow(
                                 children: <Widget>[
                                   Text("加盟日期：", style: CustomConstant.normalTextBlack),
-                                  Text(snapshot.data.joiningDate == "null" ? "无" : snapshot.data.joiningDate.toString().substring(0,10), style: CustomConstant.normalTextBlack),
+                                  Text(snapshot.data.joiningDate ?? "无" , style: CustomConstant.normalTextBlack),
                                 ]
                             ),
                           ],
@@ -214,9 +214,56 @@ class _VehicleDetailPage extends State<VehicleDetailPage>{
                                       });
                                     }
                                 )
-                            )
+                            ),
+
                           ],
-                        )
+                        ),
+                        Padding(padding: EdgeInsets.all(10.0)),
+                        //Expanded(child:
+                        new CustomFlexButton(
+                            text: '代排队',
+                            color: Colors.blue,
+                            onPress: (){
+                              if(snapshot.data.vehicleCode == null || snapshot.data.vehicleCode.length == 0){
+                                CommonUtils.showShort("车辆编号为空");
+                                return;
+                              }
+                              CommonUtils.showLoadingDialog(context);
+                              VehicleDao.setReplaceQueue(snapshot.data.vehicleCode.trim()).then((res){
+                                if(res != null && res.result){
+                                  //代排队成功
+                                  CommonUtils.showShort("代排队成功");
+                                }
+                                if(res != null && !res.result){
+                                  CommonUtils.showShort(res.data['error']['message'].toString() + "-" + res.data["error"]["details"].toString());
+                                }
+                              });
+                            }
+                        ),
+
+                        new Padding(padding: EdgeInsets.all(2.0)),
+                        new CustomFlexButton(
+                          color: Colors.blue,
+                          text: '取消排队',
+                          onPress: (){
+                            if(snapshot.data.vehicleCode == null || snapshot.data.vehicleCode.length == 0){
+                              CommonUtils.showShort("车辆编号为空");
+                              return;
+                            }
+                            CommonUtils.showLoadingDialog(context);
+                            VehicleDao.setCancelQueue(snapshot.data.vehicleCode.trim()).then((res){
+                              if(res != null && res.result){
+                                //取消排队成功
+                                CommonUtils.showShort("取消排队成功");
+                              }
+                              if(res != null && !res.result){
+                                CommonUtils.showShort(res.data['error']['message'].toString() + "-" + res.data["error"]["details"].toString());
+                              }
+                            });
+
+
+                          },
+                        ),
                         //)
                       ],
                     );

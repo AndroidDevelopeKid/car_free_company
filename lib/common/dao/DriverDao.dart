@@ -23,7 +23,7 @@ class DriverDao{
   }
   ///获取单个司机信息
   static getSingleDriverInfo() async {
-    var res = await HttpManager.netFetch(Address.getSingelDriverInfo() + "?", null, null, null);
+    var res = await HttpManager.netFetch(Address.getSingleDriverInfo() + "?", null, null, null);
     if(res != null && res.result){
       if(res.data["result"] != null){
         Driver driver = Driver.fromJson(res.data["result"]);

@@ -45,8 +45,8 @@ class _HistoryBillPage extends BaseHistoryBillState<HistoryBillPage> {
     }
   }
 
-  var _dateBegin;
-  var _dateEnd;
+  var _dateBegin = "";
+  var _dateEnd = "";
 
   List<TransportPlace> items;
 
@@ -60,16 +60,16 @@ class _HistoryBillPage extends BaseHistoryBillState<HistoryBillPage> {
   String _vehicleCode = "";
   String _mainVehiclePlate = "";
 
-  var _dateBeginNext;
-  var _dateEndNext;
+  var _dateBeginNext = "";
+  var _dateEndNext = "";
 
   String _vehicleCodeNext = "";
   String _mainVehiclePlateNext = "";
 
-  int _loadPlaceId = null;
-  int _unloadPlaceId = null;
-  int _loadPlaceNextId = null;
-  int _unloadPlaceNextId = null;
+  int _loadPlaceId;
+  int _unloadPlaceId;
+  int _loadPlaceNextId;
+  int _unloadPlaceNextId;
   final TextEditingController vehicleCodeController =
       new TextEditingController();
   final TextEditingController plateNumberController =
@@ -170,6 +170,12 @@ class _HistoryBillPage extends BaseHistoryBillState<HistoryBillPage> {
   ///获取数据
   _getData(dateBegin, dateEnd, loadPlace, unloadPlace, vehicleCode,
       mainVehiclePlate, skipCount) async {
+    if(loadPlace == null){
+      loadPlace = "";
+    }
+    if(unloadPlace == null){
+      unloadPlace = "";
+    }
     final List<HistoryBill> historyBillList = new List();
     var historyBills = await HistoryBillDao.getHistoryBills(
         dateBegin,
@@ -235,8 +241,8 @@ class _HistoryBillPage extends BaseHistoryBillState<HistoryBillPage> {
     // TODO: implement requestRefresh
     //getMessagePush();
     skipCountGlobal = 5;
-    print("parameters: " + skipCountInit.toString());
-    return _getData(_dateBegin, _dateEnd, _loadPlace, _unloadPlace,
+    //print("parameters: " + skipCountInit.toString());
+    return _getData(_dateBegin, _dateEnd, _loadPlaceId, _unloadPlaceId,
         _vehicleCode, _mainVehiclePlate, skipCountInit);
   }
 
@@ -312,7 +318,7 @@ class _HistoryBillPage extends BaseHistoryBillState<HistoryBillPage> {
                   child: new Padding(
                     padding: new EdgeInsets.fromLTRB(10.0, 10.0, 10.0, 10.0),
                     child: new Text(
-                      _dateBegin == null
+                      _dateBegin == ""
                           ? " 开始日期 "
                           : _dateBegin.toString().substring(0, 10),
                       style: CustomConstant.hintText,
@@ -330,7 +336,7 @@ class _HistoryBillPage extends BaseHistoryBillState<HistoryBillPage> {
                 child: new Padding(
                   padding: new EdgeInsets.fromLTRB(10.0, 10.0, 10.0, 10.0),
                   child: new Text(
-                      _dateEnd == null
+                      _dateEnd == ""
                           ? " 结束日期 "
                           : _dateEnd.toString().substring(0, 10),
                       style: CustomConstant.hintText),
