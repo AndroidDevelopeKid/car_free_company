@@ -2,6 +2,7 @@ import 'package:car_free_company/common/config/Config.dart';
 import 'package:car_free_company/common/dao/ResultDao.dart';
 import 'package:car_free_company/common/dao/VehicleDao.dart';
 import 'package:car_free_company/common/model/Vehicle.dart';
+import 'package:car_free_company/common/model/VehicleModel.dart';
 import 'package:car_free_company/common/style/CustomStyle.dart';
 import 'package:car_free_company/widget/BaseVehicleState.dart';
 import 'package:car_free_company/widget/CustomFlexButton.dart';
@@ -32,11 +33,14 @@ class _VehiclePage extends BaseVehicleState<VehiclePage> {
     }
 
   }
+  var selected; //选中的车型的描述
+  var selectedId; //选中的车型编号
 
   String _oUDisplayName = "";
   String _vehicleCode = "";
   String _mainVehiclePlate = "";
   String _models = "";
+  String _modelsText = "";
 
   String _oUDisplayNameNext = "";
   String _vehicleCodeNext = "";
@@ -203,21 +207,146 @@ class _VehiclePage extends BaseVehicleState<VehiclePage> {
                   //buildTextField(_mainVehiclePlate, '车牌号', plateNumberController)
               ),
               new Padding(padding: EdgeInsets.all(5.0)),
+//              Expanded(
+//                child: new TextField(
+//                  textAlign: TextAlign.center,
+//                  onChanged: (String value) {
+//                    _models = value;
+//                  },
+//                  controller: carTypeController,
+//                  decoration: InputDecoration(
+//                      hintText: '车型',
+//                      contentPadding: EdgeInsets.all(10.0),
+//                      border:
+//                      OutlineInputBorder(borderSide: BorderSide(color: Theme.of(context).primaryColor),)
+//                  ),
+//                ),
+//                //buildTextField(_models, '车型', carTypeController),
+//              ),
               Expanded(
-                child: new TextField(
-                  textAlign: TextAlign.center,
-                  onChanged: (String value) {
-                    _models = value;
-                  },
-                  controller: carTypeController,
-                  decoration: InputDecoration(
-                      hintText: '车型',
-                      contentPadding: EdgeInsets.all(10.0),
-                      border:
-                      OutlineInputBorder(borderSide: BorderSide(color: Theme.of(context).primaryColor),)
-                  ),
-                ),
-                //buildTextField(_models, '车型', carTypeController),
+                child: new OutlineButton(
+                    child: new Padding(
+                      padding: new EdgeInsets.fromLTRB(10.0, 10.0, 10.0, 10.0),
+                      child: new Text(
+                        _modelsText == "" ? " 车型 " : _models,
+                        style: CustomConstant.hintText,
+                      ),
+                    ),
+                    color: Color(CustomColors.white),
+                    borderSide: new BorderSide(color: Colors.grey),
+                    onPressed: () {
+                      VehicleDao.getVehicleModels()
+                          .then((models) {
+                        List<VehicleModel> modelList = new List();
+                        //车型
+                        if (models != null && models.result) {
+                          print("models: " + models.data.toString());
+                          var itemList = models.data["result"]["items"];
+                          print("models's itemList: " +
+                              itemList.toString() +
+                              itemList.length.toString());
+                          print("model itemList length: " +
+                              itemList.length.toString());
+                          for (int i = 0; i < itemList.length; i++) {
+                            var text = itemList[i]["text"].toString();
+                            var value = itemList[i]["value"].toString();
+                            modelList.add(
+                                new VehicleModel(value, text));
+                          }
+                        }
+                        showDialog(
+                            context: context,
+                            barrierDismissible: false,
+                            builder: (BuildContext context) {
+                              return new AlertDialog(
+                                title: new Text("车型"),
+                                content: new StatefulBuilder(
+                                    builder: (context, StateSetter setState) {
+                                      return new Column(children: <Widget>[
+                                        Expanded(
+                                          child: new Container(
+                                            width:
+                                            MediaQuery.of(context).size.width *
+                                                0.9,
+                                            height:
+                                            MediaQuery.of(context).size.height *
+                                                0.9,
+                                            child: new ListView.builder(
+                                                shrinkWrap: true,
+                                                itemCount: modelList.length,
+                                                itemBuilder: (context, index) {
+                                                  return new OutlineButton(
+                                                      borderSide: new BorderSide(
+                                                          color: Colors.grey),
+                                                      child: Text(
+                                                        '${modelList[index].text}',
+                                                        style: CustomConstant
+                                                            .placeTextBlack,
+                                                      ),
+                                                      onPressed: () {
+
+                                                          selected =
+                                                              modelList[index]
+                                                                  .text
+                                                                  .toString();
+                                                          selectedId =
+                                                              modelList[index]
+                                                                  .value
+                                                                  .toString();
+
+                                                          var callback;
+                                                          callback = [
+                                                            selected,
+                                                            selectedId
+                                                          ];
+                                                          Navigator.of(context)
+                                                              .pop(callback);
+
+                                                      });
+                                                }),
+                                          ),
+                                        ),
+                                        new Row(
+                                          mainAxisAlignment:
+                                          MainAxisAlignment.spaceAround,
+                                          children: <Widget>[
+                                            new FlatButton(
+                                              child: Text(
+                                                "取消",
+                                                style:
+                                                TextStyle(color: Colors.blue),
+                                              ),
+                                              onPressed: () => Navigator.of(context)
+                                                  .pop(["", ""]),
+                                            ),
+//                                          new FlatButton(
+//                                            child: Text(
+//                                              "确定",
+//                                              style: TextStyle(
+//                                                  color: Colors.blue),
+//                                            ),
+//                                            onPressed: () {
+//                                              Navigator.of(context).pop(
+//                                                  selected);
+//                                            },
+//                                          ),
+                                          ],
+                                        ),
+                                      ]);
+                                    }),
+                              );
+                            }).then((value) {
+                          setState(() {
+                            _modelsText = value[0];
+                            if (value[1] != "") {
+                              _models = value[1];
+                            } else {
+                              _models = null;
+                            }
+                          });
+                        });
+                      });
+                    }),
               ),
             ],
           ),

@@ -42,6 +42,8 @@ dependencies:
   pub_semver: ^1.4.2
   qr_flutter: ^2.0.0
   common_utils: ^1.1.1
+  banner_view: ^1.1.2
+  intro_slider: ^2.2.5
   flutter_localizations:
     sdk: flutter
 
@@ -86,6 +88,8 @@ flutter:
   - lib/static/images/historybillsub.ico
   - lib/static/images/transportplace.ico
   - lib/static/images/parenttransportplace.ico
+  - lib/static/images/banner01.jpeg
+  - lib/static/images/banner02.jpeg
   #  - images/a_dot_burr.jpeg
   #  - images/a_dot_ham.jpeg
 

@@ -12,7 +12,7 @@ class MyPage extends StatefulWidget {
 class _MyPageState extends State<MyPage> with AutomaticKeepAliveClientMixin {
   @override
   bool get wantKeepAlive => true;
-  var titles = ["个人设置", "登录信息"];
+  var titles = ["个人设置", ];//"登录信息"];
 
   var _userAvatar;
   var _userFullName;

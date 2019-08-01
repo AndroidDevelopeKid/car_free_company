@@ -6,9 +6,12 @@ import 'package:car_free_company/common/dao/ReposDao.dart';
 import 'package:car_free_company/common/style/CustomStyle.dart';
 import 'package:car_free_company/common/utils/CommonUtils.dart';
 import 'package:car_free_company/common/utils/NavigatorUtils.dart';
+import 'package:car_free_company/widget/BannerItemFactory.dart';
+import 'package:car_free_company/widget/Pair.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+import 'package:banner_view/banner_view.dart';
 
 class HomeHomePage extends StatefulWidget {
   @override
@@ -85,17 +88,38 @@ class _HomeHomePageState extends State<HomeHomePage>
     await flutterLocalNotificationsPlugin.cancelAll();
   }
 
+  BannerView _bannerView(){
+    // 盛放图片的 List
+    List<Pair<String, Color>> param = [
+      Pair.create(CustomIcons.BANNER_IMAGE_01, Colors.red[500]),
+      Pair.create(CustomIcons.BANNER_IMAGE_02, Colors.green[500]),//Colors.green[500]
+    ];
+
+    return new BannerView(
+      BannerItemFactory.banners(param),
+      intervalDuration: new Duration(seconds: 2),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     super.build(context);
 
     return Scaffold(
-      body: new GridView.count(
-        crossAxisCount: 3,
-
-        padding: EdgeInsets.all(20.0),
-        children: _buildWidgetList(),
-      ),
+      body:new Column(children: <Widget>[
+        new Container(
+          alignment: Alignment.center,
+          height: 180.0,
+          child: this._bannerView(),
+          padding: EdgeInsets.only(bottom: 10.0),
+        ),
+        new Expanded(child: new GridView.count(
+          crossAxisCount: 3,
+          padding: EdgeInsets.all(20.0),
+          children: _buildWidgetList(),
+        ),
+        )
+      ],),
     );
   }
 
@@ -131,8 +155,8 @@ class _HomeHomePageState extends State<HomeHomePage>
               iconSize: Config.ICON_SIZE,
               //new Icon(CustomIcons.FREIGHT_INQUIRY, size: Config.ICON_SIZE),
               onPressed: () {
-                //CommonUtils.showShort("敬请期待...");
-                NavigatorUtils.goDailySourcePlan(context);
+                CommonUtils.showShort("敬请期待...");
+                //NavigatorUtils.goDailySourcePlan(context);
               },
               tooltip: "每日货源计划查询",
               //padding: EdgeInsets.only(right: Config.ICON_RIGHT_PADDING),

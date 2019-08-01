@@ -43,6 +43,8 @@ class CustomIcons{
   static const String HISTORY_BILL_SUB = "lib/static/images/historybillsub.ico";
   static const String TRANSPORT_PLACE = "lib/static/images/transportplace.ico";
   static const String PARENT_TRANSPORT_PLACE = "lib/static/images/parenttransportplace.ico";
+  static const String BANNER_IMAGE_01 = "lib/static/images/banner01.jpeg";
+  static const String BANNER_IMAGE_02 = "lib/static/images/banner02.jpeg";
 
   static const IconData HOME_HOME = const IconData(58819, fontFamily: CustomIcons.FONT_FAMILY);
   static const IconData HOME_NOTICE = const IconData(0xe0b7, fontFamily: CustomIcons.FONT_FAMILY);

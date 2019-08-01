@@ -108,5 +108,16 @@ class VehicleDao{
       return new DataResult(res.data, false);
     }
   }
+  //车型枚举
+  static getVehicleModels() async {
+    var res = await HttpManager.netFetch(Address.vehicleModels(), null, null, null);
+    if(res != null && res.result){
+      print("vehicleModels: " + res.data.toString());
+      //LocalStorage.save(Config.DRIVERS, json.encode(res.data['result']['items']));
+      return new DataResult(res.data, true);
+    }else{
+      return new DataResult(res.data, false);
+    }
+  }
 
 }

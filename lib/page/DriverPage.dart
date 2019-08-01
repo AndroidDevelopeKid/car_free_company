@@ -5,7 +5,6 @@ import 'package:car_free_company/common/model/Driver.dart';
 import 'package:car_free_company/common/style/CustomStyle.dart';
 import 'package:car_free_company/widget/BaseDriverState.dart';
 import 'package:car_free_company/widget/CustomFlexButton.dart';
-import 'package:car_free_company/widget/CustomInputWidget.dart';
 import 'package:car_free_company/widget/CustomPullLoadWidget.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -31,6 +30,10 @@ class _DriverPage extends BaseDriverState<DriverPage> {
     }
 
   }
+  var _dateBegin = "";
+  var _dateEnd = "";
+  var _dateBeginNext = "";
+  var _dateEndNext = "";
 
   String _driverIdNumber = "";
   String _driverName = "";
@@ -82,6 +85,35 @@ class _DriverPage extends BaseDriverState<DriverPage> {
       return new DataResult("到底了", false);
     }
   }
+
+  _showDatePickerBegin() async {
+    DateTime _picker = await showDatePicker(
+      context: context,
+      initialDate: new DateTime.now(),
+      firstDate: new DateTime.now().subtract(new Duration(days: 3000)),
+      // 减 30 天
+      lastDate: new DateTime.now().add(new Duration(days: 30)), // 加 30 天
+    );
+    if (_picker == null) return;
+    setState(() {
+      _dateBegin = _picker.toString();
+    });
+  }
+
+  _showDatePickerEnd() async {
+    DateTime _picker = await showDatePicker(
+      context: context,
+      initialDate: new DateTime.now(),
+      firstDate: new DateTime.now().subtract(new Duration(days: 3000)),
+      // 减 30 天
+      lastDate: new DateTime.now().add(new Duration(days: 30)), // 加 30 天
+    );
+    if (_picker == null) return;
+    setState(() {
+      _dateEnd = _picker.toString();
+    });
+  }
+
   ///请求刷新
   @override
   requestRefresh() {
@@ -104,7 +136,7 @@ class _DriverPage extends BaseDriverState<DriverPage> {
   }
   ///tab切换防止页面重置
   @override
-  bool get wantKeepAlive => true;
+  bool get wantKeepAlive => false;
   @override
   bool get needHeader => false;
   @override
@@ -144,6 +176,43 @@ class _DriverPage extends BaseDriverState<DriverPage> {
       body: new Column(
         mainAxisAlignment: MainAxisAlignment.start,
         children: <Widget>[
+          new Padding(padding: EdgeInsets.all(2.0)),
+          new Row(
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            children: <Widget>[
+              Expanded(
+                child: new OutlineButton(
+                  child: new Padding(
+                    padding: new EdgeInsets.fromLTRB(10.0, 10.0, 10.0, 10.0),
+                    child: new Text(
+                      _dateBegin == ""
+                          ? DateTime.now().toString().substring(0,10)
+                          : _dateBegin.toString().substring(0, 10),
+                      style: CustomConstant.hintText,
+                    ),
+                  ),
+                  color: Color(CustomColors.white),
+                  borderSide: new BorderSide(color: Colors.grey),
+                  onPressed: () => _showDatePickerBegin(),
+                ),
+              ),
+              //new Text("-->"),
+              new Padding(padding: EdgeInsets.all(5.0)),
+              Expanded(
+                  child: new OutlineButton(
+                    child: new Padding(
+                      padding: new EdgeInsets.fromLTRB(10.0, 10.0, 10.0, 10.0),
+                      child: new Text(
+                          _dateEnd == ""
+                              ? DateTime.now().toString().substring(0,10)
+                              : _dateEnd.toString().substring(0, 10),
+                          style: CustomConstant.hintText),
+                    ),
+                    borderSide: new BorderSide(color: Colors.grey),
+                    onPressed: () => _showDatePickerEnd(),
+                  ))
+            ],
+          ),
           new Padding(padding: EdgeInsets.all(2.0)),
           new Row(
             mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -230,6 +299,8 @@ class _DriverPage extends BaseDriverState<DriverPage> {
             onPress:(){
               //获取到开始时间，结束时间，装地，卸地
               handleRefresh();
+              _dateBeginNext = _dateBegin;
+              _dateEndNext = _dateEnd;
               _driverIdNumberNext = _driverIdNumber;
               _driverNameNext = _driverName;
               _phoneNumberNext = _phoneNumber;

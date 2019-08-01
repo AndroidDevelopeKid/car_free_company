@@ -22,7 +22,7 @@ abstract class BaseDriverState<T extends StatefulWidget> extends State<T> with A
   }
 
   @override
-  bool get wantKeepAlive => true;
+  bool get wantKeepAlive => false;
 
   @override
   bool get isRefreshFirst => false;

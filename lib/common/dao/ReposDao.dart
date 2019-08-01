@@ -39,9 +39,7 @@ class ReposDao{
     }
   }
 
-  /**
-   * 版本更新
-   */
+  //***版本更新
   static getNewsVersion(context, showTip) async {
     //ios不检查更新
     if (Platform.isIOS) {

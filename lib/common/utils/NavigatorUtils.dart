@@ -1,10 +1,8 @@
 import 'package:car_free_company/common/model/TransportPlace.dart';
-import 'package:car_free_company/common/model/organ.dart';
 import 'package:car_free_company/page/DailySourcePlanPage.dart';
 import 'package:car_free_company/page/DriverPage.dart';
 import 'package:car_free_company/page/HistoryBillPage.dart';
 import 'package:car_free_company/page/HomePage.dart';
-import 'package:car_free_company/page/LoadPlacePickPage.dart';
 import 'package:car_free_company/page/LoginInfoPage.dart';
 import 'package:car_free_company/page/LoginPage.dart';
 import 'package:car_free_company/page/PersonalSettingsPage.dart';
@@ -62,8 +60,4 @@ class NavigatorUtils{
     }
   }
 
-  ///装地选择
-  static goLoadPlacePick(BuildContext context, List<TransportPlace> places){
-    Navigator.push(context, new CupertinoPageRoute(builder: (context) => new LoadPlacePickPage(places: places,)));
-  }
 }

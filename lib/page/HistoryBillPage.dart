@@ -319,7 +319,7 @@ class _HistoryBillPage extends BaseHistoryBillState<HistoryBillPage> {
                     padding: new EdgeInsets.fromLTRB(10.0, 10.0, 10.0, 10.0),
                     child: new Text(
                       _dateBegin == ""
-                          ? " 开始日期 "
+                          ? DateTime.now().toString().substring(0,10)
                           : _dateBegin.toString().substring(0, 10),
                       style: CustomConstant.hintText,
                     ),
@@ -337,7 +337,7 @@ class _HistoryBillPage extends BaseHistoryBillState<HistoryBillPage> {
                   padding: new EdgeInsets.fromLTRB(10.0, 10.0, 10.0, 10.0),
                   child: new Text(
                       _dateEnd == ""
-                          ? " 结束日期 "
+                          ? DateTime.now().toString().substring(0,10)
                           : _dateEnd.toString().substring(0, 10),
                       style: CustomConstant.hintText),
                 ),
