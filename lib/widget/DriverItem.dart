@@ -1,5 +1,6 @@
 import 'package:car_free_company/common/dao/DriverDao.dart';
 import 'package:car_free_company/common/model/Driver.dart';
+import 'package:car_free_company/common/model/DriverBrief.dart';
 import 'package:car_free_company/common/style/CustomStyle.dart';
 import 'package:car_free_company/common/utils/CommonUtils.dart';
 import 'package:car_free_company/widget/CustomCardItem.dart';
@@ -40,10 +41,10 @@ class DriverItem extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: <Widget>[
                     new Text(
-                      driverItemViewModel.personTypeText ?? "人员类型",
+                      driverItemViewModel.driverIDNumber ?? "身份证号",
                     ),
                     new Text(
-                      driverItemViewModel.driverPhone ?? "电话号码",
+                      driverItemViewModel.vehicleCode ?? "车辆编号",
                     ),
                   ],),
 //                new Row(
@@ -96,33 +97,16 @@ class DriverItemViewModel {
   String driverIDNumber;//身份证号
   String driverName;//姓名
   String driverPhone;//电话
-  String ouDisplayName;//所属物流公司 ??signingOrganization
-  String personTypeText;//人员类型
   String vehicleCode;//车辆编号
-  String certificateEndDate;//身份证到期日期
-  String personStateText;//人员状态
-  String buckupContactPerson;//备用联系人
-  String buckupContactPersonAddress;//备用联系地址
-  String buckupContactPersonPhone;//备用联系方式
-  String driverLicenseID;//驾驶证号
-  String dlCertificateEndDate;//驾驶证到期日期
+
   String id;
 
-  DriverItemViewModel.fromMap(Driver driver) {
-    driverIDNumber = driver.driverIDNumber;
-    driverName = driver.driverName;
-    driverPhone = driver.driverPhone;
-    ouDisplayName = driver.ouDisplayName;
-    personTypeText = driver.personTypeText;
-    vehicleCode = driver.vehicleCode;
-    certificateEndDate = driver.certificateEndDate;
-    personStateText = driver.personStateText;
-    buckupContactPerson = driver.buckupContactPerson;
-    buckupContactPersonAddress = driver.buckupContactPersonAddress;
-    buckupContactPersonPhone = driver.buckupContactPersonPhone;
-    driverLicenseID = driver.driverLicenseID;
-    dlCertificateEndDate = driver.dlCertificateEndDate;
-    id = driver.id;
+  DriverItemViewModel.fromMap(DriverBrief driverBrief) {
+    driverIDNumber = driverBrief.driverIDNumber;
+    driverName = driverBrief.driverName;
+    driverPhone = driverBrief.driverPhone;
+    vehicleCode = driverBrief.vehicleCode;
+    id = driverBrief.id;
   }
 
 

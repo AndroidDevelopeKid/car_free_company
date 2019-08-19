@@ -4,27 +4,26 @@ part 'User.g.dart';
 @JsonSerializable()
 class User{
   User(
-      this.name,
-      this.surname,
-      this.gender,
-      this.gengderText,
-      this.emailAddress,
       this.fullName,
-      this.id,
-      this.isActive,
+      this.organizationCode,
+      this.organizationDisplayName,
+      this.organizationFullName,
+      this.organizationParentId,
+      this.organizationType,
+      this.organizationTypeText,
       this.phoneNumber,
-      this.userName,
+      this.userName
+
       );
-  String name;
-  String surname;
-  String gender;
-  String gengderText;
   String userName;
   String fullName;
-  String emailAddress;
   String phoneNumber;
-  bool isActive;
-  int id;
+  String organizationCode;
+  String organizationDisplayName;
+  String organizationFullName;
+  int organizationParentId;
+  String organizationType;
+  String organizationTypeText;
 
   ///json转换为实体类
   factory User.fromJson(Map<String, dynamic> json) => _$UserFromJson(json);

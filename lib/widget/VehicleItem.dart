@@ -81,7 +81,7 @@ class VehicleItemViewModel {
     ownerName = vehicle.ownerName;
     ownerIDNumber = vehicle.ownerIDNumber;
     ownerPhone = vehicle.ownerPhone;
-    frameNumber = vehicle.frameNumber;
+    frameNumber = vehicle.trailerFrameNumber;
     engineNumber = vehicle.engineNumber;
     joiningDate = vehicle.joiningDate;
     id = vehicle.id;

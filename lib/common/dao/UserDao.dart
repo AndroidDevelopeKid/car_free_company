@@ -53,7 +53,7 @@ class UserDao{
   static getPersonalSettings(userId) async {
     var res;
     if(userId != null){
-      res = await HttpManager.netFetch(Address.getPersonalSettings() + "?Id=${userId}", null, null, null);
+      res = await HttpManager.netFetch(Address.getPersonalSettings(), null, null, null);// + "?Id=${userId}"
     }
     else{
       res = new DataResult("获取个人设置失败", false);

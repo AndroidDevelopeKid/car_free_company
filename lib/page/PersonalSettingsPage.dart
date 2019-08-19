@@ -28,11 +28,14 @@ class _PersonalSettingsPage extends State<PersonalSettingsPage>{
       var userId = await LocalStorage.get(Config.USER_ID);
       var resultDataUserInfo = await UserDao.getPersonalSettings(userId);
       if(resultDataUserInfo.data == null){
-        var dataNull = new User("无", "无", "无", "无", "无", "无", 0, false, "无", "无");
+        var dataNull = new User(null, null, null, null, null, null, null, null, null);
         return dataNull;
-      }else{
-        return resultDataUserInfo.data;
       }
+      if(resultDataUserInfo.data != null&&!resultDataUserInfo.result){
+        var dataNull = new User(null, null, null, null, null, null, null, null, null);
+        return dataNull;
+      }
+      return resultDataUserInfo.data;
 
     }else{
       User userInfoData = User.fromJson(json.decode(userInfoLS));
@@ -83,14 +86,32 @@ class _PersonalSettingsPage extends State<PersonalSettingsPage>{
                     ),
                     TableRow(
                         children: <Widget>[
-                          Text("电子邮件：", style: CustomConstant.normalTextBlack),
-                          Text(snapshot.data.emailAddress ?? "无", style: CustomConstant.normalTextBlack),
+                          Text("电话号码：", style: CustomConstant.normalTextBlack),
+                          Text(snapshot.data.phoneNumber ?? "无", style: CustomConstant.normalTextBlack),
                         ]
                     ),
                     TableRow(
                         children: <Widget>[
-                          Text("电话号码：", style: CustomConstant.normalTextBlack),
-                          Text(snapshot.data.phoneNumber ?? "无", style: CustomConstant.normalTextBlack),
+                          Text("所属组织机构编码：", style: CustomConstant.normalTextBlack),
+                          Text(snapshot.data.organizationCode ?? "无", style: CustomConstant.normalTextBlack),
+                        ]
+                    ),
+                    TableRow(
+                        children: <Widget>[
+                          Text("所属组织机构名称：", style: CustomConstant.normalTextBlack),
+                          Text(snapshot.data.organizationDisplayName ?? "无", style: CustomConstant.normalTextBlack),
+                        ]
+                    ),
+                    TableRow(
+                        children: <Widget>[
+                          Text("所属组织机构全称：", style: CustomConstant.normalTextBlack),
+                          Text(snapshot.data.organizationFullName ?? "无", style: CustomConstant.normalTextBlack),
+                        ]
+                    ),
+                    TableRow(
+                        children: <Widget>[
+                          Text("所属组织机构类型：", style: CustomConstant.normalTextBlack),
+                          Text(snapshot.data.organizationTypeText ?? "无", style: CustomConstant.normalTextBlack),
                         ]
                     ),
 

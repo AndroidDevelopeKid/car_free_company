@@ -1,9 +1,9 @@
 class Config{
   static const DEBUG = true;
 
-  static const PAGE_SIZE = 5;
+  static const PAGE_SIZE = 10;
   static const NOTICE_PAGE_SIZE = 10;
-  static const MAX_RESULT = 5;
+  static const MAX_RESULT = 10;
   static const ICON_SIZE = 60.0;
   static const ICON_RIGHT_PADDING = 35.0;
 
@@ -12,7 +12,7 @@ class Config{
 
   static const BEARER_KEY = "bearer";
 
-  static const TENANT = "3";
+  static const TENANT = "1";
 
   static const USER_NAME_KEY = "user-name";
   static const PW_KEY = "user-pw";

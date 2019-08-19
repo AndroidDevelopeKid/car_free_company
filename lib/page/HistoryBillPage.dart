@@ -34,7 +34,7 @@ class _HistoryBillPage extends BaseHistoryBillState<HistoryBillPage> {
 //  ];
   ///消息颜色
   Color planColor = const Color(CustomColors.subLightTextColor);
-  int skipCountGlobal = 5;
+  int skipCountGlobal = 10;
   int skipCountInit = 0;
 
   _refreshNotify() {
@@ -44,9 +44,10 @@ class _HistoryBillPage extends BaseHistoryBillState<HistoryBillPage> {
       });
     }
   }
+  var _isExpanded = false;
 
-  var _dateBegin = "";
-  var _dateEnd = "";
+  var _dateBegin = DateTime.now().toString().substring(0, 10);
+  var _dateEnd = DateTime.now().add(new Duration(days: 1)).toString().substring(0, 10);
 
   List<TransportPlace> items;
 
@@ -90,7 +91,7 @@ class _HistoryBillPage extends BaseHistoryBillState<HistoryBillPage> {
     );
     if (_picker == null) return;
     setState(() {
-      _dateBegin = _picker.toString();
+      _dateBegin = _picker.toString().substring(0, 10);
     });
   }
 
@@ -104,7 +105,7 @@ class _HistoryBillPage extends BaseHistoryBillState<HistoryBillPage> {
     );
     if (_picker == null) return;
     setState(() {
-      _dateEnd = _picker.toString();
+      _dateEnd = _picker.toString().substring(0, 10);
     });
   }
 
@@ -146,27 +147,6 @@ class _HistoryBillPage extends BaseHistoryBillState<HistoryBillPage> {
         }).showDialog(context);
   }
 
-  ///获取装卸地数据
-//  Future<List<TransportPlace>> _getTransportPlaceData() async {
-//    List<TransportPlace> placeList = new List();
-//    var places = await  LocalStorage.get(Config.TRANSPORT_PLACE);
-//
-//    //装卸地
-//    if(places != null && places.result){
-//      print("places: " + places.data.toString());
-//      var itemList = places.data["result"]["items"];
-//      print("plans's itemList: " + itemList.toString() + itemList.length.toString());
-//      print("plans itemList length: " + itemList.length.toString());
-//      for(int i = 0; i < itemList.length; i++){
-//        var text = itemList[i]["text"].toString();
-//        var value = itemList[i]["value"].toString();
-//        var id = itemList[i]["id"];
-//        var parentId = itemList[i]["parentId"];
-//        placeList.add(new TransportPlace(id, parentId, text, value));
-//      }
-//      return placeList;
-//    }
-//  }
   ///获取数据
   _getData(dateBegin, dateEnd, loadPlace, unloadPlace, vehicleCode,
       mainVehiclePlate, skipCount) async {
@@ -199,10 +179,14 @@ class _HistoryBillPage extends BaseHistoryBillState<HistoryBillPage> {
         var vehicleCode = itemList[i]["vehicleCode"].toString();
         var mainVehiclePlate = itemList[i]["mainVehiclePlate"].toString();
         var deliveryOrderCode = itemList[i]["deliveryOrderCode"].toString();
-        var deliveryOrderState = itemList[i]["deliveryOrderState"].toString();
+        var deliveryOrderState = itemList[i]["deliveryOrderState"];
+        var deliveryOrderStateText = itemList[i]["deliveryOrderStateText"];
         var generateDate = itemList[i]["generateDate"].toString();
+        var loadPlaceId = itemList[i]["loadPlaceId"];
         var loadPlaceName = itemList[i]["loadPlaceName"].toString();
+        var unloadPlaceId = itemList[i]["unloadPlaceId"];
         var unloadPlaceName = itemList[i]["unloadPlaceName"].toString();
+        var goodsId = itemList[i]["goodsId"];
         var goodsName = itemList[i]["goodsName"].toString();
         var outStockGenerateDate =
             itemList[i]["outStockGenerateDate"].toString();
@@ -211,22 +195,7 @@ class _HistoryBillPage extends BaseHistoryBillState<HistoryBillPage> {
         var skinbackDate = itemList[i]["skinbackDate"].toString();
         var inStockGrossWeigh = itemList[i]["inStockGrossWeigh"];
         var inStockNetWeigh = itemList[i]["inStockNetWeigh"];
-        historyBillList.add(new HistoryBill(
-            id,
-            unloadPlaceName,
-            skinbackDate,
-            outStockNetWeigh,
-            outStockGenerateDate,
-            loadPlaceName,
-            inStockNetWeigh,
-            inStockGrossWeigh,
-            goodsName,
-            deliveryOrderCode,
-            deliveryOrderState,
-            generateDate,
-            vehicleCode,
-            mainVehiclePlate,
-            weighDate));
+        historyBillList.add(new HistoryBill(id, unloadPlaceName, skinbackDate, outStockNetWeigh, outStockGenerateDate, loadPlaceName, inStockNetWeigh, inStockGrossWeigh, goodsName, deliveryOrderCode, deliveryOrderState, generateDate, vehicleCode, mainVehiclePlate, weighDate, unloadPlaceId, loadPlaceId, goodsId, deliveryOrderStateText));
       }
       return new DataResult(historyBillList, true);
     }
@@ -240,7 +209,7 @@ class _HistoryBillPage extends BaseHistoryBillState<HistoryBillPage> {
   requestRefresh() {
     // TODO: implement requestRefresh
     //getMessagePush();
-    skipCountGlobal = 5;
+    skipCountGlobal = 10;
     //print("parameters: " + skipCountInit.toString());
     return _getData(_dateBegin, _dateEnd, _loadPlaceId, _unloadPlaceId,
         _vehicleCode, _mainVehiclePlate, skipCountInit);
@@ -309,288 +278,295 @@ class _HistoryBillPage extends BaseHistoryBillState<HistoryBillPage> {
       body: new Column(
         mainAxisAlignment: MainAxisAlignment.start,
         children: <Widget>[
-          new Padding(padding: EdgeInsets.all(2.0)),
-          new Row(
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
-            children: <Widget>[
-              Expanded(
-                child: new OutlineButton(
-                  child: new Padding(
-                    padding: new EdgeInsets.fromLTRB(10.0, 10.0, 10.0, 10.0),
-                    child: new Text(
-                      _dateBegin == ""
-                          ? DateTime.now().toString().substring(0,10)
-                          : _dateBegin.toString().substring(0, 10),
-                      style: CustomConstant.hintText,
-                    ),
-                  ),
-                  color: Color(CustomColors.white),
-                  borderSide: new BorderSide(color: Colors.grey),
-                  onPressed: () => _showDatePickerBegin(),
-                ),
-              ),
-              //new Text("-->"),
-              new Padding(padding: EdgeInsets.all(5.0)),
-              Expanded(
-                  child: new OutlineButton(
-                child: new Padding(
-                  padding: new EdgeInsets.fromLTRB(10.0, 10.0, 10.0, 10.0),
-                  child: new Text(
-                      _dateEnd == ""
-                          ? DateTime.now().toString().substring(0,10)
-                          : _dateEnd.toString().substring(0, 10),
-                      style: CustomConstant.hintText),
-                ),
-                borderSide: new BorderSide(color: Colors.grey),
-                onPressed: () => _showDatePickerEnd(),
-              ))
-            ],
-          ),
-          new Padding(padding: EdgeInsets.all(2.0)),
-          new Row(
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
-            children: <Widget>[
-              Expanded(
-                child: new OutlineButton(
-                    child: new Padding(
-                      padding: new EdgeInsets.fromLTRB(10.0, 10.0, 10.0, 10.0),
-                      child: new Text(
-                        _loadPlace == "" ? " 装地 " : _loadPlace,
-                        style: CustomConstant.hintText,
-                      ),
-                    ),
-                    color: Color(CustomColors.white),
-                    borderSide: new BorderSide(color: Colors.grey),
-                    onPressed:
-                        //() => showLoadPlacePickerArray(context),
-//                      (){
-//                    NavigatorUtils.goLoadPlacePick(context);
-//                  }
+          new ExpansionPanelList(
+            children: <ExpansionPanel>[
+              ExpansionPanel(
+                headerBuilder: (context, isExpanded){
+                  return new Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: <Widget>[
+                      new Padding(padding: EdgeInsets.only(left: 10.0, right: 10.0, top: 5.0, bottom: 5.0),
+                          child: new OutlineButton(
+                            child: new Text("查询"),
+                            borderSide: new BorderSide(color: Colors.blue),
+                            //color: Colors.blueAccent,
+                            //text: '查询',
+                            onPressed: () {
+                              handleRefresh();
+                              _dateBeginNext = _dateBegin;
+                              _dateEndNext = _dateEnd;
+                              _loadPlaceNextId = _loadPlaceId;
+                              _unloadPlaceNextId = _unloadPlaceId;
+                              _vehicleCodeNext = _vehicleCode;
+                              _mainVehiclePlateNext = _mainVehiclePlate;
+                            },
+                          ),
+                        ),
 
-//                    (){
-//                      showDialog(
-//                          context: context,
-//                          barrierDismissible: false,
-//                          builder: (BuildContext context) {
-//                            return CustomPickDialog(
-//                              onChooseEvent:(){
-//
-//                              },
-//                                //title: '小哥哥小姐姐请选择',
-////                                onBoyChooseEvent: () {
-////                                  Navigator.pop(context);
-////                                },
-////                                onGirlChooseEvent: () {
-////                                  Navigator.pop(context);
-////                                }
-//                             );
-//                          });
-//                    }
-                        () {
-                      TransportPlaceDao.getTransportPlace()
-                          .then((futurePlaces) {
-                        List<TransportPlace> placeList = new List();
-                        //装卸地
-                        if (futurePlaces != null && futurePlaces.result) {
-                          print("places: " + futurePlaces.data.toString());
-                          var itemList = futurePlaces.data["result"]["items"];
-                          print("plans's itemList: " +
-                              itemList.toString() +
-                              itemList.length.toString());
-                          print("plans itemList length: " +
-                              itemList.length.toString());
-                          for (int i = 0; i < itemList.length; i++) {
-                            var text = itemList[i]["text"].toString();
-                            var value = itemList[i]["value"].toString();
-                            var id = itemList[i]["id"];
-                            var parentId = itemList[i]["parentId"];
-                            placeList.add(
-                                new TransportPlace(id, parentId, text, value));
-                          }
-                        }
-                        items = placeList;
+                      new Center(child: new Text("点击展开查询条件"),)
+                    ],
 
-                        _key = "";
-                        _delOff = true;
-                        var currentParentId = -1;
-                        List<TransportPlace> firstLevel = new List();
-                        for (int i = 0; i < items.length; i++) {
-                          if (items[i].parentId == null) {
-                            firstLevel.add(items[i]);
-                          }
-                        }
-                        var itemstemp = firstLevel;
-                        showDialog(
-                            context: context,
-                            barrierDismissible: false,
-                            builder: (BuildContext context) {
-                              return new AlertDialog(
-                                title: new Text("地址选择"),
-                                content: new StatefulBuilder(
-                                    builder: (context, StateSetter setState) {
-                                  return new Column(children: <Widget>[
-                                    new TextField(
-                                        cursorColor: Colors.blue,
-                                        // 光标颜色
-                                        // 默认设置
-                                        decoration: InputDecoration(
-                                            contentPadding:
-                                                const EdgeInsets.symmetric(
-                                                    vertical: 10.0),
-                                            border: InputBorder.none,
-                                            icon: Icon(Icons.search),
-                                            suffixIcon: GestureDetector(
-                                              child: Offstage(
-                                                offstage: _delOff,
-                                                child: Icon(
-                                                  Icons.highlight_off,
-                                                  color: Colors.blue,
-                                                ),
-                                              ),
-                                              onTap: () {
-                                                setState(() {
-                                                  _key = "";
-                                                  itemstemp = search(_key);
-                                                });
-                                              },
-                                            ),
-                                            hintText: "搜索 装地",
-                                            hintStyle: new TextStyle(
-                                                fontSize: 16,
-                                                color: Color.fromARGB(
-                                                    50, 0, 0, 0))),
-                                        controller:
-                                            TextEditingController.fromValue(
-                                          TextEditingValue(
-                                            text: _key,
-                                            selection:
-                                                TextSelection.fromPosition(
-                                              TextPosition(
-                                                offset: _key == null
-                                                    ? 0
-                                                    : _key.length, //保证光标在最后
-                                              ),
-                                            ),
-                                          ),
-                                        ),
-                                        style: new TextStyle(
-                                            fontSize: 16, color: Colors.black),
-                                        onChanged: (str) {
-                                          setState(() {
-                                            itemstemp = search(str);
-                                          });
-                                        }),
-                                    Expanded(
-                                      child: new Container(
-                                        width:
-                                            MediaQuery.of(context).size.width *
-                                                0.9,
-                                        height:
-                                            MediaQuery.of(context).size.height *
-                                                0.9,
-                                        child: new ListView.builder(
-                                            shrinkWrap: true,
-                                            itemCount: itemstemp.length,
-                                            itemBuilder: (context, index) {
-                                              return new OutlineButton(
-                                                  borderSide: new BorderSide(
-                                                      color: Colors.grey),
-                                                  child: Text(
-                                                    '${itemstemp[index].text}',
-                                                    style: CustomConstant
-                                                        .placeTextBlack,
+                  );
+                },
+                body: new Column(
+                  children: <Widget>[
+                    new Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceAround,
+                      children: <Widget>[
+                        Expanded(
+                          child: new OutlineButton(
+                            child: new Padding(
+                              padding: new EdgeInsets.fromLTRB(10.0, 10.0, 10.0, 10.0),
+                              child: new Text(
+                                _dateBegin == ""
+                                    ? DateTime.now().toString().substring(0,10)
+                                    : _dateBegin.toString().substring(0, 10),
+                                style: CustomConstant.hintText,
+                              ),
+                            ),
+                            color: Color(CustomColors.white),
+                            borderSide: new BorderSide(color: Colors.grey),
+                            onPressed: () => _showDatePickerBegin(),
+                          ),
+                        ),
+                        //new Text("-->"),
+                        new Padding(padding: EdgeInsets.all(5.0)),
+                        Expanded(
+                            child: new OutlineButton(
+                              child: new Padding(
+                                padding: new EdgeInsets.fromLTRB(10.0, 10.0, 10.0, 10.0),
+                                child: new Text(
+                                    _dateEnd == ""
+                                        ? DateTime.now().toString().substring(0,10)
+                                        : _dateEnd.toString().substring(0, 10),
+                                    style: CustomConstant.hintText),
+                              ),
+                              borderSide: new BorderSide(color: Colors.grey),
+                              onPressed: () => _showDatePickerEnd(),
+                            ))
+                      ],
+                    ),
+                    //new Padding(padding: EdgeInsets.all(2.0)),
+                    new Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceAround,
+                      children: <Widget>[
+                        Expanded(
+                          child: new OutlineButton(
+                              child: new Padding(
+                                padding: new EdgeInsets.fromLTRB(10.0, 10.0, 10.0, 10.0),
+                                child: new Text(
+                                  _loadPlace == "" ? " 装地 " : _loadPlace,
+                                  style: CustomConstant.hintText,
+                                ),
+                              ),
+                              color: Color(CustomColors.white),
+                              borderSide: new BorderSide(color: Colors.grey),
+                              onPressed:
+                                  () {
+                                TransportPlaceDao.getTransportPlace()
+                                    .then((futurePlaces) {
+                                  List<TransportPlace> placeList = new List();
+                                  //装卸地
+                                  if (futurePlaces != null && futurePlaces.result) {
+                                    print("places: " + futurePlaces.data.toString());
+                                    var itemList = futurePlaces.data["result"]["items"];
+                                    print("plans's itemList: " +
+                                        itemList.toString() +
+                                        itemList.length.toString());
+                                    print("plans itemList length: " +
+                                        itemList.length.toString());
+                                    for (int i = 0; i < itemList.length; i++) {
+                                      var text = itemList[i]["text"].toString();
+                                      var value = itemList[i]["value"].toString();
+                                      var id = itemList[i]["id"];
+                                      var parentId = itemList[i]["parentId"];
+                                      placeList.add(
+                                          new TransportPlace(id, parentId, text, value));
+                                    }
+                                  }
+                                  items = placeList;
+
+                                  _key = "";
+                                  _delOff = true;
+                                  var currentParentId = -1;
+                                  List<TransportPlace> firstLevel = new List();
+                                  for (int i = 0; i < items.length; i++) {
+                                    if (items[i].parentId == null) {
+                                      firstLevel.add(items[i]);
+                                    }
+                                  }
+                                  var itemstemp = firstLevel;
+                                  showDialog(
+                                      context: context,
+                                      barrierDismissible: false,
+                                      builder: (BuildContext context) {
+                                        return new AlertDialog(
+                                          title: new Text("地址选择"),
+                                          content: new StatefulBuilder(
+                                              builder: (context, StateSetter setState) {
+                                                return new Column(children: <Widget>[
+                                                  new TextField(
+                                                      cursorColor: Colors.blue,
+                                                      // 光标颜色
+                                                      // 默认设置
+                                                      decoration: InputDecoration(
+                                                          contentPadding:
+                                                          const EdgeInsets.symmetric(
+                                                              vertical: 10.0),
+                                                          border: InputBorder.none,
+                                                          icon: Icon(Icons.search),
+                                                          suffixIcon: GestureDetector(
+                                                            child: Offstage(
+                                                              offstage: _delOff,
+                                                              child: Icon(
+                                                                Icons.highlight_off,
+                                                                color: Colors.blue,
+                                                              ),
+                                                            ),
+                                                            onTap: () {
+                                                              setState(() {
+                                                                _key = "";
+                                                                itemstemp = search(_key);
+                                                              });
+                                                            },
+                                                          ),
+                                                          hintText: "搜索 装地",
+                                                          hintStyle: new TextStyle(
+                                                              fontSize: 16,
+                                                              color: Color.fromARGB(
+                                                                  50, 0, 0, 0))),
+                                                      controller:
+                                                      TextEditingController.fromValue(
+                                                        TextEditingValue(
+                                                          text: _key,
+                                                          selection:
+                                                          TextSelection.fromPosition(
+                                                            TextPosition(
+                                                              offset: _key == null
+                                                                  ? 0
+                                                                  : _key.length, //保证光标在最后
+                                                            ),
+                                                          ),
+                                                        ),
+                                                      ),
+                                                      style: new TextStyle(
+                                                          fontSize: 16, color: Colors.black),
+                                                      onChanged: (str) {
+                                                        setState(() {
+                                                          itemstemp = search(str);
+                                                        });
+                                                      }),
+                                                  Expanded(
+                                                    child: new Container(
+                                                      width:
+                                                      MediaQuery.of(context).size.width *
+                                                          0.9,
+                                                      height:
+                                                      MediaQuery.of(context).size.height *
+                                                          0.9,
+                                                      child: new ListView.builder(
+                                                          shrinkWrap: true,
+                                                          itemCount: itemstemp.length,
+                                                          itemBuilder: (context, index) {
+                                                            return new OutlineButton(
+                                                                borderSide: new BorderSide(
+                                                                    color: Colors.grey),
+                                                                child: Text(
+                                                                  '${itemstemp[index].text}',
+                                                                  style: CustomConstant
+                                                                      .placeTextBlack,
+                                                                ),
+                                                                onPressed: () {
+                                                                  List<TransportPlace>
+                                                                  subLevel = new List();
+                                                                  for (int i = 0;
+                                                                  i < items.length;
+                                                                  i++) {
+                                                                    if (itemstemp[index].id ==
+                                                                        items[i].parentId) {
+                                                                      subLevel.add(items[i]);
+                                                                    }
+                                                                  }
+                                                                  if (subLevel.length != 0) {
+                                                                    currentParentId =
+                                                                        subLevel[0].parentId;
+                                                                    setState(() {
+                                                                      itemstemp = subLevel;
+                                                                    });
+                                                                  } else {
+                                                                    selected =
+                                                                        itemstemp[index]
+                                                                            .text
+                                                                            .toString();
+                                                                    selectedId =
+                                                                        itemstemp[index]
+                                                                            .id
+                                                                            .toString();
+                                                                    currentParentId =
+                                                                        itemstemp[index]
+                                                                            .parentId;
+                                                                    var callback;
+                                                                    callback = [
+                                                                      selected,
+                                                                      selectedId
+                                                                    ];
+                                                                    Navigator.of(context)
+                                                                        .pop(callback);
+                                                                  }
+                                                                });
+                                                          }),
+                                                    ),
                                                   ),
-                                                  onPressed: () {
-                                                    List<TransportPlace>
-                                                        subLevel = new List();
-                                                    for (int i = 0;
-                                                        i < items.length;
-                                                        i++) {
-                                                      if (itemstemp[index].id ==
-                                                          items[i].parentId) {
-                                                        subLevel.add(items[i]);
-                                                      }
-                                                    }
-                                                    if (subLevel.length != 0) {
-                                                      currentParentId =
-                                                          subLevel[0].parentId;
-                                                      setState(() {
-                                                        itemstemp = subLevel;
-                                                      });
-                                                    } else {
-                                                      selected =
-                                                          itemstemp[index]
-                                                              .text
-                                                              .toString();
-                                                      selectedId =
-                                                          itemstemp[index]
-                                                              .id
-                                                              .toString();
-                                                      currentParentId =
-                                                          itemstemp[index]
-                                                              .parentId;
-                                                      var callback;
-                                                      callback = [
-                                                        selected,
-                                                        selectedId
-                                                      ];
-                                                      Navigator.of(context)
-                                                          .pop(callback);
-                                                    }
-                                                  });
-                                            }),
-                                      ),
-                                    ),
-                                    new Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceAround,
-                                      children: <Widget>[
-                                        new FlatButton(
-                                          child: Text(
-                                            "上一级",
-                                            style:
-                                                TextStyle(color: Colors.blue),
-                                          ),
-                                          onPressed: () {
-                                            //获取当前选中id，更新列表为选中id上级
-                                            List<TransportPlace> highLevel =
-                                                new List();
-                                            var highParentId;
-                                            for (int i = 0;
-                                                i < items.length;
-                                                i++) {
-                                              if (items[i].id ==
-                                                  currentParentId) {
-                                                highParentId =
-                                                    items[i].parentId;
-                                              }
-                                            }
-                                            for (int i = 0;
-                                                i < items.length;
-                                                i++) {
-                                              if (items[i].parentId ==
-                                                  highParentId) {
-                                                highLevel.add(items[i]);
-                                              }
-                                            }
-                                            if (highLevel.length != 0) {
-                                              currentParentId =
-                                                  highLevel[0].parentId;
-                                              setState(() {
-                                                itemstemp = highLevel;
-                                              });
-                                            } else {}
-                                          },
-                                        ),
-                                        new FlatButton(
-                                          child: Text(
-                                            "取消",
-                                            style:
-                                                TextStyle(color: Colors.blue),
-                                          ),
-                                          onPressed: () => Navigator.of(context)
-                                              .pop(["", ""]),
-                                        ),
+                                                  new Row(
+                                                    mainAxisAlignment:
+                                                    MainAxisAlignment.spaceAround,
+                                                    children: <Widget>[
+                                                      new FlatButton(
+                                                        child: Text(
+                                                          "上一级",
+                                                          style:
+                                                          TextStyle(color: Colors.blue),
+                                                        ),
+                                                        onPressed: () {
+                                                          //获取当前选中id，更新列表为选中id上级
+                                                          List<TransportPlace> highLevel =
+                                                          new List();
+                                                          var highParentId;
+                                                          for (int i = 0;
+                                                          i < items.length;
+                                                          i++) {
+                                                            if (items[i].id ==
+                                                                currentParentId) {
+                                                              highParentId =
+                                                                  items[i].parentId;
+                                                            }
+                                                          }
+                                                          for (int i = 0;
+                                                          i < items.length;
+                                                          i++) {
+                                                            if (items[i].parentId ==
+                                                                highParentId) {
+                                                              highLevel.add(items[i]);
+                                                            }
+                                                          }
+                                                          if (highLevel.length != 0) {
+                                                            currentParentId =
+                                                                highLevel[0].parentId;
+                                                            setState(() {
+                                                              itemstemp = highLevel;
+                                                            });
+                                                          } else {}
+                                                        },
+                                                      ),
+                                                      new FlatButton(
+                                                        child: Text(
+                                                          "取消",
+                                                          style:
+                                                          TextStyle(color: Colors.blue),
+                                                        ),
+                                                        onPressed: () => Navigator.of(context)
+                                                            .pop(["", ""]),
+                                                      ),
 //                                          new FlatButton(
 //                                            child: Text(
 //                                              "确定",
@@ -602,242 +578,242 @@ class _HistoryBillPage extends BaseHistoryBillState<HistoryBillPage> {
 //                                                  selected);
 //                                            },
 //                                          ),
-                                      ],
-                                    ),
-                                  ]);
-                                }),
-                              );
-                            }).then((value) {
-                          setState(() {
-                            _loadPlace = value[0];
-                            if (value[1] != "") {
-                              _loadPlaceId = int.parse(value[1]);
-                            } else {
-                              _loadPlaceId = null;
-                            }
-                          });
-                        });
-                      });
-                    }),
-              ),
-              new Padding(padding: EdgeInsets.all(5.0)),
-              Expanded(
-                child: new OutlineButton(
-                    child: new Padding(
-                      padding: new EdgeInsets.fromLTRB(10.0, 10.0, 10.0, 10.0),
-                      child: new Text(
-                        _unloadPlace == "" ? " 卸地 " : _unloadPlace,
-                        style: CustomConstant.hintText,
-                      ),
-                    ),
-                    color: Color(CustomColors.white),
-                    borderSide: new BorderSide(color: Colors.grey),
-                    onPressed: //() => showUnloadPlacePickerArray(context),
-                        () {
-                      TransportPlaceDao.getTransportPlace()
-                          .then((futurePlaces) {
-                        List<TransportPlace> placeList = new List();
-                        //装卸地
-                        if (futurePlaces != null && futurePlaces.result) {
-                          print("places: " + futurePlaces.data.toString());
-                          var itemList = futurePlaces.data["result"]["items"];
-                          print("plans's itemList: " +
-                              itemList.toString() +
-                              itemList.length.toString());
-                          print("plans itemList length: " +
-                              itemList.length.toString());
-                          for (int i = 0; i < itemList.length; i++) {
-                            var text = itemList[i]["text"].toString();
-                            var value = itemList[i]["value"].toString();
-                            var id = itemList[i]["id"];
-                            var parentId = itemList[i]["parentId"];
-                            placeList.add(
-                                new TransportPlace(id, parentId, text, value));
-                          }
-                        }
-                        items = placeList;
-
-                        _key = "";
-                        _delOff = true;
-                        var currentParentId = -1;
-                        List<TransportPlace> firstLevel = new List();
-                        for (int i = 0; i < items.length; i++) {
-                          if (items[i].parentId == null) {
-                            firstLevel.add(items[i]);
-                          }
-                        }
-                        var itemstemp = firstLevel;
-                        showDialog(
-                            context: context,
-                            barrierDismissible: false,
-                            builder: (BuildContext context) {
-                              return new AlertDialog(
-                                title: new Text("地址选择"),
-                                content: new StatefulBuilder(
-                                    builder: (context, StateSetter setState) {
-                                  return new Column(children: <Widget>[
-                                    new TextField(
-                                        cursorColor: Colors.blue,
-                                        // 光标颜色
-                                        // 默认设置
-                                        decoration: InputDecoration(
-                                            contentPadding:
-                                                const EdgeInsets.symmetric(
-                                                    vertical: 10.0),
-                                            border: InputBorder.none,
-                                            icon: Icon(Icons.search),
-                                            suffixIcon: GestureDetector(
-                                              child: Offstage(
-                                                offstage: _delOff,
-                                                child: Icon(
-                                                  Icons.highlight_off,
-                                                  color: Colors.blue,
-                                                ),
-                                              ),
-                                              onTap: () {
-                                                setState(() {
-                                                  _key = "";
-                                                  itemstemp = search(_key);
-                                                });
-                                              },
-                                            ),
-                                            hintText: "搜索 卸地",
-                                            hintStyle: new TextStyle(
-                                                fontSize: 16,
-                                                color: Color.fromARGB(
-                                                    50, 0, 0, 0))),
-                                        controller:
-                                            TextEditingController.fromValue(
-                                          TextEditingValue(
-                                            text: _key,
-                                            selection:
-                                                TextSelection.fromPosition(
-                                              TextPosition(
-                                                offset: _key == null
-                                                    ? 0
-                                                    : _key.length, //保证光标在最后
-                                              ),
-                                            ),
-                                          ),
-                                        ),
-                                        style: new TextStyle(
-                                            fontSize: 16, color: Colors.black),
-                                        onChanged: (str) {
-                                          setState(() {
-                                            itemstemp = search(str);
-                                          });
-                                        }),
-                                    Expanded(
-                                      child: new Container(
-                                        width:
-                                            MediaQuery.of(context).size.width *
-                                                0.9,
-                                        height:
-                                            MediaQuery.of(context).size.height *
-                                                0.9,
-                                        child: new ListView.builder(
-                                            shrinkWrap: true,
-                                            itemCount: itemstemp.length,
-                                            itemBuilder: (context, index) {
-                                              return new OutlineButton(
-                                                  borderSide: new BorderSide(
-                                                      color: Colors.grey),
-                                                  child: Text(
-                                                    '${itemstemp[index].text}',
-                                                    style: CustomConstant
-                                                        .placeTextBlack,
+                                                    ],
                                                   ),
-                                                  onPressed: () {
-                                                    List<TransportPlace>
-                                                        subLevel = new List();
-                                                    for (int i = 0;
-                                                        i < items.length;
-                                                        i++) {
-                                                      if (itemstemp[index].id ==
-                                                          items[i].parentId) {
-                                                        subLevel.add(items[i]);
-                                                      }
-                                                    }
-                                                    if (subLevel.length != 0) {
-                                                      currentParentId =
-                                                          subLevel[0].parentId;
-                                                      setState(() {
-                                                        itemstemp = subLevel;
-                                                      });
-                                                    } else {
-                                                      selected =
-                                                          itemstemp[index]
-                                                              .text
-                                                              .toString();
-                                                      selectedId =
-                                                          itemstemp[index]
-                                                              .id
-                                                              .toString();
-                                                      currentParentId =
-                                                          itemstemp[index]
-                                                              .parentId;
-                                                      var callback;
-                                                      callback = [
-                                                        selected,
-                                                        selectedId
-                                                      ];
-                                                      Navigator.of(context)
-                                                          .pop(callback);
-                                                    }
-                                                  });
-                                            }),
-                                      ),
-                                    ),
-                                    new Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceAround,
-                                      children: <Widget>[
-                                        new FlatButton(
-                                          child: Text(
-                                            "上一级",
-                                            style:
-                                                TextStyle(color: Colors.blue),
-                                          ),
-                                          onPressed: () {
-                                            //获取当前选中id，更新列表为选中id上级
-                                            List<TransportPlace> highLevel =
-                                                new List();
-                                            var highParentId;
-                                            for (int i = 0;
-                                                i < items.length;
-                                                i++) {
-                                              if (items[i].id ==
-                                                  currentParentId) {
-                                                highParentId =
-                                                    items[i].parentId;
-                                              }
-                                            }
-                                            for (int i = 0;
-                                                i < items.length;
-                                                i++) {
-                                              if (items[i].parentId ==
-                                                  highParentId) {
-                                                highLevel.add(items[i]);
-                                              }
-                                            }
-                                            if (highLevel.length != 0) {
-                                              currentParentId =
-                                                  highLevel[0].parentId;
-                                              setState(() {
-                                                itemstemp = highLevel;
-                                              });
-                                            } else {}
-                                          },
-                                        ),
-                                        new FlatButton(
-                                          child: Text(
-                                            "取消",
-                                            style:
-                                                TextStyle(color: Colors.blue),
-                                          ),
-                                          onPressed: () => Navigator.of(context)
-                                              .pop(["", ""]),
-                                        ),
+                                                ]);
+                                              }),
+                                        );
+                                      }).then((value) {
+                                    setState(() {
+                                      _loadPlace = value[0];
+                                      if (value[1] != "") {
+                                        _loadPlaceId = int.parse(value[1]);
+                                      } else {
+                                        _loadPlaceId = null;
+                                      }
+                                    });
+                                  });
+                                });
+                              }),
+                        ),
+                        new Padding(padding: EdgeInsets.all(5.0)),
+                        Expanded(
+                          child: new OutlineButton(
+                              child: new Padding(
+                                padding: new EdgeInsets.fromLTRB(10.0, 10.0, 10.0, 10.0),
+                                child: new Text(
+                                  _unloadPlace == "" ? " 卸地 " : _unloadPlace,
+                                  style: CustomConstant.hintText,
+                                ),
+                              ),
+                              color: Color(CustomColors.white),
+                              borderSide: new BorderSide(color: Colors.grey),
+                              onPressed: //() => showUnloadPlacePickerArray(context),
+                                  () {
+                                TransportPlaceDao.getTransportPlace()
+                                    .then((futurePlaces) {
+                                  List<TransportPlace> placeList = new List();
+                                  //装卸地
+                                  if (futurePlaces != null && futurePlaces.result) {
+                                    print("places: " + futurePlaces.data.toString());
+                                    var itemList = futurePlaces.data["result"]["items"];
+                                    print("plans's itemList: " +
+                                        itemList.toString() +
+                                        itemList.length.toString());
+                                    print("plans itemList length: " +
+                                        itemList.length.toString());
+                                    for (int i = 0; i < itemList.length; i++) {
+                                      var text = itemList[i]["text"].toString();
+                                      var value = itemList[i]["value"].toString();
+                                      var id = itemList[i]["id"];
+                                      var parentId = itemList[i]["parentId"];
+                                      placeList.add(
+                                          new TransportPlace(id, parentId, text, value));
+                                    }
+                                  }
+                                  items = placeList;
+
+                                  _key = "";
+                                  _delOff = true;
+                                  var currentParentId = -1;
+                                  List<TransportPlace> firstLevel = new List();
+                                  for (int i = 0; i < items.length; i++) {
+                                    if (items[i].parentId == null) {
+                                      firstLevel.add(items[i]);
+                                    }
+                                  }
+                                  var itemstemp = firstLevel;
+                                  showDialog(
+                                      context: context,
+                                      barrierDismissible: false,
+                                      builder: (BuildContext context) {
+                                        return new AlertDialog(
+                                          title: new Text("地址选择"),
+                                          content: new StatefulBuilder(
+                                              builder: (context, StateSetter setState) {
+                                                return new Column(children: <Widget>[
+                                                  new TextField(
+                                                      cursorColor: Colors.blue,
+                                                      // 光标颜色
+                                                      // 默认设置
+                                                      decoration: InputDecoration(
+                                                          contentPadding:
+                                                          const EdgeInsets.symmetric(
+                                                              vertical: 10.0),
+                                                          border: InputBorder.none,
+                                                          icon: Icon(Icons.search),
+                                                          suffixIcon: GestureDetector(
+                                                            child: Offstage(
+                                                              offstage: _delOff,
+                                                              child: Icon(
+                                                                Icons.highlight_off,
+                                                                color: Colors.blue,
+                                                              ),
+                                                            ),
+                                                            onTap: () {
+                                                              setState(() {
+                                                                _key = "";
+                                                                itemstemp = search(_key);
+                                                              });
+                                                            },
+                                                          ),
+                                                          hintText: "搜索 卸地",
+                                                          hintStyle: new TextStyle(
+                                                              fontSize: 16,
+                                                              color: Color.fromARGB(
+                                                                  50, 0, 0, 0))),
+                                                      controller:
+                                                      TextEditingController.fromValue(
+                                                        TextEditingValue(
+                                                          text: _key,
+                                                          selection:
+                                                          TextSelection.fromPosition(
+                                                            TextPosition(
+                                                              offset: _key == null
+                                                                  ? 0
+                                                                  : _key.length, //保证光标在最后
+                                                            ),
+                                                          ),
+                                                        ),
+                                                      ),
+                                                      style: new TextStyle(
+                                                          fontSize: 16, color: Colors.black),
+                                                      onChanged: (str) {
+                                                        setState(() {
+                                                          itemstemp = search(str);
+                                                        });
+                                                      }),
+                                                  Expanded(
+                                                    child: new Container(
+                                                      width:
+                                                      MediaQuery.of(context).size.width *
+                                                          0.9,
+                                                      height:
+                                                      MediaQuery.of(context).size.height *
+                                                          0.9,
+                                                      child: new ListView.builder(
+                                                          shrinkWrap: true,
+                                                          itemCount: itemstemp.length,
+                                                          itemBuilder: (context, index) {
+                                                            return new OutlineButton(
+                                                                borderSide: new BorderSide(
+                                                                    color: Colors.grey),
+                                                                child: Text(
+                                                                  '${itemstemp[index].text}',
+                                                                  style: CustomConstant
+                                                                      .placeTextBlack,
+                                                                ),
+                                                                onPressed: () {
+                                                                  List<TransportPlace>
+                                                                  subLevel = new List();
+                                                                  for (int i = 0;
+                                                                  i < items.length;
+                                                                  i++) {
+                                                                    if (itemstemp[index].id ==
+                                                                        items[i].parentId) {
+                                                                      subLevel.add(items[i]);
+                                                                    }
+                                                                  }
+                                                                  if (subLevel.length != 0) {
+                                                                    currentParentId =
+                                                                        subLevel[0].parentId;
+                                                                    setState(() {
+                                                                      itemstemp = subLevel;
+                                                                    });
+                                                                  } else {
+                                                                    selected =
+                                                                        itemstemp[index]
+                                                                            .text
+                                                                            .toString();
+                                                                    selectedId =
+                                                                        itemstemp[index]
+                                                                            .id
+                                                                            .toString();
+                                                                    currentParentId =
+                                                                        itemstemp[index]
+                                                                            .parentId;
+                                                                    var callback;
+                                                                    callback = [
+                                                                      selected,
+                                                                      selectedId
+                                                                    ];
+                                                                    Navigator.of(context)
+                                                                        .pop(callback);
+                                                                  }
+                                                                });
+                                                          }),
+                                                    ),
+                                                  ),
+                                                  new Row(
+                                                    mainAxisAlignment:
+                                                    MainAxisAlignment.spaceAround,
+                                                    children: <Widget>[
+                                                      new FlatButton(
+                                                        child: Text(
+                                                          "上一级",
+                                                          style:
+                                                          TextStyle(color: Colors.blue),
+                                                        ),
+                                                        onPressed: () {
+                                                          //获取当前选中id，更新列表为选中id上级
+                                                          List<TransportPlace> highLevel =
+                                                          new List();
+                                                          var highParentId;
+                                                          for (int i = 0;
+                                                          i < items.length;
+                                                          i++) {
+                                                            if (items[i].id ==
+                                                                currentParentId) {
+                                                              highParentId =
+                                                                  items[i].parentId;
+                                                            }
+                                                          }
+                                                          for (int i = 0;
+                                                          i < items.length;
+                                                          i++) {
+                                                            if (items[i].parentId ==
+                                                                highParentId) {
+                                                              highLevel.add(items[i]);
+                                                            }
+                                                          }
+                                                          if (highLevel.length != 0) {
+                                                            currentParentId =
+                                                                highLevel[0].parentId;
+                                                            setState(() {
+                                                              itemstemp = highLevel;
+                                                            });
+                                                          } else {}
+                                                        },
+                                                      ),
+                                                      new FlatButton(
+                                                        child: Text(
+                                                          "取消",
+                                                          style:
+                                                          TextStyle(color: Colors.blue),
+                                                        ),
+                                                        onPressed: () => Navigator.of(context)
+                                                            .pop(["", ""]),
+                                                      ),
 //                                          new FlatButton(
 //                                            child: Text(
 //                                              "确定",
@@ -849,81 +825,84 @@ class _HistoryBillPage extends BaseHistoryBillState<HistoryBillPage> {
 //                                                  selected);
 //                                            },
 //                                          ),
-                                      ],
-                                    ),
-                                  ]);
-                                }),
-                              );
-                            }).then((value) {
-                          setState(() {
-                            _unloadPlace = value[0];
-                            if (value[1] != "") {
-                              _unloadPlaceId = int.parse(value[1]);
-                            } else {
-                              _unloadPlaceId = null;
-                            }
-                          });
-                        });
-                      });
-                    }),
-              ),
-            ],
-          ),
-          new Padding(padding: EdgeInsets.all(2.0)),
-          new Row(
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
-            children: <Widget>[
-              Expanded(
-                child: new TextField(
-                  textAlign: TextAlign.center,
-                  onChanged: (String value) {
-                    _mainVehiclePlate = value;
-                  },
-                  controller: plateNumberController,
-                  decoration: InputDecoration(
-                      hintText: '车牌号',
-                      contentPadding: EdgeInsets.all(10.0),
-                      border: OutlineInputBorder(
-                        borderSide:
-                            BorderSide(color: Theme.of(context).primaryColor),
-                      )),
+                                                    ],
+                                                  ),
+                                                ]);
+                                              }),
+                                        );
+                                      }).then((value) {
+                                    setState(() {
+                                      _unloadPlace = value[0];
+                                      if (value[1] != "") {
+                                        _unloadPlaceId = int.parse(value[1]);
+                                      } else {
+                                        _unloadPlaceId = null;
+                                      }
+                                    });
+                                  });
+                                });
+                              }),
+                        ),
+                      ],
+                    ),
+                    new Padding(padding: EdgeInsets.all(2.0)),
+                    new Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceAround,
+                      children: <Widget>[
+                        Expanded(
+                          child: new TextField(
+                            textAlign: TextAlign.center,
+                            onChanged: (String value) {
+                              _mainVehiclePlate = value;
+                            },
+                            controller: plateNumberController,
+                            decoration: InputDecoration(
+                                hintText: '车牌号',
+                                contentPadding: EdgeInsets.all(8.0),
+                                border: OutlineInputBorder(
+                                  borderSide:
+                                  BorderSide(color: Theme.of(context).primaryColor),
+                                )),
+                          ),
+                          //buildTextField(_mainVehiclePlate, '车牌号', plateNumberController)
+                        ),
+                        new Padding(padding: EdgeInsets.all(5.0)),
+                        Expanded(
+                          child: new TextField(
+                            textAlign: TextAlign.center,
+                            onChanged: (String value) {
+                              _vehicleCode = value;
+                            },
+                            controller: vehicleCodeController,
+                            decoration: InputDecoration(
+                                hintText: '车辆编号',
+                                contentPadding: EdgeInsets.all(8.0),
+                                border: OutlineInputBorder(
+                                  borderSide:
+                                  BorderSide(color: Theme.of(context).primaryColor),
+                                )),
+                          ),
+                          //buildTextField(_vehicleCode, '车辆编号', vehicleCodeController),
+                        ),
+                      ],
+                    ),
+                    new Padding(padding: EdgeInsets.all(5.0)),
+
+                  ],
                 ),
-                //buildTextField(_mainVehiclePlate, '车牌号', plateNumberController)
-              ),
-              new Padding(padding: EdgeInsets.all(5.0)),
-              Expanded(
-                child: new TextField(
-                  textAlign: TextAlign.center,
-                  onChanged: (String value) {
-                    _vehicleCode = value;
-                  },
-                  controller: vehicleCodeController,
-                  decoration: InputDecoration(
-                      hintText: '车辆编号',
-                      contentPadding: EdgeInsets.all(10.0),
-                      border: OutlineInputBorder(
-                        borderSide:
-                            BorderSide(color: Theme.of(context).primaryColor),
-                      )),
-                ),
-                //buildTextField(_vehicleCode, '车辆编号', vehicleCodeController),
-              ),
+                isExpanded: _isExpanded,
+                canTapOnHeader: true,
+
+              )
             ],
-          ),
-          new Padding(padding: EdgeInsets.all(2.0)),
-          new CustomFlexButton(
-            color: Colors.blue,
-            text: '查询',
-            onPress: () {
-              handleRefresh();
-              _dateBeginNext = _dateBegin;
-              _dateEndNext = _dateEnd;
-              _loadPlaceNextId = _loadPlaceId;
-              _unloadPlaceNextId = _unloadPlaceId;
-              _vehicleCodeNext = _vehicleCode;
-              _mainVehiclePlateNext = _mainVehiclePlate;
+            expansionCallback: (panelIndex, isExpanded){
+              setState(() {
+                _isExpanded = !isExpanded;
+              });
             },
+            animationDuration: Duration(milliseconds: 500),
           ),
+
           new Padding(padding: EdgeInsets.all(2.0)),
           new Expanded(
               child: new CustomPullLoadWidget(

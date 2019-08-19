@@ -8,7 +8,7 @@ part of 'Driver.dart';
 
 Driver _$DriverFromJson(Map<String, dynamic> json) {
   return Driver(
-      json['id'] as String,
+      json['originalOUId'] as int,
       json['ouDisplayName'] as String,
       json['vehicleCode'] as String,
       json['driverIDNumber'] as String,
@@ -21,18 +21,22 @@ Driver _$DriverFromJson(Map<String, dynamic> json) {
       json['buckupContactPersonPhone'] as String,
       json['driverLicenseID'] as String,
       json['certificateEndDate'] as String,
-      json['dlCertificateEndDate'] as String);
+      json['dlCertificateEndDate'] as String,
+      json['personState'] as String,
+      json['personType'] as String);
 }
 
 Map<String, dynamic> _$DriverToJson(Driver instance) => <String, dynamic>{
-      'id': instance.id,
+      'originalOUId': instance.originalOUId,
       'driverIDNumber': instance.driverIDNumber,
       'driverName': instance.driverName,
       'driverPhone': instance.driverPhone,
       'ouDisplayName': instance.ouDisplayName,
+      'personType': instance.personType,
       'personTypeText': instance.personTypeText,
       'vehicleCode': instance.vehicleCode,
       'certificateEndDate': instance.certificateEndDate,
+      'personState': instance.personState,
       'personStateText': instance.personStateText,
       'buckupContactPerson': instance.buckupContactPerson,
       'buckupContactPersonAddress': instance.buckupContactPersonAddress,

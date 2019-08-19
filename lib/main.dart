@@ -54,10 +54,11 @@ class FlutterReduxApp extends StatelessWidget {
             ///参数以键值对的形式传递
             ///key：路由名字
             ///value：对应的Widget
+            initialRoute: "login",
             routes: {
-              WelcomePage.sName: (context){
-                return WelcomePage();
-              },
+//              WelcomePage.sName: (context){
+//                return WelcomePage();
+//              },
               HomePage.sName: (context){
                 return new CustomLocalizations(
                   child: new HomePage(),

@@ -56,7 +56,7 @@ class _HistoryBillDetailPage extends State<HistoryBillDetailPage>{
                 children: <Widget>[
                   //new Expanded(child:
                   new Table(
-                    border: TableBorder.all(color: Color(CustomColors.tableBorderColor), width: 2.0, style: BorderStyle.solid),
+                    //border: TableBorder.all(color: Color(CustomColors.tableBorderColor), width: 2.0, style: BorderStyle.solid),
                     children:
                     <TableRow>[
                       TableRow(
@@ -80,7 +80,7 @@ class _HistoryBillDetailPage extends State<HistoryBillDetailPage>{
                       TableRow(
                           children: <Widget>[
                             Text("提货单状态：", style: CustomConstant.normalTextBlack),
-                            Text(model.deliveryOrderState ?? "无", style: CustomConstant.normalTextBlack),
+                            Text(model.deliveryOrderStateText ?? "无", style: CustomConstant.normalTextBlack),
                           ]
                       ),
                       TableRow(

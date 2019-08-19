@@ -1,8 +1,8 @@
 import 'package:car_free_company/common/config/Config.dart';
 
 class Address{
-  //static const String host = "http://10.1.9.167/api/";
-  static const String host = "https://api.yixintm.com/api/";
+  static const String host = "http://10.1.9.167:21022/api/";
+  //static const String host = "https://api.yixintm.com/api/";
   static const String hostGit = "https://api.github.com/";
   static const String updateUrl = "https://www.pgyer.com/FDwD";
 
@@ -25,7 +25,7 @@ class Address{
 
   ///个人设置
   static getPersonalSettings(){
-    return "${host}services/app/User/GetUserByMobile";
+    return "${host}services/app/User/GetUserInfoByMobileAsync";
   }
   ///我的登陆信息
   static getLoginInformation(){
@@ -42,11 +42,11 @@ class Address{
 
   ///车辆查询
   static getVehicleQuery(){
-    return "${host}services/app/VehicleArchives/GetVehicleArchivessForManagerByMobileAsync";
+    return "${host}services/app/VehicleArchives/GetVehicleArchivesForManagerByMobileAsync";
   }
   ///单个车辆查询
   static getSingleVehicleInfo(){
-    return "${host}services/app/VehicleArchives/...";
+    return "${host}services/app/VehicleArchives/GetVehicleArchiveDetailForManagerByMobileAsync";
   }
   ///车辆锁定
   static setVehicleLocking(){
@@ -58,11 +58,22 @@ class Address{
   }
   ///车辆调度
   static vehicleDispatch(){
-    return "${host}services/app/VehicleArchives/...";
+    return "${host}services/app/VehicleDispatchAssign/GetVehicleDispatchAssignsForManagerAsync";
+  }
+  static vehicleDispatchPost(){
+    return "${host}services/app/VehicleDispatchAssign/EditVehicleDispatchAssignsForManagerAsync";
   }
   ///车型枚举
   static vehicleModels(){
-    return "${host}services/app/VehicleArchives/...";
+    return "${host}SysCode/GetVehicleType";
+  }
+  ///车辆状态
+  static vehicleState(){
+    return "${host}SysCode/GetVehicleState";
+  }
+  ///派车分组
+  static vehicleGroup(){
+    return "${host}SysCode/GetCustomerDispatchingVehicleGroup";
   }
 
 
@@ -72,11 +83,11 @@ class Address{
   }
   ///获取单个司机信息
   static getSingleDriverInfo(){
-    return "${host}services/app/VehicleDriverArchive/...";
+    return "${host}services/app/VehicleDriverArchive/GetVehicleDriverArchiveDetailForManagerByMobileAsync";
   }
   ///司机换车
   static setDriverChangeVehicle(){
-    return "${host}services/app/VehicleDriverChange/ChangeDriverVehicle";
+    return "${host}services/app/VehicleDriverChange/ChangeVehicleDriverCarAsync";
   }
   ///司机锁定
   static setDriverLocking(){

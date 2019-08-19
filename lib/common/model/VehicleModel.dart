@@ -5,11 +5,13 @@ part 'VehicleModel.g.dart';
 class VehicleModel{
   String value;//值
   String text;//显示文本
+  bool selected;
 
 
   VehicleModel(
       this.value,
-      this.text
+      this.text,
+      this.selected
       );
 
   factory VehicleModel.fromJson(Map<String, dynamic> json) => _$VehicleModelFromJson(json);

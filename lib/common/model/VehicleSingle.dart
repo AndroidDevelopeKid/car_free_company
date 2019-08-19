@@ -1,9 +1,8 @@
 import 'package:json_annotation/json_annotation.dart';
 
-part 'Vehicle.g.dart';
+part 'VehicleSingle.g.dart';
 @JsonSerializable()
-class Vehicle{
-  String id;
+class VehicleSingle{
   String vehicleCode;//车辆编号
   String mainVehiclePlate;//车牌号
   int originalOUId;
@@ -23,8 +22,7 @@ class Vehicle{
   String engineNumber;//发动机编号
   String joiningDate;//加盟日期
 
-  Vehicle(
-      this.id,
+  VehicleSingle(
       this.oUDisplayName,
       this.vehicleCode,
       this.engineNumber,
@@ -45,7 +43,7 @@ class Vehicle{
       this.vehicleType
       );
 
-  factory Vehicle.fromJson(Map<String, dynamic> json) => _$VehicleFromJson(json);
+  factory VehicleSingle.fromJson(Map<String, dynamic> json) => _$VehicleSingleFromJson(json);
 
-  Map<String, dynamic> toJson() => _$VehicleToJson(this);
+  Map<String, dynamic> toJson() => _$VehicleSingleToJson(this);
 }

@@ -21,6 +21,7 @@ class DriverDetailPage extends StatefulWidget{
 }
 
 class _DriverDetailPage extends State<DriverDetailPage>{
+  var _changeDate = "";
   String _newVehicleCode = "";
   final TextEditingController newVehicleCodeController = new TextEditingController();
   final DriverItemViewModel model;
@@ -28,17 +29,34 @@ class _DriverDetailPage extends State<DriverDetailPage>{
 
   Future<Driver> driverInfo;
 
+  _showDatePickerChange() async {
+    DateTime _picker = await showDatePicker(
+      context: context,
+      initialDate: new DateTime.now(),
+      firstDate: new DateTime.now().subtract(new Duration(days: 3000)),
+      // 减 30 天
+      lastDate: new DateTime.now().add(new Duration(days: 30)), // 加 30 天
+    );
+    if (_picker == null) return;
+    setState(() {
+      _changeDate = _picker.toString();
+    });
+  }
+
 
   ///////////解锁，锁定，换车后刷新数据，获取单个司机信息
-  Future<Driver> _getData() async {
-    var res = await DriverDao.getSingleDriverInfo();
+  Future<Driver> _getData(id) async {
+    var res = await DriverDao.getSingleDriverInfo(id);
     if(res != null && res.result){
       return res.data;
     }
     if(res != null && !res.result){
-      Driver dataNull = new Driver(null, null, null, null, null, null, null, null, null, null, null, null, null, null);
+      Driver dataNull = new Driver(null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null);
       return dataNull;
     }
+    Driver dataNull1 = new Driver(null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null);
+    return dataNull1;
+
 
 
   }
@@ -48,7 +66,7 @@ class _DriverDetailPage extends State<DriverDetailPage>{
   void initState() {
     super.initState();
     newVehicleCodeController.value = new TextEditingValue(text: "");
-    driverInfo = _getData();
+    driverInfo = _getData(model.id);
   }
   @override
   void dispose() {
@@ -80,10 +98,12 @@ class _DriverDetailPage extends State<DriverDetailPage>{
                     children: <Widget>[
                       //new Expanded(child:
                       new Table(
-                        border: TableBorder.all(color: Color(CustomColors.tableBorderColor), width: 2.0, style: BorderStyle.solid),
+                        //border: TableBorder.all(color: Color(CustomColors.tableBorderColor), width: 2.0, style: BorderStyle.none),
+                        //border: TableBorder.symmetric(outside: BorderSide()),
                         children:
                         <TableRow>[
                           TableRow(
+                              //decoration: BoxDecoration(color: Color(CustomColors.tableBackground) ),
                               children: <Widget>[
                                 Text("姓名：", style: CustomConstant.normalTextBlack),
                                 Text(snapshot.data.driverName ?? "无", style: CustomConstant.normalTextBlack),
@@ -96,6 +116,7 @@ class _DriverDetailPage extends State<DriverDetailPage>{
                               ]
                           ),
                           TableRow(
+                              //decoration: BoxDecoration(color: Color(CustomColors.tableBackground) ),
                               children: <Widget>[
                                 Text("联系电话：", style: CustomConstant.normalTextBlack),
                                 Text(snapshot.data.driverPhone ?? "无", style: CustomConstant.normalTextBlack),
@@ -108,6 +129,7 @@ class _DriverDetailPage extends State<DriverDetailPage>{
                               ]
                           ),
                           TableRow(
+                              //decoration: BoxDecoration(boxShadow: [new BoxShadow(color: Color(CustomColors.tableBackground), blurRadius: 0.5)],),
                               children: <Widget>[
                                 Text("人员类型：", style: CustomConstant.normalTextBlack),
                                 Text(snapshot.data.personTypeText ?? "无", style: CustomConstant.normalTextBlack),
@@ -120,6 +142,7 @@ class _DriverDetailPage extends State<DriverDetailPage>{
                               ]
                           ),
                           TableRow(
+                              //decoration: BoxDecoration(boxShadow: [new BoxShadow(color: Color(CustomColors.tableBackground), blurRadius: 0.5)],),
                               children: <Widget>[
                                 Text("人员状态：", style: CustomConstant.normalTextBlack),
                                 Text(snapshot.data.personStateText ?? "无", style: CustomConstant.normalTextBlack),
@@ -132,6 +155,7 @@ class _DriverDetailPage extends State<DriverDetailPage>{
                               ]
                           ),
                           TableRow(
+                              //decoration: BoxDecoration(boxShadow: [new BoxShadow(color: Color(CustomColors.tableBackground), blurRadius: 0.5)],),
                               children: <Widget>[
                                 Text("备用联系人：", style: CustomConstant.normalTextBlack),
                                 Text(snapshot.data.buckupContactPerson ?? "无", style: CustomConstant.normalTextBlack),
@@ -144,6 +168,7 @@ class _DriverDetailPage extends State<DriverDetailPage>{
                               ]
                           ),
                           TableRow(
+                              //decoration: BoxDecoration(boxShadow: [new BoxShadow(color: Color(CustomColors.tableBackground), blurRadius: 0.5)],),
                               children: <Widget>[
                                 Text("备用联系方式：", style: CustomConstant.normalTextBlack),
                                 Text(snapshot.data.buckupContactPersonPhone ?? "无", style: CustomConstant.normalTextBlack),
@@ -156,6 +181,7 @@ class _DriverDetailPage extends State<DriverDetailPage>{
                               ]
                           ),
                           TableRow(
+                              //decoration: BoxDecoration(boxShadow: [new BoxShadow(color: Color(CustomColors.tableBackground), blurRadius: 0.5)],),
                               children: <Widget>[
                                 Text("驾驶证到期日期：", style: CustomConstant.normalTextBlack),
                                 Text(snapshot.data.dlCertificateEndDate ?? "无" , style: CustomConstant.normalTextBlack),
@@ -177,7 +203,7 @@ class _DriverDetailPage extends State<DriverDetailPage>{
                                       if(res != null && res.result){//106-临时停车
                                         setState(() {
                                           //model.personStateText = "106-
-                                          driverInfo = _getData();
+                                          driverInfo = _getData(model.id);
                                         });
 
                                         CommonUtils.showShort('锁定成功');
@@ -199,7 +225,7 @@ class _DriverDetailPage extends State<DriverDetailPage>{
                                       if(res != null && res.result){
                                         setState(() {
                                           //model.personStateText = "101-正常";
-                                          driverInfo = _getData();
+                                          driverInfo = _getData(model.id);
                                         });
                                         CommonUtils.showShort('解锁成功');
                                       }
@@ -214,35 +240,54 @@ class _DriverDetailPage extends State<DriverDetailPage>{
                         ],
                       ),
                       //),
-                      Padding(padding: EdgeInsets.all(10.0)),
-                      new TextField(
-                        textAlign: TextAlign.center,
-                        onChanged: (String value) {
-                          _newVehicleCode = value;
-                        },
-                        controller: newVehicleCodeController,
-                        decoration: InputDecoration(
-                            hintText: '输入新车号',
-                            contentPadding: EdgeInsets.all(10.0),
-                            border:
-                            OutlineInputBorder(borderSide: BorderSide(color: Theme.of(context).primaryColor),)
-                        ),
-                      ),
-                      Padding(padding: EdgeInsets.all(10.0)),
+                      Padding(padding: EdgeInsets.all(5.0)),
+                      new Row(children: <Widget>[
+                        Expanded(child: new TextField(
+                          textAlign: TextAlign.center,
+                          onChanged: (String value) {
+                            _newVehicleCode = value;
+                          },
+                          controller: newVehicleCodeController,
+                          decoration: InputDecoration(
+                              hintText: '输入新车号',
+                              contentPadding: EdgeInsets.all(6.0),
+                              border:
+                              OutlineInputBorder(borderSide: BorderSide(color: Theme.of(context).primaryColor),)
+                          ),
+                        ),),
+                        Padding(padding: EdgeInsets.all(5.0)),
+                        Expanded(child: new OutlineButton(
+                          child:  new Text(
+                            _changeDate == ""
+                                ? DateTime.now().toString().substring(0,10)
+                                : _changeDate.toString().substring(0, 10),
+                            style: CustomConstant.hintText,
+                          ),
+
+                          color: Color(CustomColors.white),
+                          borderSide: new BorderSide(color: Colors.grey),
+                          onPressed: () => _showDatePickerChange(),
+                        ),),
+
+                      ],),
+
+                      Padding(padding: EdgeInsets.all(5.0)),
                       //Expanded(child:
                       new CustomFlexButton(
                           text: '换车',
                           color: Colors.blue,
                           onPress: (){
-                            DriverDao.setDriverChangeVehicle(model.driverIDNumber, model.vehicleCode, _newVehicleCode).then((res){
+                            print("huanche:" + model.driverIDNumber);
+                            DriverDao.setDriverChangeVehicle(model.driverIDNumber, model.vehicleCode, _newVehicleCode, _changeDate).then((res){
                               if(res != null && res.result){
                                 setState(() {
                                   //model.vehicleCode = _newVehicleCode;
-                                  driverInfo = _getData();
+                                  driverInfo = _getData(model.id);
                                 });
                                 CommonUtils.showShort("换车成功");
                               }
                               if(res != null && !res.result){
+                                //CommonUtils.showShort("换车失败");
                                 CommonUtils.showShort(res.data['error']['message'].toString() + "-" + res.data["error"]["details"].toString());
                               }
                             });

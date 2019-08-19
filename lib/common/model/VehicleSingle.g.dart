@@ -1,14 +1,13 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'Vehicle.dart';
+part of 'VehicleSingle.dart';
 
 // **************************************************************************
 // JsonSerializableGenerator
 // **************************************************************************
 
-Vehicle _$VehicleFromJson(Map<String, dynamic> json) {
-  return Vehicle(
-      json['id'] as String,
+VehicleSingle _$VehicleSingleFromJson(Map<String, dynamic> json) {
+  return VehicleSingle(
       json['oUDisplayName'] as String,
       json['vehicleCode'] as String,
       json['engineNumber'] as String,
@@ -29,8 +28,8 @@ Vehicle _$VehicleFromJson(Map<String, dynamic> json) {
       json['vehicleType'] as String);
 }
 
-Map<String, dynamic> _$VehicleToJson(Vehicle instance) => <String, dynamic>{
-      'id': instance.id,
+Map<String, dynamic> _$VehicleSingleToJson(VehicleSingle instance) =>
+    <String, dynamic>{
       'vehicleCode': instance.vehicleCode,
       'mainVehiclePlate': instance.mainVehiclePlate,
       'originalOUId': instance.originalOUId,

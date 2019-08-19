@@ -26,7 +26,7 @@ class HistoryBillItem extends StatelessWidget{
                   children: <Widget>[
                     new Image.asset(CustomIcons.HISTORY_BILL_SUB),
                     new Text(
-                      historyBillItemViewModel.deliveryOrderState ?? "提货单状态",
+                      historyBillItemViewModel.deliveryOrderStateText ?? "提货单状态",
                     ),
                   ],
                 ),
@@ -57,7 +57,7 @@ class HistoryBillItemViewModel {
   String vehicleCode;//车辆编号
   String mainVehiclePlate;//车牌号
   String deliveryOrderCode;//提货单号
-  String deliveryOrderState;//提货单状态
+  String deliveryOrderStateText;//提货单状态
   String generateDate;//提货单生成日期
   String loadPlaceName;//装地-提货点
   String unloadPlaceName;//卸地-采购方
@@ -73,7 +73,7 @@ class HistoryBillItemViewModel {
   HistoryBillItemViewModel.fromMap(HistoryBill historyBill) {
     this.vehicleCode = historyBill.vehicleCode;
     this.deliveryOrderCode = historyBill.deliveryOrderCode;
-    this.deliveryOrderState = historyBill.deliveryOrderState;
+    this.deliveryOrderStateText = historyBill.deliveryOrderStateText;
     this.generateDate = historyBill.generateDate;
     this.goodsName = historyBill.goodsName;
     this.id = historyBill.id;

@@ -36,7 +36,7 @@ class _MessageDetailPage extends State<MessageDetailPage>{
             elevation: 8.0,
             child: new Container(
               child:new Table(
-                border: TableBorder.all(color: Color(CustomColors.tableBorderColor), width: 2.0, style: BorderStyle.solid),
+                //border: TableBorder.all(color: Color(CustomColors.tableBorderColor), width: 2.0, style: BorderStyle.solid),
                 children: <TableRow>[
                   TableRow(
                       children: <Widget>[

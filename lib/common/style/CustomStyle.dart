@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 ///颜色
 class CustomColors{
+  static const int tableBackground = 0xffCCCCCC;
   static const int white = 0xFFFFFFFF;
   static const int cardWhite = 0xFFFFFFFF;
   static const int textWhite = 0xFFFFFFFF;

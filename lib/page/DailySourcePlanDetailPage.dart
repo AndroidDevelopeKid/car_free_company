@@ -56,7 +56,7 @@ class _DailySourcePlanDetailPage extends State<DailySourcePlanDetailPage>{
                 children: <Widget>[
                   //new Expanded(child:
                   new Table(
-                    border: TableBorder.all(color: Color(CustomColors.tableBorderColor), width: 2.0, style: BorderStyle.solid),
+                    //border: TableBorder.all(color: Color(CustomColors.tableBorderColor), width: 2.0, style: BorderStyle.solid),
                     children:
                     <TableRow>[
                       TableRow(

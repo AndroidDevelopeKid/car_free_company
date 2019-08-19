@@ -41,7 +41,21 @@ class _VehicleInsteadQueuePage extends State<VehicleInsteadQueuePage> {
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: <Widget>[
               Expanded(
-                  child: buildTextField(_vehicleSmall, '车辆小号', vehicleSmallController)
+                  child:
+                  new TextField(
+                    textAlign: TextAlign.center,
+                    onChanged: (String value) {
+                      _vehicleSmall = value;
+                    },
+                    controller: vehicleSmallController,
+                    decoration: InputDecoration(
+                        hintText: '车辆小号',
+                        contentPadding: EdgeInsets.all(8.0),
+                        border:
+                        OutlineInputBorder(borderSide: BorderSide(color: Theme.of(context).primaryColor),)
+                    ),
+                  )
+                  //buildTextField(_vehicleSmall, '车辆小号', vehicleSmallController)
               ),
             ],
           ),
@@ -51,17 +65,26 @@ class _VehicleInsteadQueuePage extends State<VehicleInsteadQueuePage> {
             text: '代排队',
             onPress: (){
               //VehicleDao
+              print("vehicleSmall:" + _vehicleSmall.toString());
               if(_vehicleSmall == null || _vehicleSmall.length == 0){
                 return;
               }
+
               CommonUtils.showLoadingDialog(context);
               VehicleDao.setReplaceQueue(_vehicleSmall.trim()).then((res){
                 if(res != null && res.result){
                   //代排队成功
                   CommonUtils.showShort("代排队成功");
                 }
+                Navigator.pop(context);
                 if(res != null && !res.result){
-                  CommonUtils.showShort(res.data['error']['message'].toString() + "-" + res.data["error"]["details"].toString());
+                  if(res.data == null){
+                    CommonUtils.showShort("访问异常");
+                  }else{
+                    CommonUtils.showShort(res.data["error"]["details"].toString());
+                  }
+                  return false;
+
                 }
               });
 

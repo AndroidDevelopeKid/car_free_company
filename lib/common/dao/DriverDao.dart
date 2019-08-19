@@ -10,8 +10,8 @@ import 'package:dio/dio.dart';
 
 class DriverDao{
   ///司机查询
-  static getDriverQuery(driverIDNumber, driverName, driverPhone, vehicleCode, maxResultCount, skipCount) async {
-    var res = await HttpManager.netFetch(Address.getDriverQuery() + "?DriverIdNumber=${driverIDNumber}&DriverName=${driverName}&DriverPhone=${driverPhone}&VehicleCode=${vehicleCode}&MaxResultCount=${maxResultCount}&SkipCount=${skipCount}", null, null, null);
+  static getDriverQuery(joinDateBegin, joinDateEnd, driverIDNumber, driverName, driverPhone, vehicleCode, maxResultCount, skipCount) async {
+    var res = await HttpManager.netFetch(Address.getDriverQuery() + "?JoiningDate=${joinDateBegin}&JoiningDateTo=${joinDateEnd}&DriverIdNumber=${driverIDNumber}&DriverName=${driverName}&DriverPhone=${driverPhone}&VehicleCode=${vehicleCode}&MaxResultCount=${maxResultCount}&SkipCount=${skipCount}", null, null, null);
     if(res != null && res.result){
       print("driverList: " + res.data.toString());
       //LocalStorage.save(Config.DRIVERS, json.encode(res.data['result']['items']));
@@ -22,8 +22,8 @@ class DriverDao{
     }
   }
   ///获取单个司机信息
-  static getSingleDriverInfo() async {
-    var res = await HttpManager.netFetch(Address.getSingleDriverInfo() + "?", null, null, null);
+  static getSingleDriverInfo(id) async {
+    var res = await HttpManager.netFetch(Address.getSingleDriverInfo() + "?Id=${id}", null, null, null);
     if(res != null && res.result){
       if(res.data["result"] != null){
         Driver driver = Driver.fromJson(res.data["result"]);
@@ -71,12 +71,12 @@ class DriverDao{
     }
   }
   ///司机换车
-  static setDriverChangeVehicle(driverIdNumber, oldVehicleCode, newVehicleCode) async {
+  static setDriverChangeVehicle(driverIdNumber, oldVehicleCode, newVehicleCode, changeVehicleDate) async {
     var res;
     Map requestParams = {
-      "driverIdNumber": driverIdNumber,
-      "oldVehicleCode": oldVehicleCode,
-      "newVehicleCode": newVehicleCode
+      "driverId": driverIdNumber,
+      "newVehicleCode": newVehicleCode,
+      "changeVehicleDate": changeVehicleDate
     };
     if(driverIdNumber != null && oldVehicleCode != null && newVehicleCode != null){
       res = await HttpManager.netFetch(Address.setDriverChangeVehicle(), json.encode(requestParams), null, new Options(method: 'post'));
