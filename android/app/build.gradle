@@ -45,7 +45,7 @@ android {
         release {
             keyAlias 'key_car_free_company'
             keyPassword '123456'
-            storeFile file('/Users/jiezhao/flutter-key/key.jks')
+            storeFile file('/Users/jiezhao/flutter-key/key_car_free_company.jks')
             storePassword '123456'
         }
         buildTypes {
