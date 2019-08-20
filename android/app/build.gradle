@@ -24,6 +24,10 @@ if (flutterVersionName == null) {
 apply plugin: 'com.android.application'
 apply from: "$flutterRoot/packages/flutter_tools/gradle/flutter.gradle"
 
+
+def keystorePropertiesFile = rootProject.file("key.properties")
+def keystoreProperties = new Properties()
+keystoreProperties.load(new FileInputStream(keystorePropertiesFile))
 android {
     compileSdkVersion 28
 
@@ -36,8 +40,8 @@ android {
         applicationId "com.my.car_free_company"
         minSdkVersion 16
         targetSdkVersion 28
-        versionCode 6
-        versionName "1.0.5"
+        versionCode 7
+        versionName "1.0.6"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
 

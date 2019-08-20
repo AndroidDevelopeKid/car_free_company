@@ -416,10 +416,12 @@ class _VehicleDetailPage extends State<VehicleDetailPage>{
                                                                 VehicleDao.vehicleDispatch(vehicleCode, _groupId).then((res){
                                                                   if(res != null && res.result){
                                                                     CommonUtils.showShort('调度成功');
+                                                                    Navigator.pop(context);
                                                                   }
                                                                   if(res != null && !res.result){
-                                                                    print("" + res.data["error"]);
+                                                                    //print("" + res.data["error"]);
                                                                     CommonUtils.showShort(res.data['error']['message']);
+                                                                    Navigator.pop(context);
                                                                   }
                                                                 });
                                                               },

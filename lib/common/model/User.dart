@@ -22,7 +22,7 @@ class User{
   String organizationDisplayName;
   String organizationFullName;
   int organizationParentId;
-  String organizationType;
+  int organizationType;
   String organizationTypeText;
 
   ///json转换为实体类
