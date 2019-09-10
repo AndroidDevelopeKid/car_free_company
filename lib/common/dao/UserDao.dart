@@ -15,7 +15,18 @@ class UserDao{
   static login(company, userName, password) async{
 
     print("company login:" + company);
+//    int id;
+//    List<String> names = await LocalStorage.get(Config.TENANT_NAMES);
+//    List<int> ids = await LocalStorage.get(Config.TENANT_IDS);
+//    for(int i = 0; i < names.length; i++){
+//      if(company == names[i]){
+//        id = ids[i];
+//      }
+//    }
+//
+//    String tenantId = id.toString();//Config.TENANT;
     String tenantId = Config.TENANT;
+
     await LocalStorage.save(Config.USER_NAME_KEY, userName);
     ///清除授权
     HttpManager.clearAuthorization();
@@ -97,6 +108,17 @@ class UserDao{
       }else{
         return new DataResult(null, true);
       }
+    }else{
+      return new DataResult(res.data, false);
+    }
+  }
+
+  ///登陆信息
+  static getTenants(maxResultCount, skipCount) async {
+    var res = await HttpManager.netFetch(Address.getTenant() + "?MaxResultCount=${maxResultCount}&SkipCount=${skipCount}", null, null, null);
+    if(res != null && res.result){
+      print("tenants: " + res.data.toString());
+      return new DataResult(res.data, true);
     }else{
       return new DataResult(res.data, false);
     }

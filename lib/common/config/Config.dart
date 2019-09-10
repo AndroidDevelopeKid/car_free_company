@@ -12,7 +12,10 @@ class Config{
 
   static const BEARER_KEY = "bearer";
 
-  static const TENANT = "1";
+  static const TENANT = "3";
+
+  static const TENANT_NAMES = "tenant-names";
+  static const TENANT_IDS = "tenant-ids";
 
   static const USER_NAME_KEY = "user-name";
   static const PW_KEY = "user-pw";

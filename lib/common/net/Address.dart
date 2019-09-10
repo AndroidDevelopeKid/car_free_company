@@ -1,8 +1,8 @@
 import 'package:car_free_company/common/config/Config.dart';
 
 class Address{
-  static const String host = "http://10.1.9.167/api/";
-  static const String hostEnum = "http://10.1.9.167:21022/api/";
+  static const String host = "https://mpi.yixintm.com/api/";
+  //static const String hostEnum = "http://10.1.9.167:21022/api/";
   //static const String host = "https://api.yixintm.com/api/";
   static const String hostGit = "https://api.github.com/";
   static const String updateUrl = "https://www.pgyer.com/FDwD";
@@ -10,6 +10,10 @@ class Address{
   ///获取授权 post
   static getAuthorization(){
     return "${host}TokenAuth/Authenticate";
+  }
+  ///获取租户
+  static getTenant(){
+    return "${host}services/app/Tenant/GetTenantsAsync";
   }
   ///获取分页后的通知
   static getPagedUserNotifications(){
@@ -66,15 +70,15 @@ class Address{
   }
   ///车型枚举
   static vehicleModels(){
-    return "${hostEnum}SysCode/GetVehicleType";
+    return "${host}SysCode/GetVehicleType";
   }
   ///车辆状态
   static vehicleState(){
-    return "${hostEnum}SysCode/GetVehicleState";
+    return "${host}SysCode/GetVehicleState";
   }
   ///派车分组
   static vehicleGroup(){
-    return "${hostEnum}SysCode/GetCustomerDispatchingVehicleGroup";
+    return "${host}SysCode/GetCustomerDispatchingVehicleGroup";
   }
 
 
