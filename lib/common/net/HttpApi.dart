@@ -119,7 +119,7 @@ class HttpManager{
         return new ResultData(response.data, true, Code.SUCCESS, headers: response.headers);
       }
     }catch(e){
-      print(e.toString());
+      print("e: " + e.toString());
       return new ResultData(response.data, false, response.statusCode);
     }
     return new ResultData(Code.errorHandleFunction(response.statusCode, "", noTip), false, response.statusCode);

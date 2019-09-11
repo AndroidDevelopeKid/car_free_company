@@ -90,7 +90,6 @@ class _LoginPageState extends State<LoginPage> {
 
   @override
   Widget build(BuildContext context) {
-
     return new GestureDetector(
       behavior: HitTestBehavior.translucent,
 
@@ -111,14 +110,13 @@ class _LoginPageState extends State<LoginPage> {
                   end: Alignment.bottomRight)),
           //color: Theme.of(context).primaryColor
           child: new Center(
-              child:
-    FutureBuilder<List<Tenant>>(
+              child: FutureBuilder<List<Tenant>>(
                   future: tenants,
                   builder: (context, snapshot) {
                     if (snapshot.hasData) {
                       List<String> tArray = List();
                       List<int> tIdArray = List();
-                      for(int i = 0; i < snapshot.data.length; i++){
+                      for (int i = 0; i < snapshot.data.length; i++) {
                         tArray.insert(i, snapshot.data[i].name);
                         tIdArray.insert(i, snapshot.data[i].id);
                       }
@@ -233,8 +231,7 @@ class _LoginPageState extends State<LoginPage> {
                       return Text("${snapshot.error}");
                     }
                     return CircularProgressIndicator();
-                  })
-          ),
+                  })),
         ),
         //)
       ),
