@@ -6,13 +6,33 @@ import 'package:car_free_company/common/net/Address.dart';
 import 'package:car_free_company/common/net/HttpApi.dart';
 import 'package:dio/dio.dart';
 
+import 'UserDao.dart';
+
 class NoticeDao{
   static getPagedUserNotifications(readState, skipCount) async {
     var res;
     if(readState == null){
-      res = await HttpManager.netFetch(Address.getPagedUserNotifications()+ "?MaxResultCount=${Config.PAGE_SIZE}&SkipCount=$skipCount", null, null, null);
+      res = await HttpManager.netFetch(Address.getPagedUserNotifications()+ "?MaxResultCount=${Config.NOTICE_PAGE_SIZE}&SkipCount=$skipCount", null, null, null);
+      if (res.code == Config.ERROR_CODE401 || res.code == Config.ERROR_CODE403) {
+        await UserDao.refreshToken();
+        res = await HttpManager.netFetch(
+            Address.getPagedUserNotifications() +
+                "?MaxResultCount=${Config.NOTICE_PAGE_SIZE}&SkipCount=${skipCount}",
+            null,
+            null,
+            null);
+      }
     }else{
-      res = await HttpManager.netFetch(Address.getPagedUserNotifications()+ "?State=${readState}&MaxResultCount=${Config.PAGE_SIZE}&SkipCount=${skipCount}", null, null, null);
+      res = await HttpManager.netFetch(Address.getPagedUserNotifications()+ "?State=${readState}&MaxResultCount=${Config.NOTICE_PAGE_SIZE}&SkipCount=${skipCount}", null, null, null);
+      if (res.code == Config.ERROR_CODE401 || res.code == Config.ERROR_CODE403) {
+        await UserDao.refreshToken();
+        res = await HttpManager.netFetch(
+            Address.getPagedUserNotifications() +
+                "?State=${readState}&?MaxResultCount=${Config.NOTICE_PAGE_SIZE}&SkipCount=${skipCount}",
+            null,
+            null,
+            null);
+      }
     }
     if(Config.DEBUG){
       print("getPagedUserNotifications res: " + res.toString() + "---" + res.result.toString() + "---");
@@ -24,7 +44,12 @@ class NoticeDao{
     }
   }
   static makeAllUserNotificationsAsRead() async {
-    var res = await HttpManager.netFetch(Address.makeAllUserNotificationsAsRead(), null, null, new Options(method: 'post'));
+    var res;
+    res = await HttpManager.netFetch(Address.makeAllUserNotificationsAsRead(), null, null, new Options(method: 'post'));
+    if (res.code == Config.ERROR_CODE401 || res.code == Config.ERROR_CODE403) {
+      await UserDao.refreshToken();
+      res = await HttpManager.netFetch(Address.makeAllUserNotificationsAsRead(), null, null, new Options(method: 'post'));
+    }
     if(Config.DEBUG){
       print("makeAllUserNotificationsAsRead res: " + res.toString() + "---" + res.result.toString() + "---");
     }

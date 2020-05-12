@@ -10,7 +10,7 @@ class CustomTabBarWidget extends StatefulWidget{
 
   final int type;
 
-  final List<Widget> tabItems;
+  final List<List<Widget>> tabItemsList;
 
   final List<Widget> tabViews;
 
@@ -33,7 +33,7 @@ class CustomTabBarWidget extends StatefulWidget{
   CustomTabBarWidget({
     Key key,
     this.type,
-    this.tabItems,
+    this.tabItemsList,
     this.tabViews,
     this.backgroundColor,
     this.indicatorColor,
@@ -59,7 +59,7 @@ class CustomTabBarWidget extends StatefulWidget{
 }
 
 class _CustomTabBarState extends State<CustomTabBarWidget> with SingleTickerProviderStateMixin{
-
+  int _currentIndex = 0; //选中位置
   final int _type;
 
   final List<Widget> _tabViews;
@@ -91,11 +91,13 @@ class _CustomTabBarState extends State<CustomTabBarWidget> with SingleTickerProv
       ) : super();
 
   TabController _tabController;
-
+  List<Widget> _tabItems;
   @override
   void initState(){
     super.initState();
-    _tabController = new TabController(length: widget.tabItems.length, vsync: this);
+    _tabController = new TabController(length: widget.tabItemsList.first.length, vsync: this);
+    _tabItems = widget.tabItemsList[0];
+    _tabController.addListener(() => _onTabChanged());
   }
   ///整个页面dispose时，控制器也应dispose，释放内存
   @override
@@ -114,7 +116,7 @@ class _CustomTabBarState extends State<CustomTabBarWidget> with SingleTickerProv
           title: _title,
           bottom: new TabBar(
             controller: _tabController,
-            tabs: widget.tabItems,
+            tabs: _tabItems,
             indicatorColor: _indicatorColor,
           ),
         ),
@@ -131,25 +133,50 @@ class _CustomTabBarState extends State<CustomTabBarWidget> with SingleTickerProv
     ///底部tabbar
     return new Scaffold(
       drawer: _drawer,
-      appBar: new AppBar(
-        backgroundColor: Theme.of(context).primaryColor,
-        title: _title,
-      ),
+//      appBar: new AppBar(
+//        backgroundColor: Theme.of(context).primaryColor,
+//        title: _title,
+//      ),
       body: new TabBarView(//TabBarView呈现内容，所以放到body中
         controller: _tabController,//配置控制器
         children: _tabViews,
       ),
       bottomNavigationBar: new Material(
         //为了适配主题风格，套一层material实现风格
-        color: Theme.of(context).primaryColor,
+        color: Colors.white,
         child: new TabBar(
           //TabBar导航标签，底部导航放到Scaffold的bottomNavigationBar中
           controller: _tabController,
-          tabs: widget.tabItems,
+          tabs: _tabItems,
           indicatorColor: _indicatorColor,//tab标签下划线颜色
+          labelColor: Color(0xff4C88FF),
+          unselectedLabelColor: Color(0xffAAAAAA),
         ),//导航栏底部颜色
       ),
     );
+  }
+  _onTabChanged() {
+    if (_tabController.indexIsChanging) {
+      if (this.mounted) {
+        this.setState(() {
+          switch (_tabController.index) {
+            case 0:
+              _tabItems = widget.tabItemsList[0];
+              break;
+            case 1:
+              _tabItems = widget.tabItemsList[1];
+              break;
+            case 2:
+              _tabItems = widget.tabItemsList[2];
+              break;
+            case 3:
+              _tabItems = widget.tabItemsList[3];
+              break;
+          }
+          _currentIndex = _tabController.index;
+        });
+      }
+    }
   }
 }
 

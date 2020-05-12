@@ -12,43 +12,82 @@ class VehicleItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return new Container(
-      child: new CustomCardItem(
-        child: new FlatButton(
-          onPressed: onPressed,
-          child:
-          new Container(
-            padding: const EdgeInsets.all(10.0),
-            child: new Column(
-              children: [
-                new Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: <Widget>[
-                    new Image.asset(CustomIcons.VEHICLE_QUERY_SUB),
-                    new Text(
-                      vehicleItemViewModel.vehicleCode ?? "车辆编号",
+    return InkWell(
+      onTap: onPressed,
+      child: Padding(
+        padding: EdgeInsets.only(bottom: 5.0, top: 5.0),
+        child: Container(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: <Widget>[
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                crossAxisAlignment: CrossAxisAlignment.end,
+                children: <Widget>[
+                  Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: <Widget>[
+                        Padding(
+                          padding: EdgeInsets.only(
+                            left: 10.0,
+                            top: 15.0,
+                          ),
+                          child: Row(
+                            children: <Widget>[
+                              SizedBox(
+                                width: 13.0,
+                                height: 14.0,
+                                child: Image.asset(CustomIcons.VEHICLE_QUERY),
+                              ),
+                              Padding(
+                                padding: EdgeInsets.only(left: 15.0),
+                                child: Text(
+                                  vehicleItemViewModel.vehicleCode ??
+                                      "车辆编号",
+                                  style: TextStyle(fontSize: 12.0),
+                                ),
+                              )
+                            ],
+                          ),
+                        ),
+                        Padding(
+                          padding: EdgeInsets.only(left: 10.0, top: 13.0),
+                          child: Text(
+                            vehicleItemViewModel.mainVehiclePlate ??
+                                "车牌号",
+                            style: TextStyle(fontSize: 13.0),
+                          ),
+                        ),
+                      ],
                     ),
-                  ],
-                ),
-                new Padding(padding: EdgeInsets.all(10.0)),
-                new Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: <Widget>[
-                    new Text(
-                      vehicleItemViewModel.vehicleTypeText ?? "车辆类型",
+                  ),
+                  Padding(
+                    padding: EdgeInsets.only(right: 26.0),
+                    child: Text(
+                      vehicleItemViewModel.vehicleTypeText ??
+                        "车辆类型",
+                      style:
+                      TextStyle(color: Color(0xff5AC426), fontSize: 13.0),
                     ),
-                    new Text(
-                      vehicleItemViewModel.mainVehiclePlate ?? "车牌号",
-                    ),
-                  ],),
-              ],
+                  ),
+                ],
+              ),
+              Padding(
+                padding: EdgeInsets.only(top: 9.0, bottom: 9.0),
+              ),
+            ],
+          ),
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(2.0),
+            border: Border.all(
+              color: Color(0xffefefef),
+              width: 1.0,
+              style: BorderStyle.solid,
             ),
           ),
         ),
       ),
-
     );
   }
 }
@@ -75,7 +114,7 @@ class VehicleItemViewModel {
     oUDisplayName = vehicle.oUDisplayName;
     vehicleTypeText = vehicle.vehicleTypeText;
     vehicleBusinessTypeText = vehicle.vehicleBusinessTypeText;
-    vehicleCode = vehicle.vehicleCode;
+    //vehicleCode;// = vehicle.vehicleCode;
     modelsText = vehicle.modelsText;
     vehicleStateText = vehicle.vehicleStateText;
     ownerName = vehicle.ownerName;

@@ -7,8 +7,12 @@ part of 'TransportPlace.dart';
 // **************************************************************************
 
 TransportPlace _$TransportPlaceFromJson(Map<String, dynamic> json) {
-  return TransportPlace(json['id'] as int, json['parentId'] as int,
-      json['text'] as String, json['value'] as String);
+  return TransportPlace(
+    json['id'] as int,
+    json['parentId'] as int,
+    json['text'] as String,
+    json['value'] as String,
+  );
 }
 
 Map<String, dynamic> _$TransportPlaceToJson(TransportPlace instance) =>
@@ -16,5 +20,5 @@ Map<String, dynamic> _$TransportPlaceToJson(TransportPlace instance) =>
       'value': instance.value,
       'text': instance.text,
       'parentId': instance.parentId,
-      'id': instance.id
+      'id': instance.id,
     };

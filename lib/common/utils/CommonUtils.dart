@@ -4,7 +4,6 @@ import 'package:car_free_company/common/style/CustomStringBase.dart';
 import 'package:car_free_company/common/style/CustomStyle.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
-import 'package:flutter_statusbar/flutter_statusbar.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -12,9 +11,9 @@ import 'package:url_launcher/url_launcher.dart';
 class CommonUtils{
   static double sStaticBarHeight = 0.0;
 
-  static void initStatusBarHeight(context) async {
-    sStaticBarHeight = await FlutterStatusbar.height / MediaQuery.of(context).devicePixelRatio;//除数是设备的像素密度
-  }
+//  static void initStatusBarHeight(context) async {
+//    sStaticBarHeight = await FlutterStatusbar.height / MediaQuery.of(context).devicePixelRatio;//除数是设备的像素密度
+//  }
 
   ///本地化
   static CustomStringBase getLocale(BuildContext context){
@@ -43,10 +42,10 @@ class CommonUtils{
                   child: new Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: <Widget>[
-                      new Container(child: SpinKitCubeGrid(color: Color(CustomColors.white))),
-                      new Container(height: 10.0),
+                      new Container(child: SpinKitCircle(color: Color(CustomColors.white))),
+                      //new Container(height: 10.0),
                       //new Container(child: new Text('loading...', style: CustomConstant.normalTextWhite)),
-                      new Container(child: new Text(CommonUtils.getLocale(context).loadingText, style: CustomConstant.normalTextWhite)),
+                      //new Container(child: new Text("加载中...", style: CustomConstant.normalTextWhite)),
 
                     ],
                   ),
@@ -57,7 +56,6 @@ class CommonUtils{
     );
 
   }
-
 
   ///通知提示
   static showShort(String msg){

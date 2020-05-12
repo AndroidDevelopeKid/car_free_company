@@ -1,5 +1,6 @@
 class Config{
   static const DEBUG = true;
+  static const TENANT_ID = "tenant-id";
 
   static const PAGE_SIZE = 10;
   static const NOTICE_PAGE_SIZE = 10;
@@ -9,10 +10,14 @@ class Config{
 
   static const IMAGE_ICON_WIDTH = 30.0;
   static const ARROW_ICON_WIDTH = 16.0;
+  static const ERROR_CODE401 = 401;
+  static const ERROR_CODE403 = 403;
 
   static const BEARER_KEY = "bearer";
 
   static const TENANT = "3";
+  static const TENANT_KEY = "tenant";
+  static const TENANT_KEY_NAME = "company-text";
 
   static const TENANT_NAMES = "tenant-names";
   static const TENANT_IDS = "tenant-ids";

@@ -44,6 +44,10 @@ mixin CustomListState<T extends StatefulWidget> on State<T>, AutomaticKeepAliveC
     isLoading = true;
     page = 1;
     var res = await requestRefresh();
+    if(res == null){
+      isLoading = false;
+      return null;
+    }
     resolveRefreshResult(res);
     resolveDataResult(res);
     if (res.next != null) {

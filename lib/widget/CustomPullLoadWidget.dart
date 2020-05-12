@@ -1,5 +1,5 @@
+import 'package:car_free_company/common/config/Config.dart';
 import 'package:car_free_company/common/style/CustomStyle.dart';
-import 'package:car_free_company/common/utils/CommonUtils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 
@@ -78,10 +78,10 @@ class _CustomPullLoadWidgetState extends State<CustomPullLoadWidget>{
   _getItem(int index){
     if(!control.needHeader && index == control.dataList.length && control.dataList.length != 0){
       ///如果不需要头部，并且数据不为0，当index等于数据长度时，渲染加载更多Item（因为index是从0开始的）
-      return _buildProgressIndicator();
+      return _buildProgressIndicator(index);
     }else if(control.needHeader && index == _getListCount() - 1 && control.dataList.length != 0){
       ///如果需要头部，并且数据不为0，当index等于实际渲染长度 - 1 时，渲染加载更多Item（因为index从0开始）
-      return _buildProgressIndicator();
+      return _buildProgressIndicator(index);
     }else if(!control.needHeader && control.dataList.length == 0){
       ///如果不需要头部，并且数据为0，渲染空页面
       return _buildEmpty();
@@ -114,48 +114,63 @@ class _CustomPullLoadWidgetState extends State<CustomPullLoadWidget>{
   }
   ///空页面
   Widget _buildEmpty(){
-    return new Container(
+    return Container(
       height: MediaQuery.of(context).size.height - 100,
       child: new Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
-          FlatButton(
-            onPressed: () {},
-            child: new Image.asset(CustomIcons.LOGIN_FACE_IMAGE),
-            //new Icon(CustomIcons.LOGIN_FACE, size: Config.ICON_SIZE,),
+          SizedBox(
+            width: 99.0,
+            height: 73.0,
+            child: Image.asset(CustomIcons.NO_MORE),
           ),
-          Container(
-            child: Text(CommonUtils.getLocale(context).appEmpty, style: CustomConstant.normalText),
+          SizedBox(
+            width: 99.0,
+            height: 10.0,
           ),
+          Text(
+            "什么也没有",
+            style: TextStyle(color: Color(0xff4C88FF), fontSize: 15.0),
+          )
         ],
       ),
     );
 
   }
   ///上拉加载更多
-  Widget _buildProgressIndicator(){
-    Widget bottomWidget = (control.needLoadMore)
-        ? new Row(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: <Widget>[
-        ///loading框
-        new SpinKitRotatingCircle(color: Theme.of(context).primaryColor),
-        new Container(
-          width: 5.0,
-        ),
-        new Text(
-          CommonUtils.getLocale(context).loadMoreText,
-          style: TextStyle(
-            color: Color(0xFF121917),
-            fontSize: 14.0,
-            fontWeight: FontWeight.bold,
+  Widget _buildProgressIndicator(int index) {
+    Widget bottomWidget;
+    if (control.needLoadMore) {
+      bottomWidget = Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: <Widget>[
+          new SpinKitWave(
+            color: Color(0xff4C88FF),
+            size: 15.0,
           ),
-        )
-      ],
-
-    )
-    ///不需要渲染
-        : new Container();
+          new Container(
+            width: 5.0,
+          ),
+          new Text(
+            "加载更多",
+            style: TextStyle(
+              color: Color(0xff4C88FF),
+              fontSize: 15.0,
+            ),
+          )
+        ],
+      );
+    }
+    if (!control.needLoadMore &&
+        _scrollController.position.pixels ==
+            _scrollController.position.maxScrollExtent && index > Config.PAGE_SIZE) {
+      bottomWidget = Container(
+        child: Text(
+          "没有更多了...",
+          style: TextStyle(color: Color(0xff4C88FF), fontSize: 15.0),
+        ),
+      );
+    }
     return new Padding(
       padding: const EdgeInsets.all(20.0),
       child: new Center(
@@ -163,6 +178,36 @@ class _CustomPullLoadWidgetState extends State<CustomPullLoadWidget>{
       ),
     );
   }
+//  Widget _buildProgressIndicator(){
+//    Widget bottomWidget = (control.needLoadMore)
+//        ? new Row(
+//      mainAxisAlignment: MainAxisAlignment.center,
+//      children: <Widget>[
+//        ///loading框
+//        new SpinKitRotatingCircle(color: Theme.of(context).primaryColor),
+//        new Container(
+//          width: 5.0,
+//        ),
+//        new Text(
+//          "加载更多",
+//          style: TextStyle(
+//            color: Color(0xFF121917),
+//            fontSize: 14.0,
+//            fontWeight: FontWeight.bold,
+//          ),
+//        )
+//      ],
+//
+//    )
+//    ///不需要渲染
+//        : new Container();
+//    return new Padding(
+//      padding: const EdgeInsets.all(20.0),
+//      child: new Center(
+//        child: bottomWidget,
+//      ),
+//    );
+//  }
 }
 class CustomPullLoadWidgetControl{
   ///数据，对齐增减，不能替换

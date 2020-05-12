@@ -24,7 +24,6 @@ abstract class BaseMessagePushState<T extends StatefulWidget> extends State<T> w
             return new MessageDetailPage(MessageItemViewModel.fromMap(pullLoadWidgetControl.dataList[index]));
           },
           ),).then((isRefresh){
-            print("tiaozhuan shua xin: " + isRefresh.toString());
             if(isRefresh){
               handleRefresh();
             }

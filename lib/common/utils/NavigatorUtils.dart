@@ -16,11 +16,11 @@ import 'package:flutter/material.dart';
 class NavigatorUtils{
   ///主页
   static goHome(BuildContext context){
-    Navigator.pushReplacementNamed(context, HomePage.sName);
+    Navigator.push(context, new CupertinoPageRoute(builder: (context) => new HomePage()));
   }
   ///登录页
   static goLogin(BuildContext context){
-    Navigator.pushReplacementNamed(context, LoginPage.sName);
+    //Navigator.pushReplacementNamed(context, LoginPage.sName);
   }
 
   ///历史提货单
@@ -47,6 +47,10 @@ class NavigatorUtils{
   static goVehicleCancelQueue(BuildContext context){
     Navigator.push(context, new CupertinoPageRoute(builder: (context) => new VehicleCancelQueuePage()));
   }
+  ///个人设置
+  static goPersonalSettings(BuildContext context){
+    Navigator.push(context, new CupertinoPageRoute(builder: (context) => new PersonalSettingsPage()));
+  }
 
   ///显示人员档案，车辆档案，人员及证件状态，车辆状态页
   static goDisplayUserInfo(BuildContext context, String title){
@@ -58,6 +62,17 @@ class NavigatorUtils{
         Navigator.push(context, new CupertinoPageRoute(builder: (context) => new LoginInfoPage()));
         break;
     }
+  }
+
+  ///返回上一页，不带参数
+  static void goBackWithNoParams(BuildContext context){
+    Navigator.pop(context);
+  }
+  ///返回上一页，带参数
+  static T goBackWithParams<T>(BuildContext context, T params){
+    Navigator.pop(context, params);
+    return params;
+
   }
 
 }

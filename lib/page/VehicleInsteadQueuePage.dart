@@ -1,11 +1,10 @@
 import 'package:car_free_company/common/dao/VehicleDao.dart';
 import 'package:car_free_company/common/style/CustomStyle.dart';
 import 'package:car_free_company/common/utils/CommonUtils.dart';
-import 'package:car_free_company/widget/CustomFlexButton.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 
-class VehicleInsteadQueuePage extends StatefulWidget{
+class VehicleInsteadQueuePage extends StatefulWidget {
   static final String name = "VehicleInsteadQueue";
 
   VehicleInsteadQueuePage({Key key}) : super(key: key);
@@ -15,99 +14,99 @@ class VehicleInsteadQueuePage extends StatefulWidget{
 
 class _VehicleInsteadQueuePage extends State<VehicleInsteadQueuePage> {
   String _vehicleSmall = "";
-  final TextEditingController vehicleSmallController = new TextEditingController();
+  final TextEditingController vehicleSmallController =
+      new TextEditingController();
+
   @override
-  void initState(){
+  void initState() {
     super.initState();
     vehicleSmallController.value = new TextEditingValue(text: "");
   }
+
   @override
-  void dispose(){
+  void dispose() {
     vehicleSmallController.dispose();
     super.dispose();
   }
+
   @override
   Widget build(BuildContext context) {
-    return new Scaffold(
-      appBar: new AppBar(
-        title: new Text("车辆代排队"),
-      ),
-
-      body:new Column(
-        mainAxisAlignment: MainAxisAlignment.start,
-        children: <Widget>[
-          new Padding(padding: EdgeInsets.all(2.0)),
-          new Row(
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
+    return Scaffold(
+        appBar: AppBar(
+          leading: IconButton(
+              iconSize: 15.0,
+              icon: Icon(CustomIcons.BACK, color: Color(0xff4C88FF)),
+              onPressed: () {
+                Navigator.of(context).pop();
+              }),
+          brightness: Brightness.light,
+          backgroundColor: Colors.white,
+          title: Text("车辆代排队",
+              style: TextStyle(fontSize: 18.0, color: Colors.black)),
+        ),
+        body: Padding(
+          padding: EdgeInsets.only(left: 10.0, top: 10.0, right: 10.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
             children: <Widget>[
-              Expanded(
-                  child:
-                  new TextField(
-                    textAlign: TextAlign.center,
-                    onChanged: (String value) {
-                      _vehicleSmall = value;
-                    },
-                    controller: vehicleSmallController,
-                    decoration: InputDecoration(
-                        hintText: '车辆小号',
-                        contentPadding: EdgeInsets.all(8.0),
-                        border:
-                        OutlineInputBorder(borderSide: BorderSide(color: Theme.of(context).primaryColor),)
+              TextField(
+                textAlign: TextAlign.center,
+                onChanged: (String value) {
+                  _vehicleSmall = value;
+                },
+                controller: vehicleSmallController,
+                decoration: InputDecoration(
+                    hintText: '车辆小号',
+                    contentPadding: EdgeInsets.all(8.0),
+                  enabledBorder:
+                  OutlineInputBorder(
+                    borderSide: BorderSide(
+                        color: Color(
+                            0xff82ACFF)),
+                  ),
+                  focusedBorder:
+                  OutlineInputBorder(
+                    borderSide: BorderSide(
+                        color: Color(
+                            0xff82ACFF)),
+                  ),
+                  border:
+                  OutlineInputBorder(),
                     ),
-                  )
-                  //buildTextField(_vehicleSmall, '车辆小号', vehicleSmallController)
+              ),
+              Padding(padding: EdgeInsets.only(top: 10.0)),
+              FlatButton(
+                color: Color(0xff45C950),
+                child: Padding(padding: EdgeInsets.only(top: 37.0, bottom: 37.0),child:Text('代排队', style: TextStyle(color: Colors.white, fontSize: 15.0),),),
+                onPressed: () {
+                  //VehicleDao
+                  print("vehicleSmall:" + _vehicleSmall.toString());
+                  if (_vehicleSmall == null || _vehicleSmall.length == 0) {
+                    return;
+                  }
+
+                  CommonUtils.showLoadingDialog(context);
+                  VehicleDao.setReplaceQueue(_vehicleSmall.trim()).then((res) {
+                    if (res != null && res.result) {
+                      //代排队成功
+                      CommonUtils.showShort("代排队成功");
+                    }
+                    Navigator.pop(context);
+                    if (res != null && !res.result) {
+                      if (res.data == null) {
+                        CommonUtils.showShort("访问异常");
+                      } else {
+                        CommonUtils.showShort(
+                            res.data["error"]["details"].toString());
+                      }
+                      return false;
+                    }
+                    return true;
+                  });
+                },
               ),
             ],
           ),
-          new Padding(padding: EdgeInsets.all(2.0)),
-          new CustomFlexButton(
-            color: Colors.blue,
-            text: '代排队',
-            onPress: (){
-              //VehicleDao
-              print("vehicleSmall:" + _vehicleSmall.toString());
-              if(_vehicleSmall == null || _vehicleSmall.length == 0){
-                return;
-              }
-
-              CommonUtils.showLoadingDialog(context);
-              VehicleDao.setReplaceQueue(_vehicleSmall.trim()).then((res){
-                if(res != null && res.result){
-                  //代排队成功
-                  CommonUtils.showShort("代排队成功");
-                }
-                Navigator.pop(context);
-                if(res != null && !res.result){
-                  if(res.data == null){
-                    CommonUtils.showShort("访问异常");
-                  }else{
-                    CommonUtils.showShort(res.data["error"]["details"].toString());
-                  }
-                  return false;
-
-                }
-              });
-
-            },
-          ),
-        ],
-      ),
-    );
-  }
-
-  Widget buildTextField(String data,String text, TextEditingController controller) {
-    return TextField(
-      textAlign: TextAlign.center,
-      onChanged: (String value) {
-        data = value;
-      },
-      controller: controller,
-      decoration: InputDecoration(
-          hintText: text,
-          contentPadding: EdgeInsets.all(10.0),
-          border:
-          OutlineInputBorder(borderSide: BorderSide(color: Theme.of(context).primaryColor),)
-      ),
-    );
+        ));
   }
 }

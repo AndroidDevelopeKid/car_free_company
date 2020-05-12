@@ -8,22 +8,23 @@ part of 'Driver.dart';
 
 Driver _$DriverFromJson(Map<String, dynamic> json) {
   return Driver(
-      json['originalOUId'] as int,
-      json['ouDisplayName'] as String,
-      json['vehicleCode'] as String,
-      json['driverIDNumber'] as String,
-      json['driverName'] as String,
-      json['driverPhone'] as String,
-      json['personTypeText'] as String,
-      json['personStateText'] as String,
-      json['buckupContactPerson'] as String,
-      json['buckupContactPersonAddress'] as String,
-      json['buckupContactPersonPhone'] as String,
-      json['driverLicenseID'] as String,
-      json['certificateEndDate'] as String,
-      json['dlCertificateEndDate'] as String,
-      json['personState'] as String,
-      json['personType'] as String);
+    json['originalOUId'] as int,
+    json['ouDisplayName'] as String,
+    json['vehicleCode'] as String,
+    json['driverIDNumber'] as String,
+    json['driverName'] as String,
+    json['driverPhone'] as String,
+    json['personTypeText'] as String,
+    json['personStateText'] as String,
+    json['buckupContactPerson'] as String,
+    json['buckupContactPersonAddress'] as String,
+    json['buckupContactPersonPhone'] as String,
+    json['driverLicenseID'] as String,
+    json['certificateEndDate'] as String,
+    json['dlCertificateEndDate'] as String,
+    json['personState'] as String,
+    json['personType'] as String,
+  );
 }
 
 Map<String, dynamic> _$DriverToJson(Driver instance) => <String, dynamic>{
@@ -42,5 +43,5 @@ Map<String, dynamic> _$DriverToJson(Driver instance) => <String, dynamic>{
       'buckupContactPersonAddress': instance.buckupContactPersonAddress,
       'buckupContactPersonPhone': instance.buckupContactPersonPhone,
       'driverLicenseID': instance.driverLicenseID,
-      'dlCertificateEndDate': instance.dlCertificateEndDate
+      'dlCertificateEndDate': instance.dlCertificateEndDate,
     };

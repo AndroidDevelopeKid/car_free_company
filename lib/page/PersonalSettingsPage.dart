@@ -1,6 +1,7 @@
-import 'package:car_free_company/common/model/LoginInfo.dart';
 import 'package:car_free_company/common/model/User.dart';
 import 'package:car_free_company/common/style/CustomStyle.dart';
+import 'package:car_free_company/widget/CustomErrorReturnWidget.dart';
+import 'package:car_free_company/widget/CustomTableRowWidget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:car_free_company/common/local/LocalStorage.dart';
@@ -8,41 +9,40 @@ import 'package:car_free_company/common/config/Config.dart';
 import 'package:car_free_company/common/dao/UserDao.dart';
 import 'dart:convert';
 
-class PersonalSettingsPage extends StatefulWidget{
+class PersonalSettingsPage extends StatefulWidget {
   static final String name = "PersonalSettings";
 
   PersonalSettingsPage({Key key}) : super(key: key);
 
   _PersonalSettingsPage createState() => _PersonalSettingsPage();
 }
-class _PersonalSettingsPage extends State<PersonalSettingsPage>{
 
-
+class _PersonalSettingsPage extends State<PersonalSettingsPage> {
   ///*********************异步获取数据进行页面显示****************************
   Future<User> userInfo;
 
-
   Future<User> fetchData() async {
     var userInfoLS = await LocalStorage.get(Config.USER_INFO);
-    if(userInfoLS == null){
+    if (userInfoLS == null) {
       var userId = await LocalStorage.get(Config.USER_ID);
       var resultDataUserInfo = await UserDao.getPersonalSettings(userId);
-      if(resultDataUserInfo.data == null){
-        var dataNull = new User(null, null, null, null, null, null, null, null, null);
+      if (resultDataUserInfo.data == null) {
+        var dataNull =
+            new User(null, null, null, null, null, null, null, null, null);
         return dataNull;
       }
-      if(resultDataUserInfo.data != null&&!resultDataUserInfo.result){
-        var dataNull = new User(null, null, null, null, null, null, null, null, null);
+      if (resultDataUserInfo.data != null && !resultDataUserInfo.result) {
+        var dataNull =
+            new User(null, null, null, null, null, null, null, null, null);
         return dataNull;
       }
       return resultDataUserInfo.data;
-
-    }else{
+    } else {
       User userInfoData = User.fromJson(json.decode(userInfoLS));
       return userInfoData;
     }
-
   }
+
   @override
   void initState() {
     // TODO: implement initState
@@ -52,91 +52,76 @@ class _PersonalSettingsPage extends State<PersonalSettingsPage>{
 
   @override
   Widget build(BuildContext context) {
-    return new Scaffold(
-      backgroundColor: CustomColors.listBackground,
-      appBar: new AppBar(
-        title: new Text("个人设置"),
+    return Scaffold(
+      appBar: AppBar(
+        leading: IconButton(
+            iconSize: 15.0,
+            icon: Icon(CustomIcons.BACK, color: Color(0xff4C88FF)),
+            onPressed: () {
+              Navigator.of(context).pop();
+            }),
+        brightness: Brightness.light,
+        backgroundColor: Colors.white,
+        title:
+            Text("个人设置", style: TextStyle(fontSize: 18.0, color: Colors.black)),
       ),
-      body:
-      new Card(
-        color: Color(CustomColors.displayCardBackground),
-        //margin: const EdgeInsets.only(left: 20.0, top: 30.0, right: 20.0, bottom: 30),
-        margin: EdgeInsets.only(top: 6.0, bottom: 6.0, left: 4.0, right: 4.0),
-        elevation: 8.0,
-        child: new Container(
-          child: FutureBuilder<User>(
-            future: userInfo,
-            builder: (context, snapshot) {
-              if (snapshot.hasData) {
-                //return Text(snapshot.data.vehicleCode);
-                return new Table(
-                  border: TableBorder.all(color: Color(CustomColors.tableBorderColor), width: 2.0, style: BorderStyle.solid),
-                  children: <TableRow>[
-                    TableRow(
-                        children: <Widget>[
-                          Text("用户名：", style: CustomConstant.normalTextBlack),
-                          Text(snapshot.data.userName ?? "无", style: CustomConstant.normalTextBlack),
-                        ]
-                    ),
-                    TableRow(
-                        children: <Widget>[
-                          Text("全称：", style: CustomConstant.normalTextBlack),
-                          Text(snapshot.data.fullName ?? "无", style: CustomConstant.normalTextBlack),
-                        ]
-                    ),
-                    TableRow(
-                        children: <Widget>[
-                          Text("电话号码：", style: CustomConstant.normalTextBlack),
-                          Text(snapshot.data.phoneNumber ?? "无", style: CustomConstant.normalTextBlack),
-                        ]
-                    ),
-                    TableRow(
-                        children: <Widget>[
-                          Text("所属组织机构编码：", style: CustomConstant.normalTextBlack),
-                          Text(snapshot.data.organizationCode ?? "无", style: CustomConstant.normalTextBlack),
-                        ]
-                    ),
-                    TableRow(
-                        children: <Widget>[
-                          Text("所属组织机构名称：", style: CustomConstant.normalTextBlack),
-                          Text(snapshot.data.organizationDisplayName ?? "无", style: CustomConstant.normalTextBlack),
-                        ]
-                    ),
-                    TableRow(
-                        children: <Widget>[
-                          Text("所属组织机构全称：", style: CustomConstant.normalTextBlack),
-                          Text(snapshot.data.organizationFullName ?? "无", style: CustomConstant.normalTextBlack),
-                        ]
-                    ),
-                    TableRow(
-                        children: <Widget>[
-                          Text("所属组织机构类型：", style: CustomConstant.normalTextBlack),
-                          Text(snapshot.data.organizationTypeText ?? "无", style: CustomConstant.normalTextBlack),
-                        ]
-                    ),
-
-
-                  ],
-                );
-              } else if (snapshot.hasError) {
-                return Text("${snapshot.error}");
-              }
-              return CircularProgressIndicator();
-            },
-          ),
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(8.0),
-            border: Border.all(
-              color: CustomColors.listBackground,
-              width: 0.7,
-              style: BorderStyle.solid,
-            ),
-          ),
-          padding: EdgeInsets.only(left: 10.0, right: 10.0, top: 12.0, bottom: 12.0),
-        ),
-
+      body: FutureBuilder<User>(
+        future: userInfo,
+        builder: (context, snapshot) {
+          if (snapshot.hasData) {
+            //return Text(snapshot.data.vehicleCode);
+            return Container(
+              child: Padding(
+                  padding: EdgeInsets.only(
+                      top: 15.0, left: 25.0, right: 25.0, bottom: 15.0),
+                  child: Table(
+                    defaultVerticalAlignment: TableCellVerticalAlignment.middle,
+                    children: <TableRow>[
+                      TableRow(children: <Widget>[
+                        CustomTableRowWidget(
+                            "用户名", snapshot.data.userName ?? "无"),
+                      ]),
+                      TableRow(children: <Widget>[
+                        CustomTableRowWidget(
+                            "全称", snapshot.data.fullName ?? "无"),
+                      ]),
+                      TableRow(children: <Widget>[
+                        CustomTableRowWidget(
+                            "电话号码", snapshot.data.phoneNumber ?? "无"),
+                      ]),
+                      TableRow(children: <Widget>[
+                        CustomTableRowWidget(
+                            "所属组织机构编码", snapshot.data.organizationCode ?? "无"),
+                      ]),
+                      TableRow(children: <Widget>[
+                        CustomTableRowWidget("所属组织机构名称",
+                            snapshot.data.organizationDisplayName ?? "无"),
+                      ]),
+                      TableRow(children: <Widget>[
+                        CustomTableRowWidget("所属组织机构全称",
+                            snapshot.data.organizationFullName ?? "无"),
+                      ]),
+                      TableRow(children: <Widget>[
+                        CustomTableRowWidget("所属组织机构类型",
+                            snapshot.data.organizationTypeText ?? "无"),
+                      ]),
+                    ],
+                  )),
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(2.0),
+                border: Border.all(
+                  color: Color(0xffF9FBFF),
+                  width: 1.0,
+                  style: BorderStyle.solid,
+                ),
+              ),
+            );
+          } else if (snapshot.hasError) {
+            return CustomErrorReturnWidget();
+          }
+          return SizedBox(height: 2.0, child: LinearProgressIndicator());
+        },
       ),
     );
-
   }
 }

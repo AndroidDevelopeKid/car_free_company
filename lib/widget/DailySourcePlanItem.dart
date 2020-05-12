@@ -1,8 +1,6 @@
 import 'package:car_free_company/common/model/DailySourcePlan.dart';
-import 'package:car_free_company/common/model/MessagePush.dart';
 import 'package:car_free_company/common/style/CustomStyle.dart';
 import 'package:car_free_company/widget/CustomCardItem.dart';
-import 'package:common_utils/common_utils.dart';
 import 'package:flutter/material.dart';
 
 class DailySourcePlanItem extends StatelessWidget {
@@ -27,7 +25,7 @@ class DailySourcePlanItem extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: <Widget>[
-                    new Image.asset(CustomIcons.DAILY_PLAN_IMAGE),
+                    new Image.asset(CustomIcons.FORM),
                     new Text(
                       dailySourcePlanItemViewModel.sourceDate == null ? "无" : dailySourcePlanItemViewModel.sourceDate.substring(0,10),
                     ),

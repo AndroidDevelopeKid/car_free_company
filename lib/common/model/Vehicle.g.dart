@@ -8,25 +8,26 @@ part of 'Vehicle.dart';
 
 Vehicle _$VehicleFromJson(Map<String, dynamic> json) {
   return Vehicle(
-      json['id'] as String,
-      json['oUDisplayName'] as String,
-      json['vehicleCode'] as String,
-      json['engineNumber'] as String,
-      json['vehicleTypeText'] as String,
-      json['trailerFrameNumber'] as String,
-      json['vehicleBusinessTypeText'] as String,
-      json['modelsText'] as String,
-      json['joiningDate'] as String,
-      json['mainVehiclePlate'] as String,
-      json['vehicleStateText'] as String,
-      json['ownerName'] as String,
-      json['ownerIDNumber'] as String,
-      json['ownerPhone'] as String,
-      json['originalOUId'] as int,
-      json['models'] as String,
-      json['vehicleBusinessType'] as String,
-      json['vehicleState'] as String,
-      json['vehicleType'] as String);
+    json['id'] as String,
+    json['oUDisplayName'] as String,
+    json['vehicleCode'] as String,
+    json['engineNumber'] as String,
+    json['vehicleTypeText'] as String,
+    json['trailerFrameNumber'] as String,
+    json['vehicleBusinessTypeText'] as String,
+    json['modelsText'] as String,
+    json['joiningDate'] as String,
+    json['mainVehiclePlate'] as String,
+    json['vehicleStateText'] as String,
+    json['ownerName'] as String,
+    json['ownerIDNumber'] as String,
+    json['ownerPhone'] as String,
+    json['originalOUId'] as int,
+    json['models'] as String,
+    json['vehicleBusinessType'] as String,
+    json['vehicleState'] as String,
+    json['vehicleType'] as String,
+  );
 }
 
 Map<String, dynamic> _$VehicleToJson(Vehicle instance) => <String, dynamic>{
@@ -48,5 +49,5 @@ Map<String, dynamic> _$VehicleToJson(Vehicle instance) => <String, dynamic>{
       'ownerPhone': instance.ownerPhone,
       'trailerFrameNumber': instance.trailerFrameNumber,
       'engineNumber': instance.engineNumber,
-      'joiningDate': instance.joiningDate
+      'joiningDate': instance.joiningDate,
     };

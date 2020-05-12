@@ -1,7 +1,6 @@
 import 'dart:convert';
 
 import 'package:car_free_company/common/dao/ResultDao.dart';
-import 'package:car_free_company/common/model/Vehicle.dart';
 import 'package:car_free_company/common/model/VehicleSingle.dart';
 import 'package:car_free_company/common/net/Address.dart';
 import 'package:car_free_company/common/net/HttpApi.dart';

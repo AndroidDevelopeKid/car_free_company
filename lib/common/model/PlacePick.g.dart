@@ -7,12 +7,15 @@ part of 'PlacePick.dart';
 // **************************************************************************
 
 PlacePick _$PlacePickFromJson(Map<String, dynamic> json) {
-  return PlacePick(json['id'] as int, json['parentId'] as int,
-      (json['place'] as List)?.map((e) => e as String)?.toList());
+  return PlacePick(
+    json['id'] as int,
+    json['parentId'] as int,
+    (json['place'] as List)?.map((e) => e as String)?.toList(),
+  );
 }
 
 Map<String, dynamic> _$PlacePickToJson(PlacePick instance) => <String, dynamic>{
       'parentId': instance.parentId,
       'id': instance.id,
-      'place': instance.place
+      'place': instance.place,
     };

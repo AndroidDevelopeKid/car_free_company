@@ -20,14 +20,15 @@ class UserDao{
     //String tenantId = Config.TENANT;
 
     await LocalStorage.save(Config.USER_NAME_KEY, userName);
+    await LocalStorage.save(Config.TENANT_ID, tenantId);
     ///清除授权
     HttpManager.clearAuthorization();
     ///清除缓存
-    await LocalStorage.remove(Config.USER_ID);
-    await LocalStorage.remove(Config.USER_INFO);
-    await LocalStorage.remove(Config.LOGIN_INFO);
-    await LocalStorage.remove(Config.DRIVERS);
-    await LocalStorage.remove(Config.TRANSPORT_PLACE);
+//    await LocalStorage.remove(Config.USER_ID);
+//    await LocalStorage.remove(Config.USER_INFO);
+//    await LocalStorage.remove(Config.LOGIN_INFO);
+//    await LocalStorage.remove(Config.DRIVERS);
+//    await LocalStorage.remove(Config.TRANSPORT_PLACE);
     Map requestParams = {
       "usernameOrEmailAddress": userName,
       "password": password
@@ -104,14 +105,40 @@ class UserDao{
       return new DataResult(res.data, false);
     }
   }
-
   ///登陆信息
   static getTenants(maxResultCount, skipCount) async {
-    var res = await HttpManager.netFetch(Address.getTenant() + "?MaxResultCount=${maxResultCount}&SkipCount=${skipCount}", null, null, null);
-    if(res != null ){
+    HttpManager.clearAuthorization();
+    var res = await HttpManager.netFetch(
+        Address.getTenant() +
+            "?MaxResultCount=${maxResultCount}&SkipCount=${skipCount}",
+        null,
+        null,
+        null);
+    if (res != null) {
       print("tenants: " + res.data.toString());
       return new DataResult(res.data, true);
     }
   }
+  ///刷新token
+  static refreshToken() async {
+    String userName = await LocalStorage.get(Config.USER_NAME_KEY);
+    String password = await LocalStorage.get(Config.PW_KEY);
+    String tenantId = await LocalStorage.get(Config.TENANT_ID);
+
+    ///清除授权
+    HttpManager.clearAuthorization();
+    Map requestParams = {
+      //"tenancyName": "default",
+      "usernameOrEmailAddress": userName,
+      "password": password
+    };
+
+    Map<String, String> header = {
+      "Abp.TenantId": tenantId,
+    };
+    await HttpManager.netFetch(Address.getAuthorization(),
+        json.encode(requestParams), header, new Options(method: 'post'));
+  }
+
 
 }

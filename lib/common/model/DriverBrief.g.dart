@@ -8,11 +8,12 @@ part of 'DriverBrief.dart';
 
 DriverBrief _$DriverBriefFromJson(Map<String, dynamic> json) {
   return DriverBrief(
-      json['id'] as String,
-      json['vehicleCode'] as String,
-      json['driverIDNumber'] as String,
-      json['driverName'] as String,
-      json['driverPhone'] as String);
+    json['id'] as String,
+    json['vehicleCode'] as String,
+    json['driverIDNumber'] as String,
+    json['driverName'] as String,
+    json['driverPhone'] as String,
+  );
 }
 
 Map<String, dynamic> _$DriverBriefToJson(DriverBrief instance) =>
@@ -21,5 +22,5 @@ Map<String, dynamic> _$DriverBriefToJson(DriverBrief instance) =>
       'driverIDNumber': instance.driverIDNumber,
       'driverName': instance.driverName,
       'driverPhone': instance.driverPhone,
-      'vehicleCode': instance.vehicleCode
+      'vehicleCode': instance.vehicleCode,
     };

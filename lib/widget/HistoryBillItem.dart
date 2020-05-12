@@ -11,43 +11,82 @@ class HistoryBillItem extends StatelessWidget{
 
   @override
   Widget build(BuildContext context) {
-    return new Container(
-      child: new CustomCardItem(
-        child: new FlatButton(
-          onPressed: onPressed,
-          child:
-          new Container(
-            padding: const EdgeInsets.all(10.0),
-            child: new Column(
-              children: [
-                new Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: <Widget>[
-                    new Image.asset(CustomIcons.HISTORY_BILL_SUB),
-                    new Text(
-                      historyBillItemViewModel.deliveryOrderStateText ?? "提货单状态",
+    return InkWell(
+      onTap: onPressed,
+      child: Padding(
+        padding: EdgeInsets.only(bottom: 5.0, top: 5.0),
+        child: Container(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: <Widget>[
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                crossAxisAlignment: CrossAxisAlignment.end,
+                children: <Widget>[
+                  Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: <Widget>[
+                        Padding(
+                          padding: EdgeInsets.only(
+                            left: 10.0,
+                            top: 15.0,
+                          ),
+                          child: Row(
+                            children: <Widget>[
+                              SizedBox(
+                                width: 13.0,
+                                height: 14.0,
+                                child: Image.asset(CustomIcons.FORM),
+                              ),
+                              Padding(
+                                padding: EdgeInsets.only(left: 15.0),
+                                child: Text(
+                                  historyBillItemViewModel.mainVehiclePlate ??
+                                      "车牌号",
+                                  style: TextStyle(fontSize: 12.0),
+                                ),
+                              )
+                            ],
+                          ),
+                        ),
+                        Padding(
+                          padding: EdgeInsets.only(left: 10.0, top: 13.0),
+                          child: Text(
+                            historyBillItemViewModel.deliveryOrderCode ??
+                                "提货单号",
+                            style: TextStyle(fontSize: 13.0),
+                          ),
+                        ),
+                      ],
                     ),
-                  ],
-                ),
-                new Padding(padding: EdgeInsets.all(10.0)),
-                new Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: <Widget>[
-                    new Text(
-                      historyBillItemViewModel.deliveryOrderCode ?? "提货单号",
+                  ),
+                  Padding(
+                    padding: EdgeInsets.only(right: 26.0),
+                    child: Text(
+                      historyBillItemViewModel.deliveryOrderStateText ??
+                          "提货单状态",
+                      style:
+                      TextStyle(color: Color(0xff5AC426), fontSize: 13.0),
                     ),
-                    new Text(
-                      historyBillItemViewModel.mainVehiclePlate ?? "车牌号",
-                    ),
-                  ],),
-              ],
+                  ),
+                ],
+              ),
+              Padding(
+                padding: EdgeInsets.only(top: 9.0, bottom: 9.0),
+              ),
+            ],
+          ),
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(2.0),
+            border: Border.all(
+              color: Color(0xffefefef),
+              width: 1.0,
+              style: BorderStyle.solid,
             ),
           ),
         ),
       ),
-
     );
   }
 }
@@ -62,6 +101,8 @@ class HistoryBillItemViewModel {
   String loadPlaceName;//装地-提货点
   String unloadPlaceName;//卸地-采购方
   String goodsName;//货物名-煤种
+  String coalCode;
+  String coalText;//煤种
   String outStockGenerateDate;//提货点称重时间
   double outStockNetWeigh;//提货点净重
   String weighDate;//采购方称重时间
@@ -76,6 +117,8 @@ class HistoryBillItemViewModel {
     this.deliveryOrderStateText = historyBill.deliveryOrderStateText;
     this.generateDate = historyBill.generateDate;
     this.goodsName = historyBill.goodsName;
+    this.coalCode = historyBill.coalCode;
+    this.coalText = historyBill.coalText;
     this.id = historyBill.id;
     this.inStockGrossWeigh = historyBill.inStockGrossWeigh;
     this.inStockNetWeigh = historyBill.inStockNetWeigh;

@@ -6,6 +6,7 @@ import 'package:car_free_company/common/style/CustomStyle.dart';
 import 'package:car_free_company/common/utils/CommonUtils.dart';
 import 'package:car_free_company/widget/BaseMessagePushState.dart';
 import 'package:car_free_company/widget/CustomPullLoadWidget.dart';
+import 'package:car_free_company/widget/SimpleImageButton.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:animated_floatactionbuttons/animated_floatactionbuttons.dart';
@@ -46,19 +47,12 @@ class _NoticePageState extends BaseMessagePushState<NoticePage>{
 
     var notifications = await NoticeDao.getPagedUserNotifications(state,skipCount);
     if(notifications != null && notifications.result){
-
-      print("skipCount : " + skipCountGlobal.toString());
-//      int totalCount = notifications.data["result"]["totalCount"];
-//      int pageCount = totalCount ~/ Config.PAGE_SIZE + 1;
-//      pageCount--;
-//      if(pageCount == 0){
-//
-//      }
-      print("notifications in noticePage: " + notifications.data.toString());
       var itemList = notifications.data["result"]["items"];
-      print("notifications in noticePage itemList: " + itemList.toString() + itemList.length.toString());
-      print("notifications in noticePage itemList length: " + itemList.length.toString());
+      var total = notifications.data["result"]["totalCount"];
       for(int i = 0; i < itemList.length; i++){
+        if(itemList[i]["notification"]["data"]["messageText"].toString() == ""){
+          
+        }
         print("notifications in noticePage item" + i.toString() + ":" + itemList[i]["notification"]["data"]["messageText"].toString());
         var msg = itemList[i]["notification"]["data"]["messageText"].toString();
         var messageSource = itemList[i]["notification"]["data"]["messageSource"].toString();
@@ -89,9 +83,9 @@ class _NoticePageState extends BaseMessagePushState<NoticePage>{
   }
   ///请求加载更多
   @override
-  requestLoadMore() {
+  requestLoadMore() async {
     // TODO: implement requestLoadMore
-    var dataLoadMore = _getData(readState,skipCountGlobal);
+    var dataLoadMore = await _getData(readState,skipCountGlobal);
     if(dataLoadMore.result){
       skipCountGlobal = skipCountGlobal + Config.NOTICE_PAGE_SIZE;
       print("skipCountGlobal : " + skipCountGlobal.toString());
@@ -107,103 +101,97 @@ class _NoticePageState extends BaseMessagePushState<NoticePage>{
   ///initState后调用，在didChangeDependencies中，可以跨组件拿到数据。
   @override
   void didChangeDependencies(){
-//    if(pullLoadWidgetControl.dataList.length == 0){
-//      showRefreshLoading();
-//    }
     super.didChangeDependencies();
     handleRefresh();
   }
 
-  Widget selectUnread() {
-    return Container(
-      child: FloatingActionButton(
-        onPressed: (){
-          readState = 0;
-          handleRefresh();
-        },
-        tooltip: '查未读',
-        heroTag: "unRead",
-        child: Icon(Icons.chat_bubble),
-      ),
-    );
-  }
-
-  Widget selectRead() {
-    return Container(
-      child: FloatingActionButton(
-        onPressed: (){
-          readState = 1;
-          handleRefresh();
-        },
-        tooltip: '查已读',
-        heroTag: "alreadyRead",
-        child: Icon(Icons.chat),
-      ),
-    );
-  }
-
-  Widget selectAll() {
-    return Container(
-      child: FloatingActionButton(
-        onPressed: (){
-          readState = null;
-          handleRefresh();
-        },
-        tooltip: '查所有',
-        heroTag: "allNotifications",
-        child: Icon(Icons.chat_bubble_outline),
-      ),
-    );
-  }
-
-  Widget makeAllRead() {
-    return Container(
-      child: FloatingActionButton(
-        onPressed: () async {
-          var makeAllReadRes = await NoticeDao.makeAllUserNotificationsAsRead();
-          if(makeAllReadRes != null && makeAllReadRes.result){
-            CommonUtils.showShort("已全部设为已读");
-            readState = null;
-            handleRefresh();
-          }
-          if(makeAllReadRes != null && !makeAllReadRes.result){
-            CommonUtils.showShort("全部设为已读失败，请重试");
-            readState = null;
-            handleRefresh();
-          }
-        },
-        tooltip: '全部设为已读',
-        heroTag: "makeAllRead",
-        child: Icon(Icons.done_all),
-      ),
-    );
-  }
   @override
   Widget build(BuildContext context){
     super.build(context);
-
         return Scaffold(
-          body: CustomPullLoadWidget(
-            pullLoadWidgetControl,
-                (BuildContext context, int index) => renderItem(index,(){
-              _refreshNotify();
-            }),
-            handleRefresh,
-            onLoadMore,
-            refreshKey: refreshIndicatorKey,
-          ),
-          floatingActionButton: AnimatedFloatingActionButton(
-            fabButtons: <Widget>[
-              selectUnread(),
-              selectRead(),
-              selectAll(),
-              makeAllRead()
-            ],
-            colorStartAnimation: Colors.blue,
-            colorEndAnimation: Colors.red,
-            animatedIconData: AnimatedIcons.menu_close,
-          ),
-        );
+            body: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: <Widget>[
+                Padding(
+                  padding: EdgeInsets.only(left: 15.0, top: 30.0, bottom: 9.0),
+                  child: SizedBox(height: 20.0, child: Image.asset(CustomIcons.LOGO),),
+                ),
+                Container(
+                  height: 2.0,
+                  color: Color(0xffEEEEEE),
+                ),
+                Padding(
+                  padding: EdgeInsets.only(top: 15.0, bottom: 21.0),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    children: <Widget>[
+                      SimpleImageButton(
+                        normalwidth: 28.0,
+                        normalheight: 15.0,
+                        pressedheight: 20.0,
+                        pressedwidth: 28.0,
+                        normalImage: CustomIcons.READ,
+                        pressedImage: CustomIcons.READ_PRESSED,
+                        onPressed: () {
+                          readState = 1;
+                          handleRefresh();
+                        },
+                      ),
+                      SimpleImageButton(
+                        normalwidth: 28.0,
+                        normalheight: 15.0,
+                        pressedheight: 20.0,
+                        pressedwidth: 28.0,
+                        normalImage: CustomIcons.UNREAD,
+                        pressedImage: CustomIcons.UNREAD_PRESSED,
+                        onPressed: () {
+                          readState = 0;
+                          handleRefresh();
+                        },
+                      ),
+                      SimpleImageButton(
+                        normalwidth: 89.0,
+                        normalheight: 15.0,
+                        pressedheight: 15.0,
+                        pressedwidth: 89.0,
+                        normalImage: CustomIcons.SET_ALL_READ,
+                        pressedImage: CustomIcons.SET_ALL_READ,
+                        onPressed: () async {
+                          var makeAllReadRes =
+                          await NoticeDao.makeAllUserNotificationsAsRead();
+                          if (makeAllReadRes != null && makeAllReadRes.result) {
+                            CommonUtils.showShort("已全部设为已读");
+                            readState = null;
+                            handleRefresh();
+                          }
+                          if (makeAllReadRes != null && !makeAllReadRes.result) {
+                            CommonUtils.showShort("全部设为已读失败，请重试");
+                            readState = null;
+                            handleRefresh();
+                          }
+                        },
+                      )
+                    ],
+                  ),
+                ),
+                Container(
+                  height: 6.0,
+                  color: Color(0xffEEEEEE),
+                ),
+                Expanded(
+                  child:
+                  CustomPullLoadWidget(
+                    pullLoadWidgetControl,
+                        (BuildContext context, int index) => renderItem(index, () {
+                      _refreshNotify();
+                    }),
+                    handleRefresh,
+                    onLoadMore,
+                    refreshKey: refreshIndicatorKey,
+                  ),
+                ),
+              ],
+            ));
 
   }
 }
